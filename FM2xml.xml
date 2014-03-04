@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<FMPXMLRESULT xmlns="http://www.filemaker.com/fmpxmlresult">
+  <ERRORCODE>0</ERRORCODE>
+  <PRODUCT BUILD="10-25-2013" NAME="FileMaker" VERSION="Pro 13.0v1"/>
+  <DATABASE DATEFORMAT="M/d/yyyy" LAYOUT="" NAME="publications 1-28-14_Class Database.fmp12" RECORDS="5" TIMEFORMAT="h:mm:ss a"/>
+  <METADATA>
+    <FIELD EMPTYOK="YES" MAXREPEAT="1" NAME="open_date" TYPE="DATE"/>
+    <FIELD EMPTYOK="YES" MAXREPEAT="1" NAME="due_date_actual_delivery" TYPE="DATE"/>
+    <FIELD EMPTYOK="YES" MAXREPEAT="1" NAME="description" TYPE="TEXT"/>
+    <FIELD EMPTYOK="YES" MAXREPEAT="1" NAME="project_number" TYPE="TEXT"/>
+    <FIELD EMPTYOK="YES" MAXREPEAT="1" NAME="status" TYPE="TEXT"/>
+    <FIELD EMPTYOK="YES" MAXREPEAT="1" NAME="artist_name" TYPE="TEXT"/>
+    <FIELD EMPTYOK="YES" MAXREPEAT="1" NAME="editor_name" TYPE="TEXT"/>
+    <FIELD EMPTYOK="YES" MAXREPEAT="1" NAME="client_contact_name" TYPE="TEXT"/>
+  </METADATA>
+  <RESULTSET FOUND="5">
+  <ROW MODID="8" RECORDID="5282">
+    <COL>
+      <DATA>2/24/2014</DATA>
+    </COL>
+    <COL>
+      <DATA>3/5/2014</DATA>
+    </COL>
+    <COL>
+      <DATA>Job 1 - Brochure</DATA>
+    </COL>
+    <COL>
+      <DATA>5202</DATA>
+    </COL>
+    <COL>
+      <DATA>Designing</DATA>
+    </COL>
+    <COL>
+      <DATA>Daniel Austin</DATA>
+    </COL>
+    <COL>
+      <DATA>Jennifer Clark</DATA>
+    </COL>
+    <COL>
+      <DATA>Gail DiSabatino</DATA>
+    </COL>
+  </ROW>
+  <ROW MODID="3" RECORDID="5283">
+    <COL>
+      <DATA>2/28/2014</DATA>
+    </COL>
+    <COL>
+       <DATA>3/11/2014</DATA>
+    </COL>
+    <COL>
+      <DATA>Job 2 - Newsletter</DATA>
+    </COL>
+    <COL>
+      <DATA>5203</DATA>
+    </COL>
+    <COL>
+      <DATA>Need Info</DATA>
+    </COL>
+    <COL>
+      <DATA>Tina LeMay</DATA>
+    </COL>
+    <COL>
+      <DATA>Jennifer Clark</DATA>
+    </COL>
+    <COL>
+      <DATA>George Smith</DATA>
+    </COL>
+    <COL>
+      <DATA>TEST TEST</DATA>
+    </COL>
+  </ROW>
+  <ROW MODID="3" RECORDID="5284">
+    <COL>
+      <DATA>2/28/2014</DATA>
+    </COL>
+    <COL>
+      <DATA>4/29/2014</DATA>
+    </COL>
+    <COL>
+      <DATA>Job 3 - Proposal</DATA>
+    </COL>
+    <COL>
+      <DATA>5204</DATA>
+    </COL>
+    <COL>
+      <DATA>Copy Edit</DATA>
+    </COL>
+    <COL>
+      <DATA></DATA>
+    </COL>
+    <COL>
+      <DATA>Jennifer Clark</DATA>
+    </COL>
+    <COL>
+      <DATA>George Smith</DATA>
+    </COL>
+  </ROW>
+  <ROW MODID="1" RECORDID="5285">
+    <COL>
+      <DATA>2/28/2014</DATA>
+    </COL>
+    <COL>
+      <DATA>3/11/2014</DATA>
+    </COL>
+    <COL>
+      <DATA>Job 4 - NoType</DATA>
+    </COL>
+    <COL>
+      <DATA>5205</DATA>
+    </COL>
+    <COL>
+      <DATA>Ready for Pickup</DATA>
+    </COL>
+    <COL>
+      <DATA>Tina LeMay</DATA>
+    </COL>
+    <COL>
+      <DATA></DATA>
+    </COL>
+    <COL>
+      <DATA>Joy Smith</DATA>
+    </COL>
+    <COL>
+      <DATA>TEST TEST</DATA>
+    </COL>
+  </ROW>
+  <ROW MODID="1" RECORDID="5286">
+    <COL>
+      <DATA>2/28/2014</DATA>
+    </COL>
+    <COL>
+      <DATA>3/25/2014</DATA>
+    </COL>
+    <COL>
+      <DATA>Job 5 - Powerpoint</DATA>
+    </COL>
+    <COL>
+      <DATA>5206</DATA>
+    </COL>
+    <COL>
+      <DATA>Designing</DATA>
+    </COL>
+    <COL>
+      <DATA>Daniel Austin</DATA>
+    </COL>
+    <COL>
+      <DATA>Jennifer Clark</DATA>
+    </COL>
+    <COL>
+      <DATA></DATA>
+    </COL>
+  </ROW>
+  </RESULTSET>
+</FMPXMLRESULT>

@@ -1,10 +1,6 @@
 <Data>
   <Employees MODID="1">
      <Person>
-	<Name>Daniel Austin</Name>
-	<Color>(255,10,20,255)</Color>
-     </Person>
-     <Person>
         <Name>Tina LeMay</Name>
         <Color>(255,10,20,255)</Color>
      </Person>
@@ -17,7 +13,7 @@
         <Color>(255,10,20,255)</Color>
      </Person>  
 
-  <Person><Name>test</Name><Color>(255, 0, 0, 0)</Color></Person><Person><Name>test</Name><Color>(255, 0, 0, 0)</Color></Person><Person><Name>zdfzdf</Name><Color>(255, 0, 0, 0)</Color></Person><Person><Name>dzdfzdf</Name><Color>(255, 0, 0, 0)</Color></Person><Person><Name>working</Name><Color>(255, 0, 127, 255)</Color></Person></Employees>
+  <Person><Name>test</Name><Color>(255, 0, 0, 0)</Color></Person><Person><Name>test</Name><Color>(255, 0, 0, 0)</Color></Person><Person><Name>zdfzdf</Name><Color>(255, 0, 0, 0)</Color></Person><Person><Name>dzdfzdf</Name><Color>(255, 0, 0, 0)</Color></Person><Person><Name>Daniel Austin</Name><Color>(255, 255, 0, 170)</Color></Person><Person><Name>David Bishop</Name><Color>(255, 85, 255, 85)</Color></Person></Employees>
   <Proj_statuses MODID="2">
      <Stat>Copy Creation</Stat>
      <Stat>Copy Edit</Stat>
@@ -27,7 +23,6 @@
      <Stat>Designing</Stat>
      <Stat>Design Review</Stat>
      <Stat>Design Revisions</Stat>
-     <Stat>Need Info</Stat>
      <Stat>Need Feedback</Stat>
      <Stat>Need Quotes</Stat>
      <Stat>Need Quotes / CB+D</Stat>
@@ -51,5 +46,5 @@
      <Stat>Waffle</Stat>
      <Stat>asdf;lkj</Stat>
      <Stat>test</Stat>
-  </Proj_statuses>
+  <Stat>Working</Stat></Proj_statuses>
 </Data>

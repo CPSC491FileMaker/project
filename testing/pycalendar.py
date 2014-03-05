@@ -9,7 +9,7 @@
 
 from PyQt4 import QtCore, QtGui
 from PyQt4.QtCore import QDateTime
-import helper, xmlparse, addEmployee, addStatus
+import helper, xmlparse, addEmployee, addStatus, removeEmployee, removeStatus
 
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
@@ -22,17 +22,30 @@ class Ui_MainWindow(object):
     statuses = []
    
     def addStatClicked(self):
-      statWindow = QtGui.QDialog()
-      stat = addStatus.Ui_Dialog(self)
-      stat.setupUi(statWindow)
-      statWindow.exec_()
+      addStatWindow = QtGui.QDialog()
+      addStat = addStatus.Ui_Dialog(self)
+      addStat.setupUi(addStatWindow)
+      addStatWindow.exec_()
     
     def addEmpClicked(self):
-      addWindow = QtGui.QDialog()
-      add = addEmployee.Ui_Dialog(self)
-      add.setupUi(addWindow)
-      addWindow.exec_()
-    
+      addEmpWindow = QtGui.QDialog()
+      addEmp = addEmployee.Ui_Dialog(self)
+      addEmp.setupUi(addEmpWindow)
+      addEmpWindow.exec_()
+
+    def remEmpClicked(self):
+      remEmpWindow = QtGui.QDialog()
+      remEmp = removeEmployee.Ui_Dialog(self)
+      remEmp.setupUi(remEmpWindow)
+      remEmpWindow.exec_()
+
+    def remStatClicked(self):
+      remStatWindow = QtGui.QDialog()
+      remStat = removeStatus.Ui_Dialog(self)
+      remStat.setupUi(remStatWindow)
+      remStatWindow.exec_()   
+
+ 
     def updateRecordsClicked(self):
       records = xml.fetchRecords()   
    
@@ -62,7 +75,6 @@ class Ui_MainWindow(object):
         for i in reversed(range(self.formLayout_6.count())):
             item = self.formLayout_6.itemAt(i)
             if isinstance(item, QtGui.QWidgetItem):
-                print "Widget: " + str(item)
                 item.widget().close()
             self.formLayout_6.removeItem(item)
 
@@ -449,11 +461,11 @@ class Ui_MainWindow(object):
         self.scrollArea=QtGui.QScrollArea(self.formLayoutWidget)
         self.verticalLayoutWidget = QtGui.QWidget(self.frame_2)
         self.verticalLayoutWidget.setObjectName(_fromUtf8("verticalLayoutWidget"))
-        self.TopFrameLayout = QtGui.QFormLayout(self.verticalLayoutWidget)
-        #self.TopFrameLayout = QtGui.QHBoxLayout(self.verticalLayoutWidget)
-        self.TopFrameLayout.setGeometry(QtCore.QRect(0,0,201,201))
+        #self.TopFrameLayout = QtGui.QVeritcalLayout(self.verticalLayoutWidget)
+        self.TopFrameLayout = QtGui.QVBoxLayout(self.verticalLayoutWidget)
+        self.TopFrameLayout.setGeometry(QtCore.QRect(0,0,200,200))
         self.TopFrameLayout.setObjectName(_fromUtf8("TopFrameLayout"))
-        self.TopFrameLayout.setContentsMargins(0,0,0,0)
+        self.TopFrameLayout.setContentsMargins(10,10,10,10)
         self.pushButton = QtGui.QPushButton(self.verticalLayoutWidget)
         self.pushButton.setGeometry(QtCore.QRect(20, 20, 139, 27))
         self.pushButton.setObjectName(_fromUtf8("pushButton"))
@@ -472,7 +484,7 @@ class Ui_MainWindow(object):
         self.formLayout_7 = QtGui.QFormLayout(self.scrollAreaWidgetContents)
         self.formLayout_7.setObjectName(_fromUtf8("formLayout_7"))
         #self.pushButton_3 = QtGui.QPushButton(self.scrollAreaWidgetContents)
-        self.pushButton_3 = QtGui.QPushButton(selfverticalLayoutWidget)
+        self.pushButton_3 = QtGui.QPushButton(self.verticalLayoutWidget)
         self.pushButton_3.setObjectName(_fromUtf8("pushButton_3"))
         self.scrollArea_2 = QtGui.QScrollArea(self.formLayoutWidget)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
@@ -750,10 +762,15 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
         self.actionExit = QtGui.QAction(MainWindow)
         self.actionExit.setObjectName(_fromUtf8("actionExit"))
+        self.actionRemEmp = QtGui.QAction(MainWindow)
+        self.actionRemEmp.setObjectName(_fromUtf8("actionRemEmp"))
+        self.actionRemStat = QtGui.QAction(MainWindow)
+        self.actionRemStat.setObjectName(_fromUtf8("actionRemStat"))
+        self.menuFile.addAction(self.actionRemEmp) 
+        self.menuFile.addAction(self.actionRemStat)
         self.menuFile.addAction(self.actionExit)
         self.menubar.addAction(self.menuFile.menuAction())
         self.menubar.addAction(self.menuHelp.menuAction())
-        self.listWidget.addItem("test")
         self.retranslateUi(MainWindow)
         self.TopFrameLayout.addWidget(self.pushButton_2)
         self.TopFrameLayout.addWidget(self.pushButton_3)
@@ -771,21 +788,22 @@ class Ui_MainWindow(object):
         QtCore.QObject.connect(self.calendarWidget_3, QtCore.SIGNAL(_fromUtf8("clicked(QDate)")), self.calclicked3)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         QtCore.QObject.connect(self.actionExit, QtCore.SIGNAL(_fromUtf8("activated()")), sys.exit)
-          
+        QtCore.QObject.connect(self.actionRemEmp, QtCore.SIGNAL(_fromUtf8("activated()")), self.remEmpClicked)
+        QtCore.QObject.connect(self.actionRemStat, QtCore.SIGNAL(_fromUtf8("activated()")), self.remStatClicked)          
 
     def retranslateUi(self, MainWindow):
         today = QtCore.QDate.currentDate()
         MainWindow.setWindowTitle(QtGui.QApplication.translate("MainWindow", "MainWindow", None, QtGui.QApplication.UnicodeUTF8))
         self.pushButton.setText(QtGui.QApplication.translate("MainWindow", "Update", None, QtGui.QApplication.UnicodeUTF8))
-        #self.pushButton.setMinimumSize(139,27)
-        #self.pushButton.setMaximumSize(139,27)
+        self.pushButton.setMinimumSize(180,27)
+        self.pushButton.setMaximumSize(180,27)
         self.pushButton_2.setText(QtGui.QApplication.translate("MainWindow", "Add Employee", None, QtGui.QApplication.UnicodeUTF8))
-        #self.pushButton_2.setMinimumSize(139,27)
-        #self.pushButton_2.setMaximumSize(139,27)
+        self.pushButton_2.setMinimumSize(180,27)
+        self.pushButton_2.setMaximumSize(180,27)
         self.toolBox.setItemText(self.toolBox.indexOf(self.page_3), QtGui.QApplication.translate("MainWindow", "Project Statuses", None, QtGui.QApplication.UnicodeUTF8))
         self.pushButton_3.setText(QtGui.QApplication.translate("MainWindow", "Add Status", None, QtGui.QApplication.UnicodeUTF8))
-        #self.pushButton_3.setMinimumSize(139,27)
-        #self.pushButton_3.setMaximumSize(139,27)
+        self.pushButton_3.setMinimumSize(180,27)
+        self.pushButton_3.setMaximumSize(180,27)
         self.toolBox.setItemText(self.toolBox.indexOf(self.page_4), QtGui.QApplication.translate("MainWindow", "Employees", None, QtGui.QApplication.UnicodeUTF8))
         self.dateEdit_3.setDisplayFormat(QtGui.QApplication.translate("MainWindow", "d MMMM yyyy", None, QtGui.QApplication.UnicodeUTF8))
         self.fill_labels1(today)
@@ -798,6 +816,8 @@ class Ui_MainWindow(object):
         self.menuFile.setTitle(QtGui.QApplication.translate("MainWindow", "File", None, QtGui.QApplication.UnicodeUTF8))
         self.menuHelp.setTitle(QtGui.QApplication.translate("MainWindow", "Help", None, QtGui.QApplication.UnicodeUTF8))
         self.actionExit.setText(QtGui.QApplication.translate("MainWindow", "Exit", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionRemEmp.setText(QtGui.QApplication.translate("MainWindow", "Remove Employee", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionRemStat.setText(QtGui.QApplication.translate("MainWindow", "Remove Status", None, QtGui.QApplication.UnicodeUTF8))
         #self.refreshCheckboxes()
 
 if __name__ == "__main__":

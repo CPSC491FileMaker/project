@@ -1,0 +1,27 @@
+<Data>
+  <Employees MODID="1">
+     <Person>
+	<Name>Daniel Austin</Name>
+	<Color>(255,10,20,255)</Color>
+     </Person>
+     <Person>
+        <Name>Tina LeMay</Name>
+        <Color>(255,10,20,255)</Color>
+     </Person>
+     <Person>
+        <Name>David Bishop</Name>
+        <Color>(255,10,20,255)</Color>
+     </Person>
+     <Person>
+        <Name>yep uhhuh</Name>
+        <Color>(255,10,20,255)</Color>
+     </Person>
+     
+  <Person><Name>testawda</Name><Color>(255, 85, 255, 170)</Color></Person></Employees>
+  <Proj_statuses MODID="2">
+     <Stat>Copy Creation</Stat>
+     <Stat>Copy Edit</Stat>
+     <Stat>Copy Review</Stat>
+     <Stat>Copy Revisions</Stat>
+  <Stat>serasfe</Stat></Proj_statuses>
+</Data>

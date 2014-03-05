@@ -15,7 +15,10 @@ except AttributeError:
     def _translate(context, text, disambig):
         return QtGui.QApplication.translate(context, text, disambig)
 
-class Ui_Dialog(object):
+class Ui_Dialog(object): 
+
+    def __init__(self, MW_Dlg):
+	self.mwD = MW_Dlg
 
     nColor = QtGui.QColor()
     nName = "placeholder"
@@ -38,12 +41,14 @@ class Ui_Dialog(object):
       self.nName = self.textEdit.toPlainText()
       if not(self.nName == ""):
 	rgb_vals = [000, 000, 000, 000]
-        rgb_vals[0] += self.nColor.alpha()
-        rgb_vals[1] += self.nColor.red()
+        rgb_vals[0] += self.nColor.red()
+        rgb_vals[1] += self.nColor.green()
         rgb_vals[2] += self.nColor.blue()
-	rgb_vals[3] += self.nColor.green()
+	rgb_vals[3] += self.nColor.alpha()
 	self.h.addEmployee(str(self.nName),str((rgb_vals[0], rgb_vals[1], rgb_vals[2], rgb_vals[3])))
 	self.Dlg.accept()
+	self.mwD.employees.append([str(self.nName),str((rgb_vals[0], rgb_vals[1], rgb_vals[2], rgb_vals[3]))])
+	self.mwD.refreshCheckboxes()
 
     def forCallback(self, D):
 	return D

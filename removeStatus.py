@@ -27,9 +27,9 @@ class Ui_Dialog(object):
     def okClicked(self):
       self.nName = self.textEdit.toPlainText()
       if not(self.nName == ""):
-	self.h.addStatus(str(self.nName))
+	self.h.removeStatus(str(self.nName))
 	self.Dlg.accept()
-	self.mwD.statuses.append(str(self.nName))
+	self.mwD.statuses.remove(str(self.nName))
 	self.mwD.refreshCheckboxes()
 
     def forCallback(self, D):

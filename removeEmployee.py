@@ -15,11 +15,12 @@ except AttributeError:
     def _translate(context, text, disambig):
         return QtGui.QApplication.translate(context, text, disambig)
 
-class Ui_Dialog(object):
+class Ui_Dialog(object): 
 
     def __init__(self, MW_Dlg):
 	self.mwD = MW_Dlg
 
+    nColor = QtGui.QColor()
     nName = "placeholder"
     h = helper.Helper()
     Dlg = None
@@ -27,9 +28,9 @@ class Ui_Dialog(object):
     def okClicked(self):
       self.nName = self.textEdit.toPlainText()
       if not(self.nName == ""):
-	self.h.addStatus(str(self.nName))
+	self.h.removeEmployee(str(self.nName))
 	self.Dlg.accept()
-	self.mwD.statuses.append(str(self.nName))
+	self.mwD.employees.remove([str(self.nName),])
 	self.mwD.refreshCheckboxes()
 
     def forCallback(self, D):
@@ -48,18 +49,27 @@ class Ui_Dialog(object):
         self.label = QtGui.QLabel(Dialog)
         self.label.setGeometry(QtCore.QRect(10, 20, 121, 17))
         self.label.setObjectName(_fromUtf8("label"))
+        self.label_2 = QtGui.QLabel(Dialog)
+        self.label_2.setGeometry(QtCore.QRect(10, 70, 191, 17))
+        self.label_2.setObjectName(_fromUtf8("label_2"))
         self.textEdit = QtGui.QTextEdit(Dialog)
         self.textEdit.setGeometry(QtCore.QRect(10, 40, 341, 21))
         self.textEdit.setObjectName(_fromUtf8("textEdit"))
+        self.pushButton = QtGui.QPushButton(Dialog)
+        self.pushButton.setGeometry(QtCore.QRect(10, 90, 95, 27))
+        self.pushButton.setObjectName(_fromUtf8("pushButton"))
+        self.frame = QtGui.QFrame(Dialog)
+	self.frame.setAutoFillBackground(True)
 
         self.retranslateUi(Dialog)
         QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL(_fromUtf8("accepted()")), self.okClicked)
         QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL(_fromUtf8("rejected()")), Dialog.reject)
+        QtCore.QObject.connect(self.pushButton, QtCore.SIGNAL(_fromUtf8("clicked()")), self.pickColor)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
     def retranslateUi(self, Dialog):
-        Dialog.setWindowTitle(_translate("Dialog", "Add Status", None))
-        self.label.setText(_translate("Dialog", "Status to add:", None))
+        Dialog.setWindowTitle(_translate("Dialog", "Remove Employee", None))
+        self.label.setText(_translate("Dialog", "Employee to remove:", None))
 
 if __name__ == "__main__":
   import sys

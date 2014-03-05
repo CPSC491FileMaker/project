@@ -9,7 +9,7 @@
 
 from PyQt4 import QtCore, QtGui
 from PyQt4.QtCore import QDateTime
-import helper, xmlparse, addEmployee, addStatus
+import helper, xmlparse, addEmployee, addStatus, removeEmployee, removeStatus
 
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
@@ -17,46 +17,75 @@ except AttributeError:
     _fromUtf8 = lambda s: s
 
 class Ui_MainWindow(object):
+
+    employees = []
+    statuses = []
    
     def addStatClicked(self):
       statWindow = QtGui.QDialog()
-      stat = addStatus.Ui_Dialog()
+      stat = addStatus.Ui_Dialog(self)
       stat.setupUi(statWindow)
       statWindow.exec_()
     
     def addEmpClicked(self):
       addWindow = QtGui.QDialog()
-      add = addEmployee.Ui_Dialog()
+      add = addEmployee.Ui_Dialog(self)
       add.setupUi(addWindow)
       addWindow.exec_()
+
+    def remEmpClicked(self):
+      remEmpWindow = QtGui.QDialog()
+      remEmp = removeEmployee.Ui_Dialog(self)
+      remEmp.setupUi(remEmpWindow)
+      remEmpWindow.exec_()
+
+    def remStatusClicked(self):
+      remStatWindow = QtGui.Qdialog()
+      remStat = removeStatus.Ui_Dialog(self)
+      remStat.setupUi(remStatWindow)
+      remStatWindow.exec_()
     
     def updateRecordsClicked(self):
       records = xml.fetchRecords()   
    
     def populateCheckboxes(self):
-      ind = 2
+      ind = 1
       self.formLayout_6.addWidget(self.pushButton_2)
-      for person in employees:
+      for person in self.employees:
         ind += 1
         self.checkBox = QtGui.QCheckBox(self.scrollAreaWidgetContents_2)
         self.checkBox.setObjectName(_fromUtf8("checkBox"))
         self.formLayout_6.addWidget(self.checkBox)
         self.scrollArea_2.setWidget(self.scrollAreaWidgetContents_2)
-        self.formLayout.setWidget(0,QtGui.QFormLayout.LabelRole,self.scrollArea_2)
+        self.formLayout.setWidget(ind,QtGui.QFormLayout.LabelRole,self.scrollArea_2)
         self.checkBox.setText(QtGui.QApplication.translate("MainWindow", person[0], None, QtGui.QApplication.UnicodeUTF8))
-      ind = 2
+      ind = 1
       self.formLayout_7.addWidget(self.pushButton_3)
-      for status in statuses:
+      for status in self.statuses:
         ind += 1
         self.checkBox_3 = QtGui.QCheckBox(self.scrollAreaWidgetContents)
         self.checkBox_3.setObjectName(_fromUtf8("checkBox3"))
         self.formLayout_7.addWidget(self.checkBox_3)
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
-        self.formLayout_3.setWidget(0,QtGui.QFormLayout.LabelRole,self.scrollArea)
+        self.formLayout_3.setWidget(ind,QtGui.QFormLayout.LabelRole,self.scrollArea)
         self.checkBox_3.setText(QtGui.QApplication.translate("MainWindow", status, None, QtGui.QApplication.UnicodeUTF8))
-#make a check box for each status
-#add the checkbox to toolbox->page_4->form layout 
+
   
+    def refreshCheckboxes(self):
+      formL_6 = self.formLayout_6.rowCount()
+      formL_7 = self.formLayout_7.rowCount()
+      widget = 1
+      while not(widget > formL_6):  #employee pane
+        if not(self.formLayout_6.itemAt(widget) == None):
+           self.formLayout_6.itemAt(widget).widget().close()	
+        widget += 1
+      widget = 1
+      while not(widget > formL_7):  #status pane
+        if not(self.formLayout_7.itemAt(widget) == None):
+          self.formLayout_7.itemAt(widget).widget().close()
+        widget += 1
+      self.populateCheckboxes()
+
     def calclicked2(self):
         self.dateEdit_2.setDate(self.calendarWidget_2.selectedDate())
         self.fill_labels2((self.calendarWidget_2.selectedDate()))
@@ -729,8 +758,7 @@ class Ui_MainWindow(object):
         self.listWidget.addItem("test")
         self.retranslateUi(MainWindow)
         self.toolBox.setCurrentIndex(1)
-        
-
+        self.populateCheckboxes()
         self.tabWidget.setCurrentIndex(2)
         QtCore.QObject.connect(self.pushButton, QtCore.SIGNAL(_fromUtf8("clicked()")), self.updateRecordsClicked)
         QtCore.QObject.connect(self.pushButton_2, QtCore.SIGNAL(_fromUtf8("clicked()")), self.addEmpClicked)
@@ -768,7 +796,6 @@ class Ui_MainWindow(object):
         self.menuFile.setTitle(QtGui.QApplication.translate("MainWindow", "File", None, QtGui.QApplication.UnicodeUTF8))
         self.menuHelp.setTitle(QtGui.QApplication.translate("MainWindow", "Help", None, QtGui.QApplication.UnicodeUTF8))
         self.actionExit.setText(QtGui.QApplication.translate("MainWindow", "Exit", None, QtGui.QApplication.UnicodeUTF8))
-        self.populateCheckboxes()
 
 if __name__ == "__main__":
     import sys
@@ -780,6 +807,8 @@ if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)
     MainWindow = QtGui.QMainWindow()
     ui = Ui_MainWindow()
+    ui.employees = employees
+    ui.statuses = statuses
     ui.setupUi(MainWindow)
     MainWindow.show()
     sys.exit(app.exec_())

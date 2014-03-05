@@ -61,7 +61,7 @@ class Ui_MainWindow(object):
         self.formLayout.setWidget(0,QtGui.QFormLayout.LabelRole,self.scrollArea_2)
         self.checkBox.setText(QtGui.QApplication.translate("MainWindow", person[0], None, QtGui.QApplication.UnicodeUTF8))
       ind =2 
-      self.formLayout_7.addWidget(self.pushButton_3)
+      #self.formLayout_7.addWidget(self.pushButton_3)
       for status in self.statuses:
         ind += 1
         self.checkBox_3 = QtGui.QCheckBox(self.scrollAreaWidgetContents)
@@ -74,11 +74,15 @@ class Ui_MainWindow(object):
     def refreshCheckboxes(self):
         for i in reversed(range(self.formLayout_6.count())):
             item = self.formLayout_6.itemAt(i)
-
             if isinstance(item, QtGui.QWidgetItem):
                 item.widget().close()
             self.formLayout_6.removeItem(item)
-         
+
+        for i in reversed(range(self.formLayout_7.count())): 
+            item = self.formLayout_7.itemAt(i)
+            if isinstance(item, QtGui.QWidgetItem):
+                item.widget().close()
+            self.formLayout_7.removeItem(item) 
         self.populateCheckboxes()
     
     def calclicked2(self):
@@ -424,9 +428,6 @@ class Ui_MainWindow(object):
         self.frame_2.setFrameShape(QtGui.QFrame.StyledPanel)
         self.frame_2.setFrameShadow(QtGui.QFrame.Raised)
         self.frame_2.setObjectName(_fromUtf8("frame_2"))
-        self.pushButton = QtGui.QPushButton(self.frame_2)
-        self.pushButton.setGeometry(QtCore.QRect(100, 90, 95, 101))
-        self.pushButton.setObjectName(_fromUtf8("pushButton"))
         self.verticalLayout.addWidget(self.frame_2)
         self.toolBox = QtGui.QToolBox(self.centralwidget)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Expanding)
@@ -458,6 +459,17 @@ class Ui_MainWindow(object):
         self.formLayout_3.setVerticalSpacing(2)
         self.formLayout_3.setObjectName(_fromUtf8("formLayout_3"))
         self.scrollArea=QtGui.QScrollArea(self.formLayoutWidget)
+        self.verticalLayoutWidget = QtGui.QWidget(self.frame_2)
+        self.verticalLayoutWidget.setObjectName(_fromUtf8("verticalLayoutWidget"))
+        self.TopFrameLayout = QtGui.QFormLayout(self.verticalLayoutWidget)
+        #self.TopFrameLayout = QtGui.QHBoxLayout(self.verticalLayoutWidget)
+        self.TopFrameLayout.setGeometry(QtCore.QRect(0,0,201,201))
+        self.TopFrameLayout.setObjectName(_fromUtf8("TopFrameLayout"))
+        self.TopFrameLayout.setContentsMargins(0,0,0,0)
+        self.pushButton = QtGui.QPushButton(self.verticalLayoutWidget)
+        self.pushButton.setGeometry(QtCore.QRect(20, 20, 139, 27))
+        self.pushButton.setObjectName(_fromUtf8("pushButton"))
+        self.TopFrameLayout.addWidget(self.pushButton)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -471,7 +483,8 @@ class Ui_MainWindow(object):
         self.scrollAreaWidgetContents.setObjectName(_fromUtf8("scrollAreaWidgetContents"))
         self.formLayout_7 = QtGui.QFormLayout(self.scrollAreaWidgetContents)
         self.formLayout_7.setObjectName(_fromUtf8("formLayout_7"))
-        self.pushButton_3 = QtGui.QPushButton(self.scrollAreaWidgetContents)
+        #self.pushButton_3 = QtGui.QPushButton(self.scrollAreaWidgetContents)
+        self.pushButton_3 = QtGui.QPushButton(selfverticalLayoutWidget)
         self.pushButton_3.setObjectName(_fromUtf8("pushButton_3"))
         self.scrollArea_2 = QtGui.QScrollArea(self.formLayoutWidget)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
@@ -489,10 +502,10 @@ class Ui_MainWindow(object):
         self.formLayout_6.setObjectName(_fromUtf8("formLayout_6"))
         #self.pushButton_2 = QtGui.QPushButton(self.scrollArea)
         #self.pushButton_2 = QtGui.QPushButton(self.scrollAreaWidgetContents_2)
-        self.pushButton_2 = QtGui.QPushButton(self.frame_2)
+        self.pushButton_2 = QtGui.QPushButton(self.verticalLayoutWidget)
         self.pushButton_2.setObjectName(_fromUtf8("pushButton_2"))
         #self.formLayout_6.addWidget(self.pushButton_2)
-        self.formLayout.setWidget(0,QtGui.QFormLayout.SpanningRole,self.pushButton_3)
+        #self.formLayout.setWidget(0,QtGui.QFormLayout.SpanningRole,self.pushButton_3)
         self.toolBox.addItem(self.page_3, _fromUtf8(""))
         self.toolBox.addItem(self.page_4, _fromUtf8(""))
         self.verticalLayout.addWidget(self.toolBox)
@@ -754,6 +767,8 @@ class Ui_MainWindow(object):
         self.menubar.addAction(self.menuHelp.menuAction())
         self.listWidget.addItem("test")
         self.retranslateUi(MainWindow)
+        self.TopFrameLayout.addWidget(self.pushButton_2)
+        self.TopFrameLayout.addWidget(self.pushButton_3)
         self.toolBox.setCurrentIndex(1)
         self.populateCheckboxes()
         self.tabWidget.setCurrentIndex(2)
@@ -774,13 +789,15 @@ class Ui_MainWindow(object):
         today = QtCore.QDate.currentDate()
         MainWindow.setWindowTitle(QtGui.QApplication.translate("MainWindow", "MainWindow", None, QtGui.QApplication.UnicodeUTF8))
         self.pushButton.setText(QtGui.QApplication.translate("MainWindow", "Update", None, QtGui.QApplication.UnicodeUTF8))
+        #self.pushButton.setMinimumSize(139,27)
+        #self.pushButton.setMaximumSize(139,27)
         self.pushButton_2.setText(QtGui.QApplication.translate("MainWindow", "Add Employee", None, QtGui.QApplication.UnicodeUTF8))
-        self.pushButton_2.setMinimumSize(139,27)
-        self.pushButton_2.setMaximumSize(139,27)
+        #self.pushButton_2.setMinimumSize(139,27)
+        #self.pushButton_2.setMaximumSize(139,27)
         self.toolBox.setItemText(self.toolBox.indexOf(self.page_3), QtGui.QApplication.translate("MainWindow", "Project Statuses", None, QtGui.QApplication.UnicodeUTF8))
         self.pushButton_3.setText(QtGui.QApplication.translate("MainWindow", "Add Status", None, QtGui.QApplication.UnicodeUTF8))
-        self.pushButton_3.setMinimumSize(139,27)
-        self.pushButton_3.setMaximumSize(139,27)
+        #self.pushButton_3.setMinimumSize(139,27)
+        #self.pushButton_3.setMaximumSize(139,27)
         self.toolBox.setItemText(self.toolBox.indexOf(self.page_4), QtGui.QApplication.translate("MainWindow", "Employees", None, QtGui.QApplication.UnicodeUTF8))
         self.dateEdit_3.setDisplayFormat(QtGui.QApplication.translate("MainWindow", "d MMMM yyyy", None, QtGui.QApplication.UnicodeUTF8))
         self.fill_labels1(today)

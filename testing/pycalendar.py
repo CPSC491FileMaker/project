@@ -37,8 +37,8 @@ class Ui_MainWindow(object):
       records = xml.fetchRecords()   
    
     def populateCheckboxes(self):
-      ind = 2
-      self.formLayout_6.addWidget(self.pushButton_2)
+      ind =2
+      #self.formLayout_6.addWidget(self.pushButton_2)
       for person in self.employees:
         ind += 1
         self.checkBox = QtGui.QCheckBox(self.scrollAreaWidgetContents_2)
@@ -47,7 +47,7 @@ class Ui_MainWindow(object):
         self.scrollArea_2.setWidget(self.scrollAreaWidgetContents_2)
         self.formLayout.setWidget(0,QtGui.QFormLayout.LabelRole,self.scrollArea_2)
         self.checkBox.setText(QtGui.QApplication.translate("MainWindow", person[0], None, QtGui.QApplication.UnicodeUTF8))
-      ind = 2
+      ind =2 
       self.formLayout_7.addWidget(self.pushButton_3)
       for status in self.statuses:
         ind += 1
@@ -59,20 +59,16 @@ class Ui_MainWindow(object):
         self.checkBox_3.setText(QtGui.QApplication.translate("MainWindow", status, None, QtGui.QApplication.UnicodeUTF8))
   
     def refreshCheckboxes(self):
-	formL_6 = self.formLayout_6.rowCount()
-	formL_7 = self.formLayout_7.rowCount()
-	widget = 1
-	while not(widget > formL_6):
-	  if not(self.formLayout_6.itemAt(widget) == None):
- 	    self.formLayout_6.itemAt(widget).widget().close()	
-	  widget += 1
-	widget = 1
-	while not(widget > formL_7):
-	  if not(self.formLayout_7.itemAt(widget) == None):
-	    self.formLayout_7.itemAt(widget).widget().close()
-	  widget += 1
-	self.populateCheckboxes()
+        for i in reversed(range(self.formLayout_6.count())):
+            item = self.formLayout_6.itemAt(i)
 
+            if isinstance(item, QtGui.QWidgetItem):
+                print "Widget: " + str(item)
+                item.widget().close()
+            self.formLayout_6.removeItem(item)
+         
+        self.populateCheckboxes()
+    
     def calclicked2(self):
         self.dateEdit_2.setDate(self.calendarWidget_2.selectedDate())
         self.fill_labels2((self.calendarWidget_2.selectedDate()))
@@ -479,9 +475,11 @@ class Ui_MainWindow(object):
         self.scrollAreaWidgetContents_2.setObjectName(_fromUtf8("scrollAreaWidgetContents_2"))
         self.formLayout_6 = QtGui.QFormLayout(self.scrollAreaWidgetContents_2)
         self.formLayout_6.setObjectName(_fromUtf8("formLayout_6"))
-        self.pushButton_2 = QtGui.QPushButton(self.scrollAreaWidgetContents_2)
+        #self.pushButton_2 = QtGui.QPushButton(self.scrollArea)
+        #self.pushButton_2 = QtGui.QPushButton(self.scrollAreaWidgetContents_2)
+        self.pushButton_2 = QtGui.QPushButton(self.frame_2)
         self.pushButton_2.setObjectName(_fromUtf8("pushButton_2"))
-        self.formLayout_6.addWidget(self.pushButton_2)
+        #self.formLayout_6.addWidget(self.pushButton_2)
         self.formLayout.setWidget(0,QtGui.QFormLayout.SpanningRole,self.pushButton_3)
         self.toolBox.addItem(self.page_3, _fromUtf8(""))
         self.toolBox.addItem(self.page_4, _fromUtf8(""))
@@ -745,7 +743,7 @@ class Ui_MainWindow(object):
         self.listWidget.addItem("test")
         self.retranslateUi(MainWindow)
         self.toolBox.setCurrentIndex(1)
-
+        self.populateCheckboxes()
         self.tabWidget.setCurrentIndex(2)
         QtCore.QObject.connect(self.pushButton, QtCore.SIGNAL(_fromUtf8("clicked()")), self.updateRecordsClicked)
         QtCore.QObject.connect(self.pushButton_2, QtCore.SIGNAL(_fromUtf8("clicked()")), self.addEmpClicked)
@@ -783,7 +781,7 @@ class Ui_MainWindow(object):
         self.menuFile.setTitle(QtGui.QApplication.translate("MainWindow", "File", None, QtGui.QApplication.UnicodeUTF8))
         self.menuHelp.setTitle(QtGui.QApplication.translate("MainWindow", "Help", None, QtGui.QApplication.UnicodeUTF8))
         self.actionExit.setText(QtGui.QApplication.translate("MainWindow", "Exit", None, QtGui.QApplication.UnicodeUTF8))
-        self.refreshCheckboxes()
+        #self.refreshCheckboxes()
 
 if __name__ == "__main__":
     import sys

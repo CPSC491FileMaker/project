@@ -9,7 +9,7 @@
 
 from PyQt4 import QtCore, QtGui
 from PyQt4.QtCore import QDateTime
-import helper, xmlparse, addEmployee, addStatus, removeEmployee, removeStatus
+import helper, xmlparse, addEmployee, addStatus
 
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
@@ -32,19 +32,6 @@ class Ui_MainWindow(object):
       add = addEmployee.Ui_Dialog(self)
       add.setupUi(addWindow)
       addWindow.exec_()
-
-    def remEmpClicked(self):
-      remEmpWindow = QtGui.QDialog()
-      remEmp = removeEmployee.Ui_Dialog(self)
-      remEmp.setupUi(remEmpWindow)
-      remEmpWindow.exec_()
-
-    def remStatusClicked(self):
-      remStatWindow = QtGui.QDialog()
-      remStat = removeStatus.Ui_Dialog(self)
-      remStat.setupUi(remStatWindow)
-      remStatWindow.exec_()
-
     
     def updateRecordsClicked(self):
       records = xml.fetchRecords()   
@@ -75,6 +62,7 @@ class Ui_MainWindow(object):
         for i in reversed(range(self.formLayout_6.count())):
             item = self.formLayout_6.itemAt(i)
             if isinstance(item, QtGui.QWidgetItem):
+                print "Widget: " + str(item)
                 item.widget().close()
             self.formLayout_6.removeItem(item)
 
@@ -773,7 +761,7 @@ class Ui_MainWindow(object):
         self.populateCheckboxes()
         self.tabWidget.setCurrentIndex(2)
         QtCore.QObject.connect(self.pushButton, QtCore.SIGNAL(_fromUtf8("clicked()")), self.updateRecordsClicked)
-        QtCore.QObject.connect(self.pushButton_2, QtCore.SIGNAL(_fromUtf8("clicked()")), self.remStatusClicked)
+        QtCore.QObject.connect(self.pushButton_2, QtCore.SIGNAL(_fromUtf8("clicked()")), self.addEmpClicked)
         QtCore.QObject.connect(self.pushButton_3, QtCore.SIGNAL(_fromUtf8("clicked()")), self.addStatClicked)
         QtCore.QObject.connect(self.dateEdit_3, QtCore.SIGNAL(_fromUtf8("dateChanged(QDate)")), self.calendarWidget.show) #right
         QtCore.QObject.connect(self.calendarWidget_2, QtCore.SIGNAL(_fromUtf8("clicked(QDate)")), self.calclicked2  )

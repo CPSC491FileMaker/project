@@ -2,46 +2,26 @@
   <Employees MODID="1">
      <Person>
 	<Name>Daniel Austin</Name>
-	<Color>0xFF0000</Color>
+	<Color>(255,10,20,255)</Color>
      </Person>
      <Person>
         <Name>Tina LeMay</Name>
-        <Color>0x00FF00</Color>
+        <Color>(255,10,20,255)</Color>
      </Person>
      <Person>
         <Name>David Bishop</Name>
-        <Color>0x0000FF</Color>
+        <Color>(255,10,20,255)</Color>
      </Person>
-<Person><Name>12</Name><Color>(255, 255, 127, 170)</Color></Person><Person><Name>23</Name><Color>(255, 255, 127, 170)</Color></Person><Person><Name>1233</Name><Color>(255, 255, 127, 170)</Color></Person></Employees>
+     <Person>
+        <Name>yep uhhuh</Name>
+        <Color>(255,10,20,255)</Color>
+     </Person>
+     
+  <Person><Name>testawda</Name><Color>(255, 85, 255, 170)</Color></Person></Employees>
   <Proj_statuses MODID="2">
      <Stat>Copy Creation</Stat>
      <Stat>Copy Edit</Stat>
      <Stat>Copy Review</Stat>
      <Stat>Copy Revisions</Stat>
-     <Stat>Concepting</Stat>
-     <Stat>Designing</Stat>
-     <Stat>Design Review</Stat>
-     <Stat>Design Revisions</Stat>
-     <Stat>Need Info</Stat>
-     <Stat>Need Feedback</Stat>
-     <Stat>Need Quotes</Stat>
-     <Stat>Need Quotes / CB+D</Stat>
-     <Stat>Need Approval</Stat>
-     <Stat>Need FM Update</Stat>
-     <Stat>Researching</Stat>
-     <Stat>Review-Initial Client</Stat>
-     <Stat>Review-2nd Client</Stat>
-     <Stat>Review-Final</Stat>
-     <Stat>Approved</Stat>
-     <Stat>Proof/Client Approval</Stat>
-     <Stat>File Prep</Stat>
-     <Stat>Web Production</Stat>
-     <Stat>In Production</Stat>
-     <Stat>In Production CB+D</Stat>
-     <Stat>Ready for Pickup</Stat>
-     <Stat>Complete/Delivery</Stat>
-     <Stat>Need Cost</Stat>
-     <Stat>On Hold...</Stat>
-     <Stat>Cancelled</Stat>
-</Proj_statuses>
+  <Stat>serasfe</Stat></Proj_statuses>
 </Data>

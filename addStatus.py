@@ -17,9 +17,6 @@ except AttributeError:
 
 class Ui_Dialog(object):
 
-    def __init__(self, MW_Dlg):
-	self.mwD = MW_Dlg
-
     nName = "placeholder"
     h = helper.Helper()
     Dlg = None
@@ -29,8 +26,6 @@ class Ui_Dialog(object):
       if not(self.nName == ""):
 	self.h.addStatus(str(self.nName))
 	self.Dlg.accept()
-	self.mwD.statuses.append(str(self.nName))
-	self.mwD.refreshCheckboxes()
 
     def forCallback(self, D):
 	return D

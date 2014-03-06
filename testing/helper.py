@@ -53,10 +53,11 @@ class Helper():
 
   def removeStatus(self, toRemove):
 
-    for statuses in self.root:
-      for status in statuses:
+    proj_stats = self.root.find('Proj_statuses')
+    for status in proj_stats:
+      #for status in statuses:
         if (status.text == toRemove):
-           statuses.remove(status)
+           proj_stats.remove(status)
     self.write('./data/data.xml')
 
   def addEmployee(self, eName, eColor):

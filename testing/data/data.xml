@@ -4,16 +4,7 @@
         <Name>Tina LeMay</Name>
         <Color>(255,10,20,255)</Color>
      </Person>
-     <Person>
-        <Name>David Bishop</Name>
-        <Color>(255,10,20,255)</Color>
-     </Person>
-     <Person>
-        <Name>yep uhhuh</Name>
-        <Color>(255,10,20,255)</Color>
-     </Person>  
-
-  <Person><Name>test</Name><Color>(255, 0, 0, 0)</Color></Person><Person><Name>test</Name><Color>(255, 0, 0, 0)</Color></Person><Person><Name>zdfzdf</Name><Color>(255, 0, 0, 0)</Color></Person><Person><Name>dzdfzdf</Name><Color>(255, 0, 0, 0)</Color></Person><Person><Name>Daniel Austin</Name><Color>(255, 255, 0, 170)</Color></Person><Person><Name>David Bishop</Name><Color>(255, 85, 255, 85)</Color></Person></Employees>
+     <Person><Name>Daniel Austin</Name><Color>(255, 255, 0, 170)</Color></Person><Person><Name>David Bishop</Name><Color>(255, 85, 127, 170)</Color></Person></Employees>
   <Proj_statuses MODID="2">
      <Stat>Copy Creation</Stat>
      <Stat>Copy Edit</Stat>
@@ -43,8 +34,5 @@
      <Stat>Need Cost</Stat>
      <Stat>On Hold...</Stat>
      <Stat>Cancelled</Stat>
-     <Stat>Waffle</Stat>
-     <Stat>asdf;lkj</Stat>
-     <Stat>test</Stat>
-  <Stat>Working</Stat></Proj_statuses>
+     </Proj_statuses>
 </Data>

@@ -68,6 +68,8 @@ class Helper():
     color = Element('Color')
     name.text = eName
     color.text = eColor
+    print 'appending ' + name.text
+    print 'appending ' + color.text
     emp.append(name)
     emp.append(color)
     kid.append(emp)

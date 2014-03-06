@@ -1,11 +1,16 @@
 import xml.etree.ElementTree as et
 import re
+from datetime import datetime
+from datetime import date
+import time
+
+
 
 class Xmlp():
 
   #initiatlizes the class and prepares an XMLtree for parsing
   def __init__(self):
-    self.tree = et.parse('data/FMxml.xml')
+    self.tree = et.parse('data/realFM.xml')
     #self.tree = et.parse('FM2xml.xml')
     self.root = self.tree.getroot()
 
@@ -35,18 +40,33 @@ class Xmlp():
       for row in child:
        idv = row.get('MODID')
        if not (idv == None):
-	 for col in row:
-	   for data in col:
-	     rList.append(data.text)	
-	 allfound.append(rList)
-       rList = []
+         for col in row:
+           for data in col:
+            if not(data.text):
+              rList.append("NONE")    
+            else:
+              rList.append(data.text)
+      allfound.append(rList)
+      rList = []
 
     for record in allfound:
-      record[0] = re.sub('[/]','',record[0])
-      record[1] = re.sub('[/]','',record[1])
+      print record
+      dateInfo = record[0].split('/')
+              
+                       #yaer day month
+      tempDate = date(int(dateInfo[2]),int(dateInfo[0]),int(dateInfo[1]))#pyDate
+      record[0] = tempDate
+      if (record[1] == "NONE"):
+        tempDate = date(int(dateInfo[2])+1,int(dateInfo[0]),int(dateInfo[1]))#pyDate
+        record[1] = tempDate
+      else:
+         dateInfo = record[1].split('/')
+         tempDate = date(int(dateInfo[2]),int(dateInfo[0]),int(dateInfo[1]))#pyDate
+         record[1] = tempDate
 
 #    print "Record Fetch"
- #   for k in allfound:  #Associated Filemaker field:
+    for k in allfound:  #Associated Filemaker field:
+        print k
   #    print k[0]        #open_date
    #   print k[1]        #due_date_actual_delivery
     #  print k[2]        #description
@@ -57,7 +77,7 @@ class Xmlp():
       #print k[7]        #client_contact_name
       #print "----End of Record"
 #    for record in allfound:
-#		record[0] = #strip that bitch		and record [1]
+#    	record[0] = #strip that bitch		and record [1]
 
     return allfound
  

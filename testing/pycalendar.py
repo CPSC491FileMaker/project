@@ -9,7 +9,7 @@
 
 from PyQt4 import QtCore, QtGui
 from PyQt4.QtCore import QDateTime
-import helper, xmlparse, addEmployee, addStatus, removeEmployee, removeStatus, re
+import atexit,os,helper, xmlparse, addEmployee, addStatus, removeEmployee, removeStatus, re
 
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
@@ -25,7 +25,17 @@ class Ui_MainWindow(object):
     empStatus = False
     statStatus = False
 
-   
+    def goodbye(self):
+      currentdir = os.path.dirname(os.path.realpath(__file__))
+      files = os.listdir(currentdir)
+      for file in files:
+          if file.endswith(".pyc"):
+              os.remove(os.path.join(currentdir,file))
+          if file.endswith("~"):
+              os.remove(os.path.join(currentdir,file))
+          if file.endswith(".swp"):
+              os.remove(os.path.join(currentdir,file))
+
     def addStatClicked(self):
       addStatWindow = QtGui.QDialog()
       addStat = addStatus.Ui_Dialog(self)
@@ -37,6 +47,9 @@ class Ui_MainWindow(object):
       addEmp = addEmployee.Ui_Dialog(self)
       addEmp.setupUi(addEmpWindow)
       addEmpWindow.exec_()
+    
+    def contactClicked(self):
+        print "stub"
 
     def remEmpClicked(self):
       remEmpWindow = QtGui.QDialog()
@@ -851,17 +864,26 @@ class Ui_MainWindow(object):
         self.actionRemEmp = QtGui.QAction(MainWindow)
         self.actionRemEmp.setObjectName(_fromUtf8("actionRemEmp"))
         self.actionRemStat = QtGui.QAction(MainWindow)
+        self.actionContact = QtGui.QAction(MainWindow)
+        self.actionContact.setObjectName(_fromUtf8("actionContact"))
         self.actionRemStat.setObjectName(_fromUtf8("actionRemStat"))
         self.menuFile.addAction(self.actionRemEmp) 
         self.menuFile.addAction(self.actionRemStat)
         self.menuFile.addAction(self.actionExit)
         self.menubar.addAction(self.menuFile.menuAction())
         self.menubar.addAction(self.menuHelp.menuAction())
+        self.menuHelp.addAction(self.actionContact)
         self.retranslateUi(MainWindow)
         self.TopFrameLayout.addWidget(self.pushButton_2)
         self.TopFrameLayout.addWidget(self.pushButton_3)
         self.toolBox.setCurrentIndex(1)
         self.populateCheckboxes()
+        self.label_22 = QtGui.QLabel(self.frame_2)
+        self.label_22.setObjectName(_fromUtf8("label_22"))
+        self.label_22.setGeometry(QtCore.QRect(40,95,191,101));
+        myPixmap = QtGui.QPixmap(_fromUtf8('./data/Clemson_nobg.png'))
+        myScaledPixmap = myPixmap.scaled(self.label_22.size(), QtCore.Qt.KeepAspectRatio)
+        self.label_22.setPixmap(myScaledPixmap)
         self.tabWidget.setCurrentIndex(2)
         QtCore.QObject.connect(self.pushButton, QtCore.SIGNAL(_fromUtf8("clicked()")), self.updateRecordsClicked)
         QtCore.QObject.connect(self.pushButton_2, QtCore.SIGNAL(_fromUtf8("clicked()")), self.addEmpClicked)
@@ -876,6 +898,7 @@ class Ui_MainWindow(object):
         QtCore.QObject.connect(self.actionExit, QtCore.SIGNAL(_fromUtf8("activated()")), sys.exit)
         QtCore.QObject.connect(self.actionRemEmp, QtCore.SIGNAL(_fromUtf8("activated()")), self.remEmpClicked)
         QtCore.QObject.connect(self.actionRemStat, QtCore.SIGNAL(_fromUtf8("activated()")), self.remStatClicked)          
+        QtCore.QObject.connect(self.actionContact, QtCore.SIGNAL(_fromUtf8("activated()")), self.contactClicked)
 
     def retranslateUi(self, MainWindow):
         today = QtCore.QDate.currentDate()
@@ -904,7 +927,8 @@ class Ui_MainWindow(object):
         self.actionExit.setText(QtGui.QApplication.translate("MainWindow", "Exit", None, QtGui.QApplication.UnicodeUTF8))
         self.actionRemEmp.setText(QtGui.QApplication.translate("MainWindow", "Remove Employee", None, QtGui.QApplication.UnicodeUTF8))
         self.actionRemStat.setText(QtGui.QApplication.translate("MainWindow", "Remove Status", None, QtGui.QApplication.UnicodeUTF8))
-        #self.refreshCheckboxes()
+        self.actionContact.setText(QtGui.QApplication.translate("MainWindow", "Contact", None, QtGui.QApplication.UnicodeUTF8))
+ #self.refreshCheckboxes()
 
 if __name__ == "__main__":
     import sys
@@ -922,5 +946,6 @@ if __name__ == "__main__":
     ui.statuses = statuses
     ui.setupUi(MainWindow)
     MainWindow.show()
+    atexit.register(ui.goodbye)
     sys.exit(app.exec_())
 

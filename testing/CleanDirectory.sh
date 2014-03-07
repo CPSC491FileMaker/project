@@ -1,5 +1,5 @@
 #!/bin/bash
-
+echo "Cleaning up..."
 PYC=$(ls | grep .pyc)
 TEMPS=$(ls | grep .*~)
 SWP=$(ls -a | grep .swp)

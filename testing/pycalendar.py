@@ -9,7 +9,7 @@
 
 from PyQt4 import QtCore, QtGui
 from PyQt4.QtCore import QDateTime
-import helper, xmlparse, addEmployee, addStatus, removeEmployee, removeStatus
+import atexit,os, helper, xmlparse, addEmployee, addStatus, removeEmployee, removeStatus
 
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
@@ -21,6 +21,9 @@ class Ui_MainWindow(object):
     employees = []
     statuses = []
    
+    def goodbye(self):
+       os.system("sh CleanDirectory.sh")
+        
     def addStatClicked(self):
       addStatWindow = QtGui.QDialog()
       addStat = addStatus.Ui_Dialog(self)
@@ -879,5 +882,6 @@ if __name__ == "__main__":
     ui.statuses = statuses
     ui.setupUi(MainWindow)
     MainWindow.show()
+    atexit.register(ui.goodbye)
     sys.exit(app.exec_())
 

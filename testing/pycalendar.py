@@ -22,7 +22,15 @@ class Ui_MainWindow(object):
     statuses = []
    
     def goodbye(self):
-       os.system("sh CleanDirectory.sh")
+       currentdir = os.path.dirname(os.path.realpath(__file__))
+       files = os.listdir(currentdir)
+       for file in files:
+           if file.endswith(".pyc"):
+               os.remove(os.path.join(currentdir,file))
+           if file.endswith("~"):
+               os.remove(os.path.join(currentdir,file))
+           if file.endswith(".swp"):
+               os.remove(os.path.join(currentdir,file))
         
     def addStatClicked(self):
       addStatWindow = QtGui.QDialog()
@@ -47,7 +55,9 @@ class Ui_MainWindow(object):
       remStat = removeStatus.Ui_Dialog(self)
       remStat.setupUi(remStatWindow)
       remStatWindow.exec_()   
-
+    
+    def contactClicked(self):
+        print "stub"
  
     def updateRecordsClicked(self):
       records = xml.fetchRecords()   
@@ -807,11 +817,14 @@ class Ui_MainWindow(object):
         self.actionRemEmp.setObjectName(_fromUtf8("actionRemEmp"))
         self.actionRemStat = QtGui.QAction(MainWindow)
         self.actionRemStat.setObjectName(_fromUtf8("actionRemStat"))
+        self.actionContact = QtGui.QAction(MainWindow)
+        self.actionContact.setObjectName(_fromUtf8("actionContact"))
         self.menuFile.addAction(self.actionRemEmp) 
         self.menuFile.addAction(self.actionRemStat)
         self.menuFile.addAction(self.actionExit)
         self.menubar.addAction(self.menuFile.menuAction())
         self.menubar.addAction(self.menuHelp.menuAction())
+        self.menuHelp.addAction(self.actionContact)
         self.label_22 = QtGui.QLabel(self.frame_2)
         self.label_22.setObjectName(_fromUtf8("label_22"))
         self.label_22.setGeometry(QtCore.QRect(40,95,191,101));
@@ -837,6 +850,7 @@ class Ui_MainWindow(object):
         QtCore.QObject.connect(self.actionExit, QtCore.SIGNAL(_fromUtf8("activated()")), sys.exit)
         QtCore.QObject.connect(self.actionRemEmp, QtCore.SIGNAL(_fromUtf8("activated()")), self.remEmpClicked)
         QtCore.QObject.connect(self.actionRemStat, QtCore.SIGNAL(_fromUtf8("activated()")), self.remStatClicked)          
+        QtCore.QObject.connect(self.actionContact, QtCore.SIGNAL(_fromUtf8("activated()")), self.contactClicked)
         
 
     def retranslateUi(self, MainWindow):
@@ -866,6 +880,7 @@ class Ui_MainWindow(object):
         self.actionExit.setText(QtGui.QApplication.translate("MainWindow", "Exit", None, QtGui.QApplication.UnicodeUTF8))
         self.actionRemEmp.setText(QtGui.QApplication.translate("MainWindow", "Remove Employee", None, QtGui.QApplication.UnicodeUTF8))
         self.actionRemStat.setText(QtGui.QApplication.translate("MainWindow", "Remove Status", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionContact.setText(QtGui.QApplication.translate("MainWindow", "Contact", None, QtGui.QApplication.UnicodeUTF8))
         #self.refreshCheckboxes()
 
 if __name__ == "__main__":

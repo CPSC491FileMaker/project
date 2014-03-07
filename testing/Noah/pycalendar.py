@@ -9,7 +9,7 @@
 
 from PyQt4 import QtCore, QtGui
 from PyQt4.QtCore import QDateTime
-import helper, xmlparse, addEmployee, addStatus, removeEmployee, removeStatus, re
+import atexit,os, helper, xmlparse, addEmployee, addStatus, removeEmployee, removeStatus
 
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
@@ -20,12 +20,18 @@ class Ui_MainWindow(object):
 
     employees = []
     statuses = []
-    empCheckBoxes = []
-    statCheckBoxes = []    
-    empStatus = False
-    statStatus = False
-
    
+    def goodbye(self):
+       currentdir = os.path.dirname(os.path.realpath(__file__))
+       files = os.listdir(currentdir)
+       for file in files:
+           if file.endswith(".pyc"):
+               os.remove(os.path.join(currentdir,file))
+           if file.endswith("~"):
+               os.remove(os.path.join(currentdir,file))
+           if file.endswith(".swp"):
+               os.remove(os.path.join(currentdir,file))
+        
     def addStatClicked(self):
       addStatWindow = QtGui.QDialog()
       addStat = addStatus.Ui_Dialog(self)
@@ -49,22 +55,21 @@ class Ui_MainWindow(object):
       remStat = removeStatus.Ui_Dialog(self)
       remStat.setupUi(remStatWindow)
       remStatWindow.exec_()   
-
+    
+    def contactClicked(self):
+        print "stub"
  
     def updateRecordsClicked(self):
       records = xml.fetchRecords()   
    
     def populateCheckboxes(self):
-      self.empCheckBoxes = []
-      self.statCheckBoxes = []
       ind =2
       #self.formLayout_6.addWidget(self.pushButton_2)
       for person in self.employees:
         ind += 1
         self.checkBox = QtGui.QCheckBox(self.scrollAreaWidgetContents_2)
         self.checkBox.setObjectName(_fromUtf8("checkBox"))
-        self.formLayout_6.addWidget(self.checkBox)     
-        self.empCheckBoxes.append(self.checkBox)
+        self.formLayout_6.addWidget(self.checkBox)
         self.scrollArea_2.setWidget(self.scrollAreaWidgetContents_2)
         self.formLayout.setWidget(0,QtGui.QFormLayout.LabelRole,self.scrollArea_2)
         self.checkBox.setText(QtGui.QApplication.translate("MainWindow", person[0], None, QtGui.QApplication.UnicodeUTF8))
@@ -75,19 +80,10 @@ class Ui_MainWindow(object):
         self.checkBox_3 = QtGui.QCheckBox(self.scrollAreaWidgetContents)
         self.checkBox_3.setObjectName(_fromUtf8("checkBox3"))
         self.formLayout_7.addWidget(self.checkBox_3)
-        self.statCheckBoxes.append(self.checkBox_3)
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
         self.formLayout_3.setWidget(0,QtGui.QFormLayout.LabelRole,self.scrollArea)
         self.checkBox_3.setText(QtGui.QApplication.translate("MainWindow", status, None, QtGui.QApplication.UnicodeUTF8))
-        
-      print "empCheckBoxes "+str(self.empCheckBoxes)
-      for cb in self.empCheckBoxes:
-        print cb.isChecked()
-
-      print "statCheckBoxes "+str(self.statCheckBoxes)
-      for cb in self.statCheckBoxes:
-        print cb.text()
-
+  
     def refreshCheckboxes(self):
         for i in reversed(range(self.formLayout_6.count())):
             item = self.formLayout_6.itemAt(i)
@@ -102,30 +98,6 @@ class Ui_MainWindow(object):
             self.formLayout_7.removeItem(item) 
         self.populateCheckboxes()
     
-
-    def checkEmp(self,employeeName):
-      count = 0
-      print "in checkEmp "
-      for checkBox in self.empCheckBoxes:
-        print "cb.text "+str(count)+' '+checkBox.text()
-        count = count + 1
-        if (checkBox.text() == employeeName):
-          self.empStatus = checkBox.isChecked()
-          print "empStatus "+str(self.empStatus)
-          return
-        else:
-          self.empStatus = False
-
-    def checkStat(self,status):
-      print "in checkStat "
-      for checkBox in self.statCheckBoxes:
-        print "cb.text "+checkBox.text()
-        if(checkBox.text() == status):
-          self.statStatus = checkBox.isChecked()
-          print "statStatus "+str(checkBox.isChecked())
-        else:
-          self.statStatus = False
-
     def calclicked2(self):
         self.dateEdit_2.setDate(self.calendarWidget_2.selectedDate())
         self.fill_labels2((self.calendarWidget_2.selectedDate()))
@@ -139,49 +111,43 @@ class Ui_MainWindow(object):
     def calclicked3(self):
         self.listWidget_7.clear()
         selectedDate = self.calendarWidget_3.selectedDate() #QDate
-        #print "selectedDate from Widget "+str(selectedDate)
-        self.dateEdit.setDate(selectedDate) #datebox
-        self.calendarWidget_3.hide() #calanderbox
+        print "selectedDate from Widget "+str(selectedDate)
+        self.dateEdit.setDate(selectedDate) #box
+        self.calendarWidget_3.hide() #calander
+        #selectedDateString = str(selectedDate.month())+str(selectedDate.day())+str(selectedDate.year()) 
         selectedDateString = selectedDate.toString("Mdyyyy")
-        #print "selectedDateString "+selectedDateString
-        #print "selectedDate: "+str(selectedDate)
+        print "selectedDateString "+selectedDateString
+        #selectedDate = QDateTime.fromString(selectedDateString,"Mdyyyy")#QDateTime
+        print "selectedDate: "+str(selectedDate)
+        #selectedDate = selectedDate.toPyDateTime()#PyDateTime
         selectedDate = selectedDate.toPyDate()
-        #print "selectedDate: "+str(selectedDate)
-        
+        print "selectedDate: "+str(selectedDate)
         for record in records:
-          self.checkEmp(record[5])
-          if(self.empStatus):
-            for employee in self.employees:
-              if(employee[0] == record[5]):
-                color = employee[1]
-                color = re.sub('[()]','',color)
-                color = color.split(',')
-            print "MADE IT PAST CHECKEMP"
-            print "color "+str(color)
-            #self.checkStat(record[4])
-            #if(self.statStatus):
-              startDate = record[0]
-              #print "startDate "+str(startDate)
-              endDate = record[1]
-              #print "endDate "+str(endDate)
-              #print "selectedDate "+str(selectedDate)
-              deltaStartEndDate = endDate - startDate
-              #print "deltaStartEndDate "+str(deltaStartEndDate.total_seconds())
-              deltaDate = endDate - selectedDate
-              #print "deltaDate "+str(deltaDate.total_seconds())
-              if( deltaStartEndDate.total_seconds() > 0):
-                alphaValue = deltaDate.total_seconds() / deltaStartEndDate.total_seconds()
-              else:
-                alphaValue = -2;
-              #print "alphaValue "+str(alphaValue)
-              if (selectedDate <= endDate and selectedDate >= startDate ):
-                #print "startDate: "+ startDate.__repr__()
-                #print "date: "+selectedDate.__repr__()
-                #print "endDate: "+endDate.__repr__()
-                putMeInList = QtGui.QListWidgetItem(self.listWidget_7)
-                putMeInList.setText(record[2]+", "+record[3]+", "+record[4]+", "+record[5])
-                putMeInList.setBackgroundColor(QtGui.QColor(int(color[0]),int(color[1]),int(color[2]),255-(alphaValue*255)))
-                self.listWidget_7.addItem(putMeInList)    
+          #startDate = QDateTime.fromString(record[0],"Mdyyyy")#QDateTime
+          #startDate = startDate.toPyDateTime()#PyDateTime
+          startDate = record[0]
+          print "startDate "+str(startDate)
+          #endDate = QDateTime.fromString(record[1],"Mdyyyy")#QDateTime
+          #endDate = endDate.toPyDateTime()#PyDateTime
+          endDate = record[1]
+          print "endDate "+str(endDate)
+          print "selectedDate "+str(selectedDate)
+          deltaStartEndDate = endDate - startDate
+          print "deltaStartEndDate "+str(deltaStartEndDate.total_seconds())
+          deltaDate = endDate - selectedDate
+          print "deltaDate "+str(deltaDate.total_seconds())
+          if( deltaStartEndDate.total_seconds() > 0):
+            alphaValue = deltaDate.total_seconds() / deltaStartEndDate.total_seconds()
+          
+          print "alphaValue "+str(alphaValue)
+          if (selectedDate <= endDate and selectedDate >= startDate ):
+            #print "startDate: "+ startDate.__repr__()
+            #print "date: "+selectedDate.__repr__()
+            #print "endDate: "+endDate.__repr__()
+            putMeInList = QtGui.QListWidgetItem(self.listWidget_7)
+            putMeInList.setText(record[2]+","+record[3]+","+record[4])
+            putMeInList.setBackgroundColor(QtGui.QColor(255,0,0,255-(alphaValue*255)))
+            self.listWidget_7.addItem(putMeInList)    
 
     def fill_labels1(self, p_Date):
         day = int(p_Date.dayOfWeek())
@@ -284,7 +250,7 @@ class Ui_MainWindow(object):
            p_Date=p_Date.addDays(1)
            self.label_14.setText(QtGui.QApplication.translate("MainWindow", p_Date.toString("dddd MMM dd"), None, QtGui.QApplication.UnicodeUTF8))
            p_Date=p_Date.addDays(1)
-           self.label_15.setText(QGui.QApplication.translate("MainWindow", p_Date.toString("dddd MMM dd"), None, QtGui.QApplication.UnicodeUTF8))
+           self.label_15.setText(QtGui.QApplication.translate("MainWindow", p_Date.toString("dddd MMM dd"), None, QtGui.QApplication.UnicodeUTF8))
            p_Date=p_Date.addDays(1)
            self.label_16.setText(QtGui.QApplication.translate("MainWindow", p_Date.toString("dddd MMM dd"), None, QtGui.QApplication.UnicodeUTF8))
            p_Date=p_Date.addDays(1)
@@ -638,6 +604,7 @@ class Ui_MainWindow(object):
         self.label_14 = QtGui.QLabel(self.horizontalLayoutWidget_4)
         self.label_14.setAlignment(QtCore.Qt.AlignCenter)
         self.label_14.setObjectName(_fromUtf8("label_14"))
+
         self.horizontalLayout_5.addWidget(self.label_14)
         self.horizontalLayoutWidget_5 = QtGui.QWidget(self.tab)
         self.horizontalLayoutWidget_5.setGeometry(QtCore.QRect(10, 380, 871, 31))
@@ -850,11 +817,20 @@ class Ui_MainWindow(object):
         self.actionRemEmp.setObjectName(_fromUtf8("actionRemEmp"))
         self.actionRemStat = QtGui.QAction(MainWindow)
         self.actionRemStat.setObjectName(_fromUtf8("actionRemStat"))
+        self.actionContact = QtGui.QAction(MainWindow)
+        self.actionContact.setObjectName(_fromUtf8("actionContact"))
         self.menuFile.addAction(self.actionRemEmp) 
         self.menuFile.addAction(self.actionRemStat)
         self.menuFile.addAction(self.actionExit)
         self.menubar.addAction(self.menuFile.menuAction())
         self.menubar.addAction(self.menuHelp.menuAction())
+        self.menuHelp.addAction(self.actionContact)
+        self.label_22 = QtGui.QLabel(self.frame_2)
+        self.label_22.setObjectName(_fromUtf8("label_22"))
+        self.label_22.setGeometry(QtCore.QRect(40,95,191,101));
+        myPixmap = QtGui.QPixmap(_fromUtf8('./data/Clemson_nobg.png'))
+        myScaledPixmap = myPixmap.scaled(self.label_22.size(), QtCore.Qt.KeepAspectRatio)
+        self.label_22.setPixmap(myScaledPixmap)
         self.retranslateUi(MainWindow)
         self.TopFrameLayout.addWidget(self.pushButton_2)
         self.TopFrameLayout.addWidget(self.pushButton_3)
@@ -874,6 +850,8 @@ class Ui_MainWindow(object):
         QtCore.QObject.connect(self.actionExit, QtCore.SIGNAL(_fromUtf8("activated()")), sys.exit)
         QtCore.QObject.connect(self.actionRemEmp, QtCore.SIGNAL(_fromUtf8("activated()")), self.remEmpClicked)
         QtCore.QObject.connect(self.actionRemStat, QtCore.SIGNAL(_fromUtf8("activated()")), self.remStatClicked)          
+        QtCore.QObject.connect(self.actionContact, QtCore.SIGNAL(_fromUtf8("activated()")), self.contactClicked)
+        
 
     def retranslateUi(self, MainWindow):
         today = QtCore.QDate.currentDate()
@@ -902,6 +880,7 @@ class Ui_MainWindow(object):
         self.actionExit.setText(QtGui.QApplication.translate("MainWindow", "Exit", None, QtGui.QApplication.UnicodeUTF8))
         self.actionRemEmp.setText(QtGui.QApplication.translate("MainWindow", "Remove Employee", None, QtGui.QApplication.UnicodeUTF8))
         self.actionRemStat.setText(QtGui.QApplication.translate("MainWindow", "Remove Status", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionContact.setText(QtGui.QApplication.translate("MainWindow", "Contact", None, QtGui.QApplication.UnicodeUTF8))
         #self.refreshCheckboxes()
 
 if __name__ == "__main__":
@@ -909,9 +888,7 @@ if __name__ == "__main__":
     xml = xmlparse.Xmlp()
     hpr = helper.Helper()
     employees = hpr.updateEmployee()
-    print "employees "+str(employees)
     statuses = hpr.updateStatus()
-    print "statuses "+str(statuses)
     records = xml.fetchRecords()
     app = QtGui.QApplication(sys.argv)
     MainWindow = QtGui.QMainWindow()
@@ -920,5 +897,6 @@ if __name__ == "__main__":
     ui.statuses = statuses
     ui.setupUi(MainWindow)
     MainWindow.show()
+    atexit.register(ui.goodbye)
     sys.exit(app.exec_())
 

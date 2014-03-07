@@ -40,29 +40,38 @@ class Xmlp():
       for row in child:
        idv = row.get('MODID')
        if not (idv == None):
-         for col in row:
-           for data in col:
-            if not(data.text):
-              rList.append("NONE")    
-            else:
-              rList.append(data.text)
-      allfound.append(rList)
-      rList = []
+           for col in row:
+             for data in col:
+               #print data.text
+               if(data.text == None or data.text == '?'):
+                 #print "FOUND ONE"
+                 rList.append("NONE")    
+               else:
+                 rList.append(data.text)
+           allfound.append(rList)
+           rList = []
 
+    #print "allfound is this big "+str(len(allfound))    
+    #for record in allfound:
+      #print record
+    
     for record in allfound:
-      print record
+      #print record
       dateInfo = record[0].split('/')
-              
-                       #yaer day month
+      #print "dateInfo record[0] "+record[3]+' '+str(dateInfo)
+      #year day month
       tempDate = date(int(dateInfo[2]),int(dateInfo[0]),int(dateInfo[1]))#pyDate
       record[0] = tempDate
-      if (record[1] == "NONE"):
+      if (record[1] == 'NONE'):
+     #   print "record[1] == NONE "+record[3]
         tempDate = date(int(dateInfo[2])+1,int(dateInfo[0]),int(dateInfo[1]))#pyDate
         record[1] = tempDate
       else:
-         dateInfo = record[1].split('/')
-         tempDate = date(int(dateInfo[2]),int(dateInfo[0]),int(dateInfo[1]))#pyDate
-         record[1] = tempDate
+    #    print "record[1] != NONE "+record[3] 
+        dateInfo = record[1].split('/')
+        tempDate = date(int(dateInfo[2]),int(dateInfo[0]),int(dateInfo[1]))#pyDate
+        record[1] = tempDate
+      
 
 #    print "Record Fetch"
     for k in allfound:  #Associated Filemaker field:

@@ -104,23 +104,28 @@ class Ui_MainWindow(object):
         #selectedDateString = str(selectedDate.month())+str(selectedDate.day())+str(selectedDate.year()) 
         selectedDateString = selectedDate.toString("Mdyyyy")
         print "selectedDateString "+selectedDateString
-        selectedDate = QDateTime.fromString(selectedDateString,"Mdyyyy")#QDateTime
+        #selectedDate = QDateTime.fromString(selectedDateString,"Mdyyyy")#QDateTime
         print "selectedDate: "+str(selectedDate)
-        selectedDate = selectedDate.toPyDateTime()#PyDateTime
+        #selectedDate = selectedDate.toPyDateTime()#PyDateTime
+        selectedDate = selectedDate.toPyDate()
         print "selectedDate: "+str(selectedDate)
         for record in records:
-          startDate = QDateTime.fromString(record[0],"Mdyyyy")#QDateTime
-          startDate = startDate.toPyDateTime()#PyDateTime
+          #startDate = QDateTime.fromString(record[0],"Mdyyyy")#QDateTime
+          #startDate = startDate.toPyDateTime()#PyDateTime
+          startDate = record[0]
           print "startDate "+str(startDate)
-          endDate = QDateTime.fromString(record[1],"Mdyyyy")#QDateTime
-          endDate = endDate.toPyDateTime()#PyDateTime
+          #endDate = QDateTime.fromString(record[1],"Mdyyyy")#QDateTime
+          #endDate = endDate.toPyDateTime()#PyDateTime
+          endDate = record[1]
           print "endDate "+str(endDate)
           print "selectedDate "+str(selectedDate)
           deltaStartEndDate = endDate - startDate
           print "deltaStartEndDate "+str(deltaStartEndDate.total_seconds())
           deltaDate = endDate - selectedDate
           print "deltaDate "+str(deltaDate.total_seconds())
-          alphaValue = deltaDate.total_seconds() / deltaStartEndDate.total_seconds()
+          if( deltaStartEndDate.total_seconds() > 0):
+            alphaValue = deltaDate.total_seconds() / deltaStartEndDate.total_seconds()
+          
           print "alphaValue "+str(alphaValue)
           if (selectedDate <= endDate and selectedDate >= startDate ):
             #print "startDate: "+ startDate.__repr__()

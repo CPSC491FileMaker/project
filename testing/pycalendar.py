@@ -96,8 +96,45 @@ class Ui_MainWindow(object):
         self.calendarWidget.hide()    
 
     def calclicked3(self):
-        self.dateEdit.setDate(self.calendarWidget_3.selectedDate())
-        self.calendarWidget_3.hide()    
+        self.listWidget_7.clear()
+        selectedDate = self.calendarWidget_3.selectedDate() #QDate
+        print "selectedDate from Widget "+str(selectedDate)
+        self.dateEdit.setDate(selectedDate) #box
+        self.calendarWidget_3.hide() #calander
+        #selectedDateString = str(selectedDate.month())+str(selectedDate.day())+str(selectedDate.year()) 
+        selectedDateString = selectedDate.toString("Mdyyyy")
+        print "selectedDateString "+selectedDateString
+        #selectedDate = QDateTime.fromString(selectedDateString,"Mdyyyy")#QDateTime
+        print "selectedDate: "+str(selectedDate)
+        #selectedDate = selectedDate.toPyDateTime()#PyDateTime
+        selectedDate = selectedDate.toPyDate()
+        print "selectedDate: "+str(selectedDate)
+        for record in records:
+          #startDate = QDateTime.fromString(record[0],"Mdyyyy")#QDateTime
+          #startDate = startDate.toPyDateTime()#PyDateTime
+          startDate = record[0]
+          print "startDate "+str(startDate)
+          #endDate = QDateTime.fromString(record[1],"Mdyyyy")#QDateTime
+          #endDate = endDate.toPyDateTime()#PyDateTime
+          endDate = record[1]
+          print "endDate "+str(endDate)
+          print "selectedDate "+str(selectedDate)
+          deltaStartEndDate = endDate - startDate
+          print "deltaStartEndDate "+str(deltaStartEndDate.total_seconds())
+          deltaDate = endDate - selectedDate
+          print "deltaDate "+str(deltaDate.total_seconds())
+          if( deltaStartEndDate.total_seconds() > 0):
+            alphaValue = deltaDate.total_seconds() / deltaStartEndDate.total_seconds()
+          
+          print "alphaValue "+str(alphaValue)
+          if (selectedDate <= endDate and selectedDate >= startDate ):
+            #print "startDate: "+ startDate.__repr__()
+            #print "date: "+selectedDate.__repr__()
+            #print "endDate: "+endDate.__repr__()
+            putMeInList = QtGui.QListWidgetItem(self.listWidget_7)
+            putMeInList.setText(record[2]+","+record[3]+","+record[4])
+            putMeInList.setBackgroundColor(QtGui.QColor(255,0,0,255-(alphaValue*255)))
+            self.listWidget_7.addItem(putMeInList)    
 
     def fill_labels1(self, p_Date):
         day = int(p_Date.dayOfWeek())
@@ -554,6 +591,7 @@ class Ui_MainWindow(object):
         self.label_14 = QtGui.QLabel(self.horizontalLayoutWidget_4)
         self.label_14.setAlignment(QtCore.Qt.AlignCenter)
         self.label_14.setObjectName(_fromUtf8("label_14"))
+
         self.horizontalLayout_5.addWidget(self.label_14)
         self.horizontalLayoutWidget_5 = QtGui.QWidget(self.tab)
         self.horizontalLayoutWidget_5.setGeometry(QtCore.QRect(10, 380, 871, 31))
@@ -771,6 +809,12 @@ class Ui_MainWindow(object):
         self.menuFile.addAction(self.actionExit)
         self.menubar.addAction(self.menuFile.menuAction())
         self.menubar.addAction(self.menuHelp.menuAction())
+        self.label_22 = QtGui.QLabel(self.frame_2)
+        self.label_22.setObjectName(_fromUtf8("label_22"))
+        self.label_22.setGeometry(QtCore.QRect(40,95,191,101));
+        myPixmap = QtGui.QPixmap(_fromUtf8('./data/Clemson_nobg.png'))
+        myScaledPixmap = myPixmap.scaled(self.label_22.size(), QtCore.Qt.KeepAspectRatio)
+        self.label_22.setPixmap(myScaledPixmap)
         self.retranslateUi(MainWindow)
         self.TopFrameLayout.addWidget(self.pushButton_2)
         self.TopFrameLayout.addWidget(self.pushButton_3)
@@ -790,6 +834,7 @@ class Ui_MainWindow(object):
         QtCore.QObject.connect(self.actionExit, QtCore.SIGNAL(_fromUtf8("activated()")), sys.exit)
         QtCore.QObject.connect(self.actionRemEmp, QtCore.SIGNAL(_fromUtf8("activated()")), self.remEmpClicked)
         QtCore.QObject.connect(self.actionRemStat, QtCore.SIGNAL(_fromUtf8("activated()")), self.remStatClicked)          
+        
 
     def retranslateUi(self, MainWindow):
         today = QtCore.QDate.currentDate()

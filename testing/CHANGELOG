@@ -1,0 +1,60 @@
+CHANGELOG
+
+2 March 2014
+-fixed the File-> Exit slot 
+-initial attempt at dynamically modifying the labels on Bi-Weekly failed.  
+-No error.  Im just a dumb dumb.
+
+3 March
+-added functions to update the Bi-Weekly and Weekly calendar headers.  Yes its ugly.  IDGAF
+
+DJW:  	Populated Toolbox from data.xml
+	Created modal window that allows adding of employees
+	-includes color picker
+	-updates data.xml properly
+	-Got the main window to call the modal window
+	-Created the “add status” button
+	-Created a visual way to allow removal of employees/statuses
+
+	BUGS WITH ADD BUTTONS:
+	FIXED: leaving a blank empty breaks the world
+	-does not refresh the checkbox lists
+		-can’t re-call populateCheckboxes() due to pollution (unless we clear the widget first?)
+	-the add functions do not add the names to the LISTS in the pycalendar.py
+TODO: Implement a timer or ‘watcher’ program to check the xml timestamp
+TODO: put “remove status” and “remove employee” buttons in the file dropdown menu
+TODO: create 
+
+NJH: in callback calclicked3 implemented the adding of information from records in the xml, this clears the list and repopulates the list for the day view
+
+TO DO: -write compare dates function because QDate is so fucking wrong
+	  	-find percentage for color
+	  -get color info and person info from xml/lists
+	  -make label and populate
+
+4 March
+	-added scroll bars to the toolbars
+	-merged Daniel and Beaty’s files
+	-added a CleanDirectory.sh shell script
+	-fixed layout bug in toolBar
+	-made first commit of our merged data onto our new github!
+	-created github site https://github.com/CPSC491FileMaker/project
+	
+		clone in with: git clone https://github.com/CPSC491FileMaker/project
+
+	-created a separate branch called “testing” if you want to dump stuff to sync to your home computer or whatever.
+	-please ensure all commits do not break the program.  otherwise, keep them in testing
+	-please familarize yourself with git using the tutorial at gitref.org
+
+
+TO DO:
+	-create a synchronization method that accepts time as argument (to be used on immediate update needs and over long period update needs)
+	-either have Noah add his code / commit it or get Beaty to add it / commit it
+	-Clean up google drive
+		-WBT
+
+5 March:
+
+    -Noah, add what you did here=P
+    -added my 3 code lines contribution for today to put an image under the 3 buttons on the main page.
+    -copied noahs stuff to the root directory since it seems ready to be brought up.

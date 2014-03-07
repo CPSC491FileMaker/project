@@ -122,7 +122,7 @@ class Ui_MainWindow(object):
         print "cb.text "+checkBox.text()
         if(checkBox.text() == status):
           self.statStatus = checkBox.isChecked()
-          print "statStatus "+checkBox.isChecked()
+          print "statStatus "+str(checkBox.isChecked())
         else:
           self.statStatus = False
 
@@ -151,14 +151,15 @@ class Ui_MainWindow(object):
         for record in records:
           self.checkEmp(record[5])
           if(self.empStatus):
-              for employee in self.employees:
-                if(employee[0] == record[5]):
-                  color = employee[1]
-                  color = re.sub('[()]','',color)
-                  color = color.split(',')
-              print "MADE IT PAST CHECKEMP"
-              print "color "+str(color)
-            #if(self.checkStat(record[4])):
+            for employee in self.employees:
+              if(employee[0] == record[5]):
+                color = employee[1]
+                color = re.sub('[()]','',color)
+                color = color.split(',')
+            print "MADE IT PAST CHECKEMP"
+            print "color "+str(color)
+            #self.checkStat(record[4])
+            #if(self.statStatus):
               startDate = record[0]
               #print "startDate "+str(startDate)
               endDate = record[1]

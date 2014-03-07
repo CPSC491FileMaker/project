@@ -27,10 +27,12 @@ class Ui_Dialog(object):
     def okClicked(self):
       self.nName = self.textEdit.toPlainText()
       if not(self.nName == ""):
-	self.h.addStatus(str(self.nName))
-	self.Dlg.accept()
-	self.mwD.statuses.append(str(self.nName))
-	self.mwD.refreshCheckboxes()
+        self.h.removeStatus(str(self.nName))
+      self.Dlg.accept()
+      for entry in self.mwD.statuses:
+        if entry == str(self.nName):
+    	  self.mwD.statuses.remove(str(self.nName))
+      self.mwD.refreshCheckboxes()
 
     def forCallback(self, D):
 	return D
@@ -46,7 +48,7 @@ class Ui_Dialog(object):
         self.buttonBox.setStandardButtons(QtGui.QDialogButtonBox.Cancel|QtGui.QDialogButtonBox.Ok)
         self.buttonBox.setObjectName(_fromUtf8("buttonBox"))
         self.label = QtGui.QLabel(Dialog)
-        self.label.setGeometry(QtCore.QRect(10, 20, 121, 17))
+        self.label.setGeometry(QtCore.QRect(10, 20, 200, 17))
         self.label.setObjectName(_fromUtf8("label"))
         self.textEdit = QtGui.QTextEdit(Dialog)
         self.textEdit.setGeometry(QtCore.QRect(10, 40, 341, 21))
@@ -58,8 +60,8 @@ class Ui_Dialog(object):
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
     def retranslateUi(self, Dialog):
-        Dialog.setWindowTitle(_translate("Dialog", "Add Status", None))
-        self.label.setText(_translate("Dialog", "Status to add:", None))
+        Dialog.setWindowTitle(_translate("Dialog", "Remove status", None))
+        self.label.setText(_translate("Dialog", "Status to remove:", None))
 
 if __name__ == "__main__":
   import sys

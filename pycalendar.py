@@ -9,7 +9,7 @@
 
 from PyQt4 import QtCore, QtGui
 from PyQt4.QtCore import QDateTime
-import helper, xmlparse, addEmployee, addStatus
+import helper, xmlparse, addEmployee, addStatus, removeEmployee, removeStatus
 
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
@@ -17,26 +17,42 @@ except AttributeError:
     _fromUtf8 = lambda s: s
 
 class Ui_MainWindow(object):
+
+    employees = []
+    statuses = []
    
     def addStatClicked(self):
-      statWindow = QtGui.QDialog()
-      stat = addStatus.Ui_Dialog()
-      stat.setupUi(statWindow)
-      statWindow.exec_()
+      addStatWindow = QtGui.QDialog()
+      addStat = addStatus.Ui_Dialog(self)
+      addStat.setupUi(addStatWindow)
+      addStatWindow.exec_()
     
     def addEmpClicked(self):
-      addWindow = QtGui.QDialog()
-      add = addEmployee.Ui_Dialog()
-      add.setupUi(addWindow)
-      addWindow.exec_()
-    
+      addEmpWindow = QtGui.QDialog()
+      addEmp = addEmployee.Ui_Dialog(self)
+      addEmp.setupUi(addEmpWindow)
+      addEmpWindow.exec_()
+
+    def remEmpClicked(self):
+      remEmpWindow = QtGui.QDialog()
+      remEmp = removeEmployee.Ui_Dialog(self)
+      remEmp.setupUi(remEmpWindow)
+      remEmpWindow.exec_()
+
+    def remStatClicked(self):
+      remStatWindow = QtGui.QDialog()
+      remStat = removeStatus.Ui_Dialog(self)
+      remStat.setupUi(remStatWindow)
+      remStatWindow.exec_()   
+
+ 
     def updateRecordsClicked(self):
       records = xml.fetchRecords()   
    
     def populateCheckboxes(self):
-      ind = 2
-      self.formLayout_6.addWidget(self.pushButton_2)
-      for person in employees:
+      ind =2
+      #self.formLayout_6.addWidget(self.pushButton_2)
+      for person in self.employees:
         ind += 1
         self.checkBox = QtGui.QCheckBox(self.scrollAreaWidgetContents_2)
         self.checkBox.setObjectName(_fromUtf8("checkBox"))
@@ -44,9 +60,9 @@ class Ui_MainWindow(object):
         self.scrollArea_2.setWidget(self.scrollAreaWidgetContents_2)
         self.formLayout.setWidget(0,QtGui.QFormLayout.LabelRole,self.scrollArea_2)
         self.checkBox.setText(QtGui.QApplication.translate("MainWindow", person[0], None, QtGui.QApplication.UnicodeUTF8))
-      ind = 2
-      self.formLayout_7.addWidget(self.pushButton_3)
-      for status in statuses:
+      ind =2 
+      #self.formLayout_7.addWidget(self.pushButton_3)
+      for status in self.statuses:
         ind += 1
         self.checkBox_3 = QtGui.QCheckBox(self.scrollAreaWidgetContents)
         self.checkBox_3.setObjectName(_fromUtf8("checkBox3"))
@@ -54,9 +70,21 @@ class Ui_MainWindow(object):
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
         self.formLayout_3.setWidget(0,QtGui.QFormLayout.LabelRole,self.scrollArea)
         self.checkBox_3.setText(QtGui.QApplication.translate("MainWindow", status, None, QtGui.QApplication.UnicodeUTF8))
-#make a check box for each status
-#add the checkbox to toolbox->page_4->form layout 
   
+    def refreshCheckboxes(self):
+        for i in reversed(range(self.formLayout_6.count())):
+            item = self.formLayout_6.itemAt(i)
+            if isinstance(item, QtGui.QWidgetItem):
+                item.widget().close()
+            self.formLayout_6.removeItem(item)
+
+        for i in reversed(range(self.formLayout_7.count())): 
+            item = self.formLayout_7.itemAt(i)
+            if isinstance(item, QtGui.QWidgetItem):
+                item.widget().close()
+            self.formLayout_7.removeItem(item) 
+        self.populateCheckboxes()
+    
     def calclicked2(self):
         self.dateEdit_2.setDate(self.calendarWidget_2.selectedDate())
         self.fill_labels2((self.calendarWidget_2.selectedDate()))
@@ -68,8 +96,45 @@ class Ui_MainWindow(object):
         self.calendarWidget.hide()    
 
     def calclicked3(self):
-        self.dateEdit.setDate(self.calendarWidget_3.selectedDate())
-        self.calendarWidget_3.hide()    
+        self.listWidget_7.clear()
+        selectedDate = self.calendarWidget_3.selectedDate() #QDate
+        print "selectedDate from Widget "+str(selectedDate)
+        self.dateEdit.setDate(selectedDate) #box
+        self.calendarWidget_3.hide() #calander
+        #selectedDateString = str(selectedDate.month())+str(selectedDate.day())+str(selectedDate.year()) 
+        selectedDateString = selectedDate.toString("Mdyyyy")
+        print "selectedDateString "+selectedDateString
+        #selectedDate = QDateTime.fromString(selectedDateString,"Mdyyyy")#QDateTime
+        print "selectedDate: "+str(selectedDate)
+        #selectedDate = selectedDate.toPyDateTime()#PyDateTime
+        selectedDate = selectedDate.toPyDate()
+        print "selectedDate: "+str(selectedDate)
+        for record in records:
+          #startDate = QDateTime.fromString(record[0],"Mdyyyy")#QDateTime
+          #startDate = startDate.toPyDateTime()#PyDateTime
+          startDate = record[0]
+          print "startDate "+str(startDate)
+          #endDate = QDateTime.fromString(record[1],"Mdyyyy")#QDateTime
+          #endDate = endDate.toPyDateTime()#PyDateTime
+          endDate = record[1]
+          print "endDate "+str(endDate)
+          print "selectedDate "+str(selectedDate)
+          deltaStartEndDate = endDate - startDate
+          print "deltaStartEndDate "+str(deltaStartEndDate.total_seconds())
+          deltaDate = endDate - selectedDate
+          print "deltaDate "+str(deltaDate.total_seconds())
+          if( deltaStartEndDate.total_seconds() > 0):
+            alphaValue = deltaDate.total_seconds() / deltaStartEndDate.total_seconds()
+          
+          print "alphaValue "+str(alphaValue)
+          if (selectedDate <= endDate and selectedDate >= startDate ):
+            #print "startDate: "+ startDate.__repr__()
+            #print "date: "+selectedDate.__repr__()
+            #print "endDate: "+endDate.__repr__()
+            putMeInList = QtGui.QListWidgetItem(self.listWidget_7)
+            putMeInList.setText(record[2]+","+record[3]+","+record[4])
+            putMeInList.setBackgroundColor(QtGui.QColor(255,0,0,255-(alphaValue*255)))
+            self.listWidget_7.addItem(putMeInList)    
 
     def fill_labels1(self, p_Date):
         day = int(p_Date.dayOfWeek())
@@ -400,9 +465,6 @@ class Ui_MainWindow(object):
         self.frame_2.setFrameShape(QtGui.QFrame.StyledPanel)
         self.frame_2.setFrameShadow(QtGui.QFrame.Raised)
         self.frame_2.setObjectName(_fromUtf8("frame_2"))
-        self.pushButton = QtGui.QPushButton(self.frame_2)
-        self.pushButton.setGeometry(QtCore.QRect(100, 90, 95, 101))
-        self.pushButton.setObjectName(_fromUtf8("pushButton"))
         self.verticalLayout.addWidget(self.frame_2)
         self.toolBox = QtGui.QToolBox(self.centralwidget)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Expanding)
@@ -434,6 +496,17 @@ class Ui_MainWindow(object):
         self.formLayout_3.setVerticalSpacing(2)
         self.formLayout_3.setObjectName(_fromUtf8("formLayout_3"))
         self.scrollArea=QtGui.QScrollArea(self.formLayoutWidget)
+        self.verticalLayoutWidget = QtGui.QWidget(self.frame_2)
+        self.verticalLayoutWidget.setObjectName(_fromUtf8("verticalLayoutWidget"))
+        #self.TopFrameLayout = QtGui.QVeritcalLayout(self.verticalLayoutWidget)
+        self.TopFrameLayout = QtGui.QVBoxLayout(self.verticalLayoutWidget)
+        self.TopFrameLayout.setGeometry(QtCore.QRect(0,0,200,200))
+        self.TopFrameLayout.setObjectName(_fromUtf8("TopFrameLayout"))
+        self.TopFrameLayout.setContentsMargins(10,10,10,10)
+        self.pushButton = QtGui.QPushButton(self.verticalLayoutWidget)
+        self.pushButton.setGeometry(QtCore.QRect(20, 20, 139, 27))
+        self.pushButton.setObjectName(_fromUtf8("pushButton"))
+        self.TopFrameLayout.addWidget(self.pushButton)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -447,7 +520,8 @@ class Ui_MainWindow(object):
         self.scrollAreaWidgetContents.setObjectName(_fromUtf8("scrollAreaWidgetContents"))
         self.formLayout_7 = QtGui.QFormLayout(self.scrollAreaWidgetContents)
         self.formLayout_7.setObjectName(_fromUtf8("formLayout_7"))
-        self.pushButton_3 = QtGui.QPushButton(self.scrollAreaWidgetContents)
+        #self.pushButton_3 = QtGui.QPushButton(self.scrollAreaWidgetContents)
+        self.pushButton_3 = QtGui.QPushButton(self.verticalLayoutWidget)
         self.pushButton_3.setObjectName(_fromUtf8("pushButton_3"))
         self.scrollArea_2 = QtGui.QScrollArea(self.formLayoutWidget)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
@@ -463,10 +537,12 @@ class Ui_MainWindow(object):
         self.scrollAreaWidgetContents_2.setObjectName(_fromUtf8("scrollAreaWidgetContents_2"))
         self.formLayout_6 = QtGui.QFormLayout(self.scrollAreaWidgetContents_2)
         self.formLayout_6.setObjectName(_fromUtf8("formLayout_6"))
-        self.pushButton_2 = QtGui.QPushButton(self.scrollAreaWidgetContents_2)
+        #self.pushButton_2 = QtGui.QPushButton(self.scrollArea)
+        #self.pushButton_2 = QtGui.QPushButton(self.scrollAreaWidgetContents_2)
+        self.pushButton_2 = QtGui.QPushButton(self.verticalLayoutWidget)
         self.pushButton_2.setObjectName(_fromUtf8("pushButton_2"))
-        self.formLayout_6.addWidget(self.pushButton_2)
-        self.formLayout.setWidget(0,QtGui.QFormLayout.SpanningRole,self.pushButton_3)
+        #self.formLayout_6.addWidget(self.pushButton_2)
+        #self.formLayout.setWidget(0,QtGui.QFormLayout.SpanningRole,self.pushButton_3)
         self.toolBox.addItem(self.page_3, _fromUtf8(""))
         self.toolBox.addItem(self.page_4, _fromUtf8(""))
         self.verticalLayout.addWidget(self.toolBox)
@@ -515,6 +591,7 @@ class Ui_MainWindow(object):
         self.label_14 = QtGui.QLabel(self.horizontalLayoutWidget_4)
         self.label_14.setAlignment(QtCore.Qt.AlignCenter)
         self.label_14.setObjectName(_fromUtf8("label_14"))
+
         self.horizontalLayout_5.addWidget(self.label_14)
         self.horizontalLayoutWidget_5 = QtGui.QWidget(self.tab)
         self.horizontalLayoutWidget_5.setGeometry(QtCore.QRect(10, 380, 871, 31))
@@ -723,14 +800,26 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
         self.actionExit = QtGui.QAction(MainWindow)
         self.actionExit.setObjectName(_fromUtf8("actionExit"))
+        self.actionRemEmp = QtGui.QAction(MainWindow)
+        self.actionRemEmp.setObjectName(_fromUtf8("actionRemEmp"))
+        self.actionRemStat = QtGui.QAction(MainWindow)
+        self.actionRemStat.setObjectName(_fromUtf8("actionRemStat"))
+        self.menuFile.addAction(self.actionRemEmp) 
+        self.menuFile.addAction(self.actionRemStat)
         self.menuFile.addAction(self.actionExit)
         self.menubar.addAction(self.menuFile.menuAction())
         self.menubar.addAction(self.menuHelp.menuAction())
-        self.listWidget.addItem("test")
+        self.label_22 = QtGui.QLabel(self.frame_2)
+        self.label_22.setObjectName(_fromUtf8("label_22"))
+        self.label_22.setGeometry(QtCore.QRect(40,95,191,101));
+        myPixmap = QtGui.QPixmap(_fromUtf8('./data/Clemson_nobg.png'))
+        myScaledPixmap = myPixmap.scaled(self.label_22.size(), QtCore.Qt.KeepAspectRatio)
+        self.label_22.setPixmap(myScaledPixmap)
         self.retranslateUi(MainWindow)
+        self.TopFrameLayout.addWidget(self.pushButton_2)
+        self.TopFrameLayout.addWidget(self.pushButton_3)
         self.toolBox.setCurrentIndex(1)
-        
-
+        self.populateCheckboxes()
         self.tabWidget.setCurrentIndex(2)
         QtCore.QObject.connect(self.pushButton, QtCore.SIGNAL(_fromUtf8("clicked()")), self.updateRecordsClicked)
         QtCore.QObject.connect(self.pushButton_2, QtCore.SIGNAL(_fromUtf8("clicked()")), self.addEmpClicked)
@@ -743,19 +832,23 @@ class Ui_MainWindow(object):
         QtCore.QObject.connect(self.calendarWidget_3, QtCore.SIGNAL(_fromUtf8("clicked(QDate)")), self.calclicked3)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         QtCore.QObject.connect(self.actionExit, QtCore.SIGNAL(_fromUtf8("activated()")), sys.exit)
-          
+        QtCore.QObject.connect(self.actionRemEmp, QtCore.SIGNAL(_fromUtf8("activated()")), self.remEmpClicked)
+        QtCore.QObject.connect(self.actionRemStat, QtCore.SIGNAL(_fromUtf8("activated()")), self.remStatClicked)          
+        
 
     def retranslateUi(self, MainWindow):
         today = QtCore.QDate.currentDate()
         MainWindow.setWindowTitle(QtGui.QApplication.translate("MainWindow", "MainWindow", None, QtGui.QApplication.UnicodeUTF8))
         self.pushButton.setText(QtGui.QApplication.translate("MainWindow", "Update", None, QtGui.QApplication.UnicodeUTF8))
+        self.pushButton.setMinimumSize(180,27)
+        self.pushButton.setMaximumSize(180,27)
         self.pushButton_2.setText(QtGui.QApplication.translate("MainWindow", "Add Employee", None, QtGui.QApplication.UnicodeUTF8))
-        self.pushButton_2.setMinimumSize(139,27)
-        self.pushButton_2.setMaximumSize(139,27)
+        self.pushButton_2.setMinimumSize(180,27)
+        self.pushButton_2.setMaximumSize(180,27)
         self.toolBox.setItemText(self.toolBox.indexOf(self.page_3), QtGui.QApplication.translate("MainWindow", "Project Statuses", None, QtGui.QApplication.UnicodeUTF8))
         self.pushButton_3.setText(QtGui.QApplication.translate("MainWindow", "Add Status", None, QtGui.QApplication.UnicodeUTF8))
-        self.pushButton_3.setMinimumSize(139,27)
-        self.pushButton_3.setMaximumSize(139,27)
+        self.pushButton_3.setMinimumSize(180,27)
+        self.pushButton_3.setMaximumSize(180,27)
         self.toolBox.setItemText(self.toolBox.indexOf(self.page_4), QtGui.QApplication.translate("MainWindow", "Employees", None, QtGui.QApplication.UnicodeUTF8))
         self.dateEdit_3.setDisplayFormat(QtGui.QApplication.translate("MainWindow", "d MMMM yyyy", None, QtGui.QApplication.UnicodeUTF8))
         self.fill_labels1(today)
@@ -768,7 +861,9 @@ class Ui_MainWindow(object):
         self.menuFile.setTitle(QtGui.QApplication.translate("MainWindow", "File", None, QtGui.QApplication.UnicodeUTF8))
         self.menuHelp.setTitle(QtGui.QApplication.translate("MainWindow", "Help", None, QtGui.QApplication.UnicodeUTF8))
         self.actionExit.setText(QtGui.QApplication.translate("MainWindow", "Exit", None, QtGui.QApplication.UnicodeUTF8))
-        self.populateCheckboxes()
+        self.actionRemEmp.setText(QtGui.QApplication.translate("MainWindow", "Remove Employee", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionRemStat.setText(QtGui.QApplication.translate("MainWindow", "Remove Status", None, QtGui.QApplication.UnicodeUTF8))
+        #self.refreshCheckboxes()
 
 if __name__ == "__main__":
     import sys
@@ -780,6 +875,8 @@ if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)
     MainWindow = QtGui.QMainWindow()
     ui = Ui_MainWindow()
+    ui.employees = employees
+    ui.statuses = statuses
     ui.setupUi(MainWindow)
     MainWindow.show()
     sys.exit(app.exec_())

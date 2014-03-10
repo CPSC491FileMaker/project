@@ -126,7 +126,7 @@ class Ui_MainWindow(object):
       count = 0
       #print "in checkEmp "
       #for checkBox in self.empCheckBoxes:
-      for i in range(self.formLayout_2.count()):
+      for i in range(self.formLayout_3.count()):
         #print "cb.text "+str(i)+' '+self.formLayout_6.itemAt(i).widget().text()
         if (self.formLayout_3.itemAt(i).widget().text() == employeeName):
           self.empStatus = self.formLayout_3.itemAt(i).widget().isChecked()
@@ -134,6 +134,27 @@ class Ui_MainWindow(object):
           return
         else:
           self.empStatus = False
+
+    def checkStat(self,status):
+      #print "in checkStat "
+      #for checkBox in self.statCheckBoxes:
+      for i in range(self.formLayout_4.count()):
+        #print "cb.text "+self.formLayout_7.itemAt(i).widget().text()
+        if(self.formLayout_4.itemAt(i).widget().text() == status):
+          self.statStatus = self.formLayout_4.itemAt(i).widget().isChecked()
+          #print "statStatus "+str(statStatus)
+        else:
+          self.statStatus = False
+
+    #horizontalLayout_4
+    #listWidget_2 == Sunday
+    #listWidget_5 == Monday
+    #listWidget_6 == Tuesday
+    #listWidget_4 == Wednesday
+    #listWidget_3 == Thursday
+    #listWidget == Friday
+    #listWidget_8 == Saturday
+    #weekly view
 
     def calclicked(self):
         self.dateEdit_3.setDate(self.calendarWidget.selectedDate())

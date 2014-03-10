@@ -74,8 +74,13 @@ class Xmlp():
       
 
 #    print "Record Fetch"
+#<<<<<<< HEAD
     for k in allfound:  #Associated Filemaker field:
         print k
+#=======
+    #for k in allfound:  #Associated Filemaker field:
+        #print k
+#>>>>>>> 59a5cea1287bb21d6dea58be210c384e80fa0a7a
   #    print k[0]        #open_date
    #   print k[1]        #due_date_actual_delivery
     #  print k[2]        #description

@@ -9,7 +9,13 @@
 
 from PyQt4 import QtCore, QtGui
 from PyQt4.QtCore import QDateTime
-import atexit,os, helper, xmlparse, addEmployee, addStatus, removeEmployee, removeStatus
+#<<<<<<< HEAD
+#import atexit,os, helper, xmlparse, addEmployee, addStatus, removeEmployee, removeStatus
+#=======
+import atexit,os,helper, xmlparse, addEmployee, addStatus, removeEmployee, removeStatus, re
+from datetime import date
+import datetime
+#>>>>>>> 59a5cea1287bb21d6dea58be210c384e80fa0a7a
 
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
@@ -20,6 +26,7 @@ class Ui_MainWindow(object):
 
     employees = []
     statuses = []
+#<<<<<<< HEAD
    
     def goodbye(self):
        currentdir = os.path.dirname(os.path.realpath(__file__))
@@ -32,6 +39,24 @@ class Ui_MainWindow(object):
            if file.endswith(".swp"):
                os.remove(os.path.join(currentdir,file))
         
+#=======
+    #empCheckBoxes = []
+    #statCheckBoxes = []    
+    empStatus = False
+    statStatus = False
+
+    def goodbye(self):
+      currentdir = os.path.dirname(os.path.realpath(__file__))
+      files = os.listdir(currentdir)
+      for file in files:
+          if file.endswith(".pyc"):
+              os.remove(os.path.join(currentdir,file))
+          if file.endswith("~"):
+              os.remove(os.path.join(currentdir,file))
+          if file.endswith(".swp"):
+              os.remove(os.path.join(currentdir,file))
+
+#>>>>>>> 59a5cea1287bb21d6dea58be210c384e80fa0a7a
     def addStatClicked(self):
       addStatWindow = QtGui.QDialog()
       addStat = addStatus.Ui_Dialog(self)
@@ -43,6 +68,9 @@ class Ui_MainWindow(object):
       addEmp = addEmployee.Ui_Dialog(self)
       addEmp.setupUi(addEmpWindow)
       addEmpWindow.exec_()
+    
+    def contactClicked(self):
+        print "stub"
 
     def remEmpClicked(self):
       remEmpWindow = QtGui.QDialog()
@@ -63,13 +91,16 @@ class Ui_MainWindow(object):
       records = xml.fetchRecords()   
    
     def populateCheckboxes(self):
+      #self.empCheckBoxes = []
+      #self.statCheckBoxes = []
       ind =2
       #self.formLayout_6.addWidget(self.pushButton_2)
       for person in self.employees:
         ind += 1
         self.checkBox = QtGui.QCheckBox(self.scrollAreaWidgetContents_2)
         self.checkBox.setObjectName(_fromUtf8("checkBox"))
-        self.formLayout_6.addWidget(self.checkBox)
+        self.formLayout_6.addWidget(self.checkBox)     
+        #self.empCheckBoxes.append(self.checkBox)
         self.scrollArea_2.setWidget(self.scrollAreaWidgetContents_2)
         self.formLayout.setWidget(0,QtGui.QFormLayout.LabelRole,self.scrollArea_2)
         self.checkBox.setText(QtGui.QApplication.translate("MainWindow", person[0], None, QtGui.QApplication.UnicodeUTF8))
@@ -80,10 +111,19 @@ class Ui_MainWindow(object):
         self.checkBox_3 = QtGui.QCheckBox(self.scrollAreaWidgetContents)
         self.checkBox_3.setObjectName(_fromUtf8("checkBox3"))
         self.formLayout_7.addWidget(self.checkBox_3)
+        #self.statCheckBoxes.append(self.checkBox_3)
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
         self.formLayout_3.setWidget(0,QtGui.QFormLayout.LabelRole,self.scrollArea)
         self.checkBox_3.setText(QtGui.QApplication.translate("MainWindow", status, None, QtGui.QApplication.UnicodeUTF8))
-  
+        
+      #print "empCheckBoxes "+str(self.empCheckBoxes)
+      #for cb in self.empCheckBoxes:
+        #print cb.isChecked()
+
+      #print "statCheckBoxes "+str(self.statCheckBoxes)
+      #for cb in self.statCheckBoxes:
+        #print cb.text()
+
     def refreshCheckboxes(self):
         for i in reversed(range(self.formLayout_6.count())):
             item = self.formLayout_6.itemAt(i)
@@ -98,10 +138,302 @@ class Ui_MainWindow(object):
             self.formLayout_7.removeItem(item) 
         self.populateCheckboxes()
     
+    #formLayout_6 == employee checkBoxes
+    def checkEmp(self,employeeName):
+      count = 0
+      #print "in checkEmp "
+      #for checkBox in self.empCheckBoxes:
+      for i in range(self.formLayout_6.count()):
+        #print "cb.text "+str(i)+' '+self.formLayout_6.itemAt(i).widget().text()
+        if (self.formLayout_6.itemAt(i).widget().text() == employeeName):
+          self.empStatus = self.formLayout_6.itemAt(i).widget().isChecked()
+          #print "empStatus "+str(self.empStatus)
+          return
+        else:
+          self.empStatus = False
+
+    #formLayout_7 == status checkBoxes
+    def checkStat(self,status):
+      #print "in checkStat "
+      #for checkBox in self.statCheckBoxes:
+      for i in range(self.formLayout_7.count()):
+        #print "cb.text "+self.formLayout_7.itemAt(i).widget().text()
+        if(self.formLayout_7.itemAt(i).widget().text() == status):
+          self.statStatus = self.formLayout_7.itemAt(i).widget().isChecked()
+          #print "statStatus "+str(statStatus)
+        else:
+          self.statStatus = False
+
+        #horizontalLayout_4
+    #listWidget_2 == Sunday
+    #listWidget_5 == Monday
+    #listWidget_6 == Tuesday
+    #listWidget_4 == Wednesday
+    #listWidget_3 == Thursday
+    #listWidget == Friday
+    #listWidget_8 == Saturday
+    #weekly view
     def calclicked2(self):
-        self.dateEdit_2.setDate(self.calendarWidget_2.selectedDate())
-        self.fill_labels2((self.calendarWidget_2.selectedDate()))
-        self.calendarWidget_2.hide()   
+        print "about to clear lists"
+
+        #for i in range(self.horizontalLayout_4.count()):
+         # self.horizontalLayout_4.itemAt(i).widget().addItem('test')
+          #for item in allitems:
+           # print "i: "+str(i)+' '+item
+          # print str(self.horizontalLayout_4.itemAt(i).widget().contains())
+
+        for i in range(self.horizontalLayout_4.count()):
+         # allitems = self.horizontalLayout_4.itemAt(i).widget().findItems('',QtCore.Qt.MatchRegExp)
+          #for item in allitems:
+           # print "i: "+str(i)+' '+item
+          # print str(self.horizontalLayout_4.itemAt(i).widget().contains())
+
+          self.horizontalLayout_4.itemAt(i).widget().clear()
+
+        selectedDate = self.calendarWidget_2.selectedDate()
+        self.dateEdit_2.setDate(selectedDate)
+        self.fill_labels2(selectedDate)
+        self.calendarWidget_2.hide()
+        selectedDateDayOfWeek = selectedDate.dayOfWeek()
+        selectedDate = selectedDate.toPyDate()
+        rangeForSelectedDate = []
+        if(selectedDateDayOfWeek == 1):#monday
+          tempDate = selectedDate
+          tempDate -= datetime.timedelta(days=1)
+          rangeForSelectedDate.append(tempDate)
+          tempDate += datetime.timedelta(days=1)
+          rangeForSelectedDate.append(tempDate)
+          tempDate += datetime.timedelta(days=1)
+          rangeForSelectedDate.append(tempDate)
+          tempDate += datetime.timedelta(days=1)
+          rangeForSelectedDate.append(tempDate)
+          tempDate += datetime.timedelta(days=1)
+          rangeForSelectedDate.append(tempDate)
+          tempDate += datetime.timedelta(days=1)
+          rangeForSelectedDate.append(tempDate)
+          tempDate += datetime.timedelta(days=1)
+          rangeForSelectedDate.append(tempDate)
+          print "rangeForSelectedDate"
+          for date in rangeForSelectedDate:
+            print date
+        elif(selectedDateDayOfWeek == 2):#tuesday
+          tempDate = selectedDate
+          tempDate -= datetime.timedelta(days=2)
+          rangeForSelectedDate.append(tempDate)
+          tempDate += datetime.timedelta(days=1)
+          rangeForSelectedDate.append(tempDate)
+          tempDate += datetime.timedelta(days=1)
+          rangeForSelectedDate.append(tempDate)
+          tempDate += datetime.timedelta(days=1)
+          rangeForSelectedDate.append(tempDate)
+          tempDate += datetime.timedelta(days=1)
+          rangeForSelectedDate.append(tempDate)
+          tempDate += datetime.timedelta(days=1)
+          rangeForSelectedDate.append(tempDate)
+          tempDate += datetime.timedelta(days=1)
+          rangeForSelectedDate.append(tempDate)
+          print "rangeForSelectedDate"
+          for date in rangeForSelectedDate:
+            print date
+        elif(selectedDateDayOfWeek == 3):#wednesday
+          tempDate = selectedDate
+          tempDate -= datetime.timedelta(days=3)
+          rangeForSelectedDate.append(tempDate)
+          tempDate += datetime.timedelta(days=1)
+          rangeForSelectedDate.append(tempDate)
+          tempDate += datetime.timedelta(days=1)
+          rangeForSelectedDate.append(tempDate)
+          tempDate += datetime.timedelta(days=1)
+          rangeForSelectedDate.append(tempDate)
+          tempDate += datetime.timedelta(days=1)
+          rangeForSelectedDate.append(tempDate)
+          tempDate += datetime.timedelta(days=1)
+          rangeForSelectedDate.append(tempDate)
+          tempDate += datetime.timedelta(days=1)
+          rangeForSelectedDate.append(tempDate)
+          print "rangeForSelectedDate"
+          for date in rangeForSelectedDate:
+            print date
+        elif(selectedDateDayOfWeek == 4):#thursday
+          tempDate = selectedDate
+          tempDate -= datetime.timedelta(days=4)
+          rangeForSelectedDate.append(tempDate)
+          tempDate += datetime.timedelta(days=1)
+          rangeForSelectedDate.append(tempDate)
+          tempDate += datetime.timedelta(days=1)
+          rangeForSelectedDate.append(tempDate)
+          tempDate += datetime.timedelta(days=1)
+          rangeForSelectedDate.append(tempDate)
+          tempDate += datetime.timedelta(days=1)
+          rangeForSelectedDate.append(tempDate)
+          tempDate += datetime.timedelta(days=1)
+          rangeForSelectedDate.append(tempDate)
+          tempDate += datetime.timedelta(days=1)
+          rangeForSelectedDate.append(tempDate)
+          print "rangeForSelectedDate"
+          for date in rangeForSelectedDate:
+            print date
+        elif(selectedDateDayOfWeek == 5):#friday
+          tempDate = selectedDate
+          tempDate -= datetime.timedelta(days=5)
+          rangeForSelectedDate.append(tempDate)
+          tempDate += datetime.timedelta(days=1)
+          rangeForSelectedDate.append(tempDate)
+          tempDate += datetime.timedelta(days=1)
+          rangeForSelectedDate.append(tempDate)
+          tempDate += datetime.timedelta(days=1)
+          rangeForSelectedDate.append(tempDate)
+          tempDate += datetime.timedelta(days=1)
+          rangeForSelectedDate.append(tempDate)
+          tempDate += datetime.timedelta(days=1)
+          rangeForSelectedDate.append(tempDate)
+          tempDate += datetime.timedelta(days=1)
+          rangeForSelectedDate.append(tempDate)
+          print "rangeForSelectedDate"
+          for date in rangeForSelectedDate:
+            print date
+        elif(selectedDateDayOfWeek == 6):#saturday
+          tempDate = selectedDate
+          tempDate -= datetime.timedelta(days=6)
+          rangeForSelectedDate.append(tempDate)
+          tempDate += datetime.timedelta(days=1)
+          rangeForSelectedDate.append(tempDate)
+          tempDate += datetime.timedelta(days=1)
+          rangeForSelectedDate.append(tempDate)
+          tempDate += datetime.timedelta(days=1)
+          rangeForSelectedDate.append(tempDate)
+          tempDate += datetime.timedelta(days=1)
+          rangeForSelectedDate.append(tempDate)
+          tempDate += datetime.timedelta(days=1)
+          rangeForSelectedDate.append(tempDate)
+          tempDate += datetime.timedelta(days=1)
+          rangeForSelectedDate.append(tempDate)
+          print "rangeForSelectedDate"
+          for date in rangeForSelectedDate:
+            print date
+        elif(selectedDateDayOfWeek == 7):#sunday
+          tempDate = selectedDate
+          tempDate -= datetime.timedelta(days=7)
+          rangeForSelectedDate.append(tempDate)
+          tempDate += datetime.timedelta(days=1)
+          rangeForSelectedDate.append(tempDate)
+          tempDate += datetime.timedelta(days=1)
+          rangeForSelectedDate.append(tempDate)
+          tempDate += datetime.timedelta(days=1)
+          rangeForSelectedDate.append(tempDate)
+          tempDate += datetime.timedelta(days=1)
+          rangeForSelectedDate.append(tempDate)
+          tempDate += datetime.timedelta(days=1)
+          rangeForSelectedDate.append(tempDate)
+          tempDate += datetime.timedelta(days=1)
+          rangeForSelectedDate.append(tempDate)
+          print "rangeForSelectedDate"
+          for date in rangeForSelectedDate:
+            print date
+
+        for date in rangeForSelectedDate:
+          print "date "+str(date)
+          dow = date.weekday()
+          print "day of the week"+str(date.weekday())
+          for record in records:
+            self.checkEmp(record[5])
+            if(self.empStatus):
+              #print "empStatus is true"
+              for employee in self.employees:
+                if(employee[0] == record[5]):
+                  color = employee[1]
+                  color = re.sub('[()]','',color)
+                  color = color.split(',')
+             #check statStatus
+              startDate = record[0]
+              endDate = record[1]
+              dayOfWeek = date.weekday()
+              #selectedDate = selectedDate.toPyDate()
+              #print "selectedDate "+str(selectedDate)
+              deltaStartEndDate = endDate - startDate
+              deltaDate = endDate - date
+              if (deltaStartEndDate.total_seconds() > 0):
+                alphaValue = deltaDate.total_seconds() / deltaStartEndDate.total_seconds()
+              else:
+                alphaValue = -2
+              if(dayOfWeek == 0):#listWidget_5 monday
+                if (date <= endDate and date >= startDate ):
+                  #print "startDate: "+ startDate.__repr__()
+                  #print "date: "+selectedDate.__repr__()
+                  #print "endDate: "+endDate.__repr__()
+                  putMeInList = QtGui.QListWidgetItem(self.listWidget_5)
+                  #putMeInList.setWordWrap(True)
+                  putMeInList.setText(record[0].isoformat()+"\n"+record[1].isoformat()+"\n"+record[2]+"\n"+record[3]+"\n"+record[4]+"\n"+record[5])
+                  putMeInList.setBackgroundColor(QtGui.QColor(int(color[0]),int(color[1]),int(color[2]),255-(alphaValue*255)))
+                  self.listWidget_5.addItem(putMeInList)
+              elif(dayOfWeek == 1):#listWidget_6 tuesday
+                if (date <= endDate and date >= startDate ):
+                  #print "startDate: "+ startDate.__repr__()
+                  #print "date: "+selectedDate.__repr__()
+                  #print "endDate: "+endDate.__repr__()
+                  putMeInList = QtGui.QListWidgetItem(self.listWidget_6)
+                  #putMeInList.setWordWrap(True)
+                  putMeInList.setText(record[0].isoformat()+"\n"+record[1].isoformat()+"\n"+record[2]+"\n"+record[3]+"\n"+record[4]+"\n"+record[5])
+                  putMeInList.setBackgroundColor(QtGui.QColor(int(color[0]),int(color[1]),int(color[2]),255-(alphaValue*255)))
+                  self.listWidget_6.addItem(putMeInList)
+              elif(dayOfWeek == 2):#listWidget_4 wednesday
+                if (date <= endDate and date >= startDate ):
+                  #print "startDate: "+ startDate.__repr__()
+                  #print "date: "+selectedDate.__repr__()
+                  #print "endDate: "+endDate.__repr__()
+                  putMeInList = QtGui.QListWidgetItem(self.listWidget_4)
+                  #putMeInList.setWordWrap(True)
+                  putMeInList.setText(record[0].isoformat()+"\n"+record[1].isoformat()+"\n"+record[2]+"\n"+record[3]+"\n"+record[4]+"\n"+record[5])
+                  putMeInList.setBackgroundColor(QtGui.QColor(int(color[0]),int(color[1]),int(color[2]),255-(alphaValue*255)))
+                  self.listWidget_4.addItem(putMeInList)
+              elif(dayOfWeek == 3):#listWidget_3 thursday
+                if (date <= endDate and date >= startDate ):
+                  #print "startDate: "+ startDate.__repr__()
+                  #print "date: "+selectedDate.__repr__()
+                  #print "endDate: "+endDate.__repr__()
+                  putMeInList = QtGui.QListWidgetItem(self.listWidget_3)
+                  #putMeInList.setWordWrap(True)
+                  putMeInList.setText(record[0].isoformat()+"\n"+record[1].isoformat()+"\n"+record[2]+"\n"+record[3]+"\n"+record[4]+"\n"+record[5])
+                  putMeInList.setBackgroundColor(QtGui.QColor(int(color[0]),int(color[1]),int(color[2]),255-(alphaValue*255)))
+                  self.listWidget_3.addItem(putMeInList)
+              elif(dayOfWeek == 4):#listWidget friday
+                if (date <= endDate and date >= startDate ):
+                  #print "startDate: "+ startDate.__repr__()
+                  #print "date: "+selectedDate.__repr__()
+                  #print "endDate: "+endDate.__repr__()
+                  putMeInList = QtGui.QListWidgetItem(self.listWidget)
+                  #putMeInList.setWordWrap(True)
+                  putMeInList.setText(record[0].isoformat()+"\n"+record[1].isoformat()+"\n"+record[2]+"\n"+record[3]+"\n"+record[4]+"\n"+record[5])
+                  putMeInList.setBackgroundColor(QtGui.QColor(int(color[0]),int(color[1]),int(color[2]),255-(alphaValue*255)))
+                  self.listWidget.addItem(putMeInList)
+              elif(dayOfWeek == 5):#listWidget_8 saturday
+                if (date <= endDate and date >= startDate ):
+                  #print "startDate: "+ startDate.__repr__()
+                  #print "date: "+selectedDate.__repr__()
+                  #print "endDate: "+endDate.__repr__()
+                  putMeInList = QtGui.QListWidgetItem(self.listWidget_8)
+                  #putMeInList.setWordWrap(True)                  
+                  putMeInList.setText(record[0].isoformat()+"\n"+record[1].isoformat()+"\n"+record[2]+"\n"+record[3]+"\n"+record[4]+"\n"+record[5])
+                  putMeInList.setBackgroundColor(QtGui.QColor(int(color[0]),int(color[1]),int(color[2]),255-(alphaValue*255)))
+                  self.listWidget_8.addItem(putMeInList)
+              elif(dayOfWeek == 6):#listWidget_2 sunday
+                if (date <= endDate and date >= startDate ):
+                  #print "startDate: "+ startDate.__repr__()
+                  #print "date: "+selectedDate.__repr__()
+                  #print "endDate: "+endDate.__repr__()
+                  putMeInList = QtGui.QListWidgetItem(self.listWidget_2)
+                  #putMeInList.setWordWrap(True)
+                  putMeInList.setText(record[0].isoformat()+"\n"+record[1].isoformat()+"\n"+record[2]+"\n"+record[3]+"\n"+record[4]+"\n"+record[5])
+                  putMeInList.setBackgroundColor(QtGui.QColor(int(color[0]),int(color[1]),int(color[2]),255-(alphaValue*255)))
+                  self.listWidget_2.addItem(putMeInList)
+            #listWidget_2 == Sunday
+    #listWidget_5 == Monday
+    #listWidget_6 == Tuesday
+    #listWidget_4 == Wednesday
+    #listWidget_3 == Thursday
+    #listWidget == Friday
+    #listWidget_8 == Saturday
+   
          
     def calclicked(self):
         self.dateEdit_3.setDate(self.calendarWidget.selectedDate())
@@ -111,6 +443,7 @@ class Ui_MainWindow(object):
     def calclicked3(self):
         self.listWidget_7.clear()
         selectedDate = self.calendarWidget_3.selectedDate() #QDate
+#<<<<<<< HEAD
         print "selectedDate from Widget "+str(selectedDate)
         self.dateEdit.setDate(selectedDate) #box
         self.calendarWidget_3.hide() #calander
@@ -148,6 +481,51 @@ class Ui_MainWindow(object):
             putMeInList.setText(record[2]+","+record[3]+","+record[4])
             putMeInList.setBackgroundColor(QtGui.QColor(255,0,0,255-(alphaValue*255)))
             self.listWidget_7.addItem(putMeInList)    
+#=======
+        #print "selectedDate from Widget "+str(selectedDate)
+        self.dateEdit.setDate(selectedDate) #datebox
+        self.calendarWidget_3.hide() #calanderbox
+        selectedDateString = selectedDate.toString("Mdyyyy")
+        #print "selectedDateString "+selectedDateString
+        #print "selectedDate: "+str(selectedDate)
+        selectedDate = selectedDate.toPyDate()
+        #print "selectedDate: "+str(selectedDate)
+        
+        for record in records:
+          self.checkEmp(record[5])
+          if(self.empStatus):
+              for employee in self.employees:
+                if(employee[0] == record[5]):
+                  color = employee[1]
+                  color = re.sub('[()]','',color)
+                  color = color.split(',')
+              #print "MADE IT PAST CHECKEMP"
+              #print "color "+str(color)
+            #self.checkStat(record[4])
+            #if(self.statStatus):
+              startDate = record[0]
+              #print "startDate "+str(startDate)
+              endDate = record[1]
+              #print "endDate "+str(endDate)
+              #print "selectedDate "+str(selectedDate)
+              deltaStartEndDate = endDate - startDate
+              #print "deltaStartEndDate "+str(deltaStartEndDate.total_seconds())
+              deltaDate = endDate - selectedDate
+              #print "deltaDate "+str(deltaDate.total_seconds())
+              if( deltaStartEndDate.total_seconds() > 0):
+                alphaValue = deltaDate.total_seconds() / deltaStartEndDate.total_seconds()
+              else:
+                alphaValue = -2;
+              #print "alphaValue "+str(alphaValue)
+              if (selectedDate <= endDate and selectedDate >= startDate ):
+                #print "startDate: "+ startDate.__repr__()
+                #print "date: "+selectedDate.__repr__()
+                #print "endDate: "+endDate.__repr__()
+                putMeInList = QtGui.QListWidgetItem(self.listWidget_7)
+                putMeInList.setText(record[2]+", "+record[3]+", "+record[4]+", "+record[5])
+                putMeInList.setBackgroundColor(QtGui.QColor(int(color[0]),int(color[1]),int(color[2]),255-(alphaValue*255)))
+                self.listWidget_7.addItem(putMeInList)    
+#>>>>>>> 59a5cea1287bb21d6dea58be210c384e80fa0a7a
 
     def fill_labels1(self, p_Date):
         day = int(p_Date.dayOfWeek())
@@ -250,7 +628,7 @@ class Ui_MainWindow(object):
            p_Date=p_Date.addDays(1)
            self.label_14.setText(QtGui.QApplication.translate("MainWindow", p_Date.toString("dddd MMM dd"), None, QtGui.QApplication.UnicodeUTF8))
            p_Date=p_Date.addDays(1)
-           self.label_15.setText(QtGui.QApplication.translate("MainWindow", p_Date.toString("dddd MMM dd"), None, QtGui.QApplication.UnicodeUTF8))
+           self.label_15.setText(QGui.QApplication.translate("MainWindow", p_Date.toString("dddd MMM dd"), None, QtGui.QApplication.UnicodeUTF8))
            p_Date=p_Date.addDays(1)
            self.label_16.setText(QtGui.QApplication.translate("MainWindow", p_Date.toString("dddd MMM dd"), None, QtGui.QApplication.UnicodeUTF8))
            p_Date=p_Date.addDays(1)
@@ -816,6 +1194,8 @@ class Ui_MainWindow(object):
         self.actionRemEmp = QtGui.QAction(MainWindow)
         self.actionRemEmp.setObjectName(_fromUtf8("actionRemEmp"))
         self.actionRemStat = QtGui.QAction(MainWindow)
+        self.actionContact = QtGui.QAction(MainWindow)
+        self.actionContact.setObjectName(_fromUtf8("actionContact"))
         self.actionRemStat.setObjectName(_fromUtf8("actionRemStat"))
         self.actionContact = QtGui.QAction(MainWindow)
         self.actionContact.setObjectName(_fromUtf8("actionContact"))
@@ -825,17 +1205,26 @@ class Ui_MainWindow(object):
         self.menubar.addAction(self.menuFile.menuAction())
         self.menubar.addAction(self.menuHelp.menuAction())
         self.menuHelp.addAction(self.actionContact)
+#<<<<<<< HEAD
         self.label_22 = QtGui.QLabel(self.frame_2)
         self.label_22.setObjectName(_fromUtf8("label_22"))
         self.label_22.setGeometry(QtCore.QRect(40,95,191,101));
         myPixmap = QtGui.QPixmap(_fromUtf8('./data/Clemson_nobg.png'))
         myScaledPixmap = myPixmap.scaled(self.label_22.size(), QtCore.Qt.KeepAspectRatio)
         self.label_22.setPixmap(myScaledPixmap)
+#=======
+#>>>>>>> 59a5cea1287bb21d6dea58be210c384e80fa0a7a
         self.retranslateUi(MainWindow)
         self.TopFrameLayout.addWidget(self.pushButton_2)
         self.TopFrameLayout.addWidget(self.pushButton_3)
         self.toolBox.setCurrentIndex(1)
         self.populateCheckboxes()
+        self.label_22 = QtGui.QLabel(self.frame_2)
+        self.label_22.setObjectName(_fromUtf8("label_22"))
+        self.label_22.setGeometry(QtCore.QRect(40,95,191,101));
+        myPixmap = QtGui.QPixmap(_fromUtf8('./data/Clemson_nobg.png'))
+        myScaledPixmap = myPixmap.scaled(self.label_22.size(), QtCore.Qt.KeepAspectRatio)
+        self.label_22.setPixmap(myScaledPixmap)
         self.tabWidget.setCurrentIndex(2)
         QtCore.QObject.connect(self.pushButton, QtCore.SIGNAL(_fromUtf8("clicked()")), self.updateRecordsClicked)
         QtCore.QObject.connect(self.pushButton_2, QtCore.SIGNAL(_fromUtf8("clicked()")), self.addEmpClicked)
@@ -851,7 +1240,10 @@ class Ui_MainWindow(object):
         QtCore.QObject.connect(self.actionRemEmp, QtCore.SIGNAL(_fromUtf8("activated()")), self.remEmpClicked)
         QtCore.QObject.connect(self.actionRemStat, QtCore.SIGNAL(_fromUtf8("activated()")), self.remStatClicked)          
         QtCore.QObject.connect(self.actionContact, QtCore.SIGNAL(_fromUtf8("activated()")), self.contactClicked)
+#<<<<<<< HEAD
         
+#=======
+#>>>>>>> 59a5cea1287bb21d6dea58be210c384e80fa0a7a
 
     def retranslateUi(self, MainWindow):
         today = QtCore.QDate.currentDate()
@@ -881,14 +1273,20 @@ class Ui_MainWindow(object):
         self.actionRemEmp.setText(QtGui.QApplication.translate("MainWindow", "Remove Employee", None, QtGui.QApplication.UnicodeUTF8))
         self.actionRemStat.setText(QtGui.QApplication.translate("MainWindow", "Remove Status", None, QtGui.QApplication.UnicodeUTF8))
         self.actionContact.setText(QtGui.QApplication.translate("MainWindow", "Contact", None, QtGui.QApplication.UnicodeUTF8))
+#<<<<<<< HEAD
         #self.refreshCheckboxes()
+#=======
+ #self.refreshCheckboxes()
+#>>>>>>> 59a5cea1287bb21d6dea58be210c384e80fa0a7a
 
 if __name__ == "__main__":
     import sys
     xml = xmlparse.Xmlp()
     hpr = helper.Helper()
     employees = hpr.updateEmployee()
+    #print "employees "+str(employees)
     statuses = hpr.updateStatus()
+    #print "statuses "+str(statuses)
     records = xml.fetchRecords()
     app = QtGui.QApplication(sys.argv)
     MainWindow = QtGui.QMainWindow()

@@ -15,11 +15,12 @@ except AttributeError:
     def _translate(context, text, disambig):
         return QtGui.QApplication.translate(context, text, disambig)
 
-class Ui_Dialog(object):
+class Ui_Dialog(object): 
 
     def __init__(self, MW_Dlg):
 	self.mwD = MW_Dlg
 
+    tName = "placeholder"
     nName = "placeholder"
     h = helper.Helper()
     Dlg = None
@@ -27,10 +28,13 @@ class Ui_Dialog(object):
     def okClicked(self):
       self.nName = self.textEdit.toPlainText()
       if not(self.nName == ""):
-	self.h.addStatus(str(self.nName))
-	self.Dlg.accept()
-	self.mwD.statuses.append(str(self.nName))
-	self.mwD.refreshCheckboxes()
+        self.h.removeEmployee(str(self.nName))
+      self.Dlg.accept()
+      for entry in self.mwD.employees:
+        self.tName = entry[0]
+        if self.tName == self.nName:
+          self.mwD.employees.remove(entry)
+      self.mwD.refreshCheckboxes()
 
     def forCallback(self, D):
 	return D
@@ -46,7 +50,7 @@ class Ui_Dialog(object):
         self.buttonBox.setStandardButtons(QtGui.QDialogButtonBox.Cancel|QtGui.QDialogButtonBox.Ok)
         self.buttonBox.setObjectName(_fromUtf8("buttonBox"))
         self.label = QtGui.QLabel(Dialog)
-        self.label.setGeometry(QtCore.QRect(10, 20, 121, 17))
+        self.label.setGeometry(QtCore.QRect(10, 20, 200, 17))
         self.label.setObjectName(_fromUtf8("label"))
         self.textEdit = QtGui.QTextEdit(Dialog)
         self.textEdit.setGeometry(QtCore.QRect(10, 40, 341, 21))
@@ -58,8 +62,8 @@ class Ui_Dialog(object):
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
     def retranslateUi(self, Dialog):
-        Dialog.setWindowTitle(_translate("Dialog", "Add Status", None))
-        self.label.setText(_translate("Dialog", "Status to add:", None))
+        Dialog.setWindowTitle(_translate("Dialog", "Remove Employee", None))
+        self.label.setText(_translate("Dialog", "Employee to remove:", None))
 
 if __name__ == "__main__":
   import sys

@@ -1143,7 +1143,7 @@ class Ui_MainWindow(object):
         QtCore.QObject.connect(self.calendarWidget_2, QtCore.SIGNAL(_fromUtf8("clicked(QDate)")), self.calclicked2  )
         QtCore.QObject.connect(self.calendarWidget_3, QtCore.SIGNAL(_fromUtf8("clicked(QDate)")), self.calclicked3)
         QtCore.QObject.connect(self.actionExit, QtCore.SIGNAL(_fromUtf8("activated()")), sys.exit)
-        QtCore.QObject.connect(self.actionRemove_Employee, QtCore.SIGNAL(_fromUtf8("activated()")),self.remEmpClicked
+        #QtCore.QObject.connect(self.actionRemove_Employee, QtCore.SIGNAL(_fromUtf8("activated()")),self.remEmpClicked
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):

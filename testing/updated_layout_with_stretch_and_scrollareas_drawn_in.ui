@@ -123,15 +123,15 @@
          <bool>false</bool>
         </property>
         <property name="currentIndex">
-         <number>1</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="page_3">
          <property name="geometry">
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>200</width>
-           <height>536</height>
+           <width>190</width>
+           <height>552</height>
           </rect>
          </property>
          <attribute name="label">
@@ -169,25 +169,14 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>181</width>
-                <height>508</height>
+                <width>177</width>
+                <height>504</height>
                </rect>
               </property>
               <layout class="QFormLayout" name="formLayout_3">
-               <item row="0" column="0">
-                <widget class="QCheckBox" name="checkBox_2">
-                 <property name="text">
-                  <string>CheckBox</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="0">
-                <widget class="QCheckBox" name="checkBox">
-                 <property name="text">
-                  <string>CheckBox</string>
-                 </property>
-                </widget>
-               </item>
+               <property name="fieldGrowthPolicy">
+                <enum>QFormLayout::ExpandingFieldsGrow</enum>
+               </property>
               </layout>
              </widget>
             </widget>
@@ -200,8 +189,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>200</width>
-           <height>536</height>
+           <width>190</width>
+           <height>552</height>
           </rect>
          </property>
          <attribute name="label">
@@ -239,25 +228,14 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>181</width>
-                <height>517</height>
+                <width>177</width>
+                <height>513</height>
                </rect>
               </property>
               <layout class="QFormLayout" name="formLayout_4">
-               <item row="0" column="0">
-                <widget class="QCheckBox" name="checkBox_4">
-                 <property name="text">
-                  <string>CheckBox</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="0">
-                <widget class="QCheckBox" name="checkBox_3">
-                 <property name="text">
-                  <string>CheckBox</string>
-                 </property>
-                </widget>
-               </item>
+               <property name="fieldGrowthPolicy">
+                <enum>QFormLayout::ExpandingFieldsGrow</enum>
+               </property>
               </layout>
              </widget>
             </widget>
@@ -745,7 +723,7 @@
      <x>0</x>
      <y>0</y>
      <width>1123</width>
-     <height>26</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

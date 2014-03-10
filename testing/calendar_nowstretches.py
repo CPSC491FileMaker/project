@@ -38,8 +38,18 @@ class Ui_MainWindow(object):
     #statCheckBoxes = []    
     empStatus = False
     statStatus = False
-    
+
+    def openMenu(self,position):
+        menu = QtGui.QMenu()
+        clearAll= menu.addAction("Clear All")
+        action = menu.exec_(self.listWidget_7.mapToGlobal(position))
+        if action == clearAll:
+            self.listWidget_7.clear()
+
     def contactClicked(self):
+        print "stub"
+    
+    def aboutClicked(self):
         print "stub"
 
     def remEmpClicked(self):
@@ -1112,6 +1122,8 @@ class Ui_MainWindow(object):
         self.horizontalLayout_2.setObjectName(_fromUtf8("horizontalLayout_2"))
         self.listWidget_7 = QtGui.QListWidget(self.tab_3)
         self.listWidget_7.setObjectName(_fromUtf8("listWidget_7"))
+        self.listWidget_7.setSelectionMode(QtGui.QAbstractItemView.ExtendedSelection)
+        self.listWidget_7.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
         self.horizontalLayout_2.addWidget(self.listWidget_7)
         self.gridLayout_4.addLayout(self.horizontalLayout_2, 1, 0, 1, 3)
         self.tabWidget.addTab(self.tab_3, _fromUtf8(""))
@@ -1167,6 +1179,7 @@ class Ui_MainWindow(object):
         myPixmap = QtGui.QPixmap(_fromUtf8('./data/Clemson_nobg.png'))
         myScaledPixmap = myPixmap.scaled(self.label_22.size(), QtCore.Qt.KeepAspectRatio)
         self.label_22.setPixmap(myScaledPixmap)
+        self.listWidget_7.customContextMenuRequested.connect(self.openMenu)
         QtCore.QObject.connect(self.pushButton, QtCore.SIGNAL(_fromUtf8("clicked()")), self.updateRecordsClicked)
         QtCore.QObject.connect(self.pushButton_2, QtCore.SIGNAL(_fromUtf8("clicked()")), self.addEmpClicked)
         QtCore.QObject.connect(self.pushButton_3, QtCore.SIGNAL(_fromUtf8("clicked()")), self.addStatClicked)
@@ -1180,6 +1193,7 @@ class Ui_MainWindow(object):
         QtCore.QObject.connect(self.actionRemEmp, QtCore.SIGNAL(_fromUtf8("activated()")), self.remEmpClicked)
         QtCore.QObject.connect(self.actionRemStat, QtCore.SIGNAL(_fromUtf8("activated()")), self.remStatClicked)          
         QtCore.QObject.connect(self.actionContact, QtCore.SIGNAL(_fromUtf8("activated()")), self.contactClicked)
+        QtCore.QObject.connect(self.actionAbout, QtCore.SIGNAL(_fromUtf8("activated()")), self.aboutClicked) 
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):

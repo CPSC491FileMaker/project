@@ -25,7 +25,7 @@ class Ui_Dialog(object):
     Dlg = None
 
     def okClicked(self):
-      self.nName = self.textEdit.toPlainText()
+      self.nName = self.lineEdit.text()
       if not(self.nName == ""):
         self.h.removeStatus(str(self.nName))
       self.Dlg.accept()
@@ -50,9 +50,9 @@ class Ui_Dialog(object):
         self.label = QtGui.QLabel(Dialog)
         self.label.setGeometry(QtCore.QRect(10, 20, 200, 17))
         self.label.setObjectName(_fromUtf8("label"))
-        self.textEdit = QtGui.QTextEdit(Dialog)
-        self.textEdit.setGeometry(QtCore.QRect(10, 40, 341, 21))
-        self.textEdit.setObjectName(_fromUtf8("textEdit"))
+        self.lineEdit = QtGui.QLineEdit(Dialog)
+        self.lineEdit.setGeometry(QtCore.QRect(10, 40, 341, 21))
+        self.lineEdit.setObjectName(_fromUtf8("lineEdit"))
 
         self.retranslateUi(Dialog)
         QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL(_fromUtf8("accepted()")), self.okClicked)

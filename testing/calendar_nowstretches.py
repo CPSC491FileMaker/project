@@ -39,6 +39,21 @@ class Ui_MainWindow(object):
     empStatus = False
     statStatus = False
     
+    def contactClicked(self):
+        print "stub"
+
+    def remEmpClicked(self):
+      remEmpWindow = QtGui.QDialog()
+      remEmp = removeEmployee.Ui_Dialog(self)
+      remEmp.setupUi(remEmpWindow)
+      remEmpWindow.exec_()
+
+    def remStatClicked(self):
+      remStatWindow = QtGui.QDialog()
+      remStat = removeStatus.Ui_Dialog(self)
+      remStat.setupUi(remStatWindow)
+      remStatWindow.exec_()   
+
     def goodbye(self):
       currentdir = os.path.dirname(os.path.realpath(__file__))
       files = os.listdir(currentdir)
@@ -1095,16 +1110,14 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
         self.actionExit = QtGui.QAction(MainWindow)
         self.actionExit.setObjectName(_fromUtf8("actionExit"))
-        self.actionRemove_Employee = QtGui.QAction(MainWindow)
-        self.actionRemove_Employee.setObjectName(_fromUtf8("actionRemove_Employee"))
-        self.actionRemove_Status = QtGui.QAction(MainWindow)
-        self.actionRemove_Status.setObjectName(_fromUtf8("actionRemove_Status"))
+        self.actionRemEmp = QtGui.QAction(MainWindow)
+        self.actionRemStat = QtGui.QAction(MainWindow)
         self.actionContact = QtGui.QAction(MainWindow)
         self.actionContact.setObjectName(_fromUtf8("actionContact"))
         self.actionAbout = QtGui.QAction(MainWindow)
         self.actionAbout.setObjectName(_fromUtf8("actionAbout"))
-        self.menuFile.addAction(self.actionRemove_Employee)
-        self.menuFile.addAction(self.actionRemove_Status)
+        self.menuFile.addAction(self.actionRemEmp)
+        self.menuFile.addAction(self.actionRemStat)
         self.menuFile.addAction(self.actionExit)
         self.menuHelp.addSeparator()
         self.menuHelp.addAction(self.actionContact)
@@ -1143,7 +1156,9 @@ class Ui_MainWindow(object):
         QtCore.QObject.connect(self.calendarWidget_2, QtCore.SIGNAL(_fromUtf8("clicked(QDate)")), self.calclicked2  )
         QtCore.QObject.connect(self.calendarWidget_3, QtCore.SIGNAL(_fromUtf8("clicked(QDate)")), self.calclicked3)
         QtCore.QObject.connect(self.actionExit, QtCore.SIGNAL(_fromUtf8("activated()")), sys.exit)
-        QtCore.QObject.connect(self.actionRemove_Employee, QtCore.SIGNAL(_fromUtf8("activated()")),self.remEmpClicked
+        QtCore.QObject.connect(self.actionRemEmp, QtCore.SIGNAL(_fromUtf8("activated()")), self.remEmpClicked)
+        QtCore.QObject.connect(self.actionRemStat, QtCore.SIGNAL(_fromUtf8("activated()")), self.remStatClicked)          
+        QtCore.QObject.connect(self.actionContact, QtCore.SIGNAL(_fromUtf8("activated()")), self.contactClicked)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -1152,7 +1167,7 @@ class Ui_MainWindow(object):
         self.pushButton_2.setText(_translate("MainWindow", "Add Employee", None))
         self.pushButton_3.setText(_translate("MainWindow", "Add Status", None))
         self.pushButton.setText(_translate("MainWindow", "Update", None))
-        self.label_22.setText(_translate("MainWindow", "Banner Goes Here", None))
+        #self.label_22.setText(_translate("MainWindow", "Banner Goes Here", None))
         #self.checkBox_2.setText(_translate("MainWindow", "CheckBox", None))
         #self.checkBox.setText(_translate("MainWindow", "CheckBox", None))
         self.toolBox.setItemText(self.toolBox.indexOf(self.page_3), _translate("MainWindow", "Employees", None))
@@ -1173,8 +1188,8 @@ class Ui_MainWindow(object):
         self.menuFile.setTitle(_translate("MainWindow", "File", None))
         self.menuHelp.setTitle(_translate("MainWindow", "Help", None))
         self.actionExit.setText(_translate("MainWindow", "Exit", None))
-        self.actionRemove_Employee.setText(_translate("MainWindow", "Remove Employee", None))
-        self.actionRemove_Status.setText(_translate("MainWindow", "Remove Status", None))
+        self.actionRemEmp.setText(_translate("MainWindow", "Remove Employee", None))
+        self.actionRemStat.setText(_translate("MainWindow", "Remove Status", None))
         self.actionContact.setText(_translate("MainWindow", "Contact", None))
         self.actionAbout.setText(_translate("MainWindow", "About", None))
 

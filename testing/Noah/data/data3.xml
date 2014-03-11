@@ -1,9 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
 <Data>
   <Employees MODID="1">
+     <Person>
+	<Name>Daniel Austin</Name>
+	<Color>(255,10,20,255)</Color>
+     </Person>
      <Person>
         <Name>Tina LeMay</Name>
         <Color>(255,10,20,255)</Color>
      </Person>
+     <Person>
+        <Name>David Bishop</Name>
+        <Color>(255,10,20,255)</Color>
+     </Person>
+     <Person>
+        <Name>yep uhhuh</Name>
+        <Color>(255,10,20,255)</Color>
+     </Person>  
+
   </Employees>
   <Proj_statuses MODID="2">
      <Stat>Copy Creation</Stat>
@@ -14,6 +28,7 @@
      <Stat>Designing</Stat>
      <Stat>Design Review</Stat>
      <Stat>Design Revisions</Stat>
+     <Stat>Need Info</Stat>
      <Stat>Need Feedback</Stat>
      <Stat>Need Quotes</Stat>
      <Stat>Need Quotes / CB+D</Stat>
@@ -34,10 +49,8 @@
      <Stat>Need Cost</Stat>
      <Stat>On Hold...</Stat>
      <Stat>Cancelled</Stat>
-<<<<<<< HEAD
-     <Stat>test2</Stat><Stat>test43</Stat><Stat>Eating</Stat><Stat>Eating</Stat><Stat>Eating</Stat><Stat>Eating</Stat><Stat>Eating</Stat><Stat>Eating</Stat><Stat>Eating</Stat><Stat>Eating</Stat><Stat>Eating</Stat><Stat>Eating</Stat><Stat>Eating</Stat><Stat>Eating</Stat><Stat>Eating</Stat><Stat>Eating</Stat><Stat>Eating</Stat><Stat>Eating</Stat><Stat>Eating</Stat><Stat>Eating</Stat><Stat>Eating</Stat><Stat>Eating</Stat><Stat>Eating</Stat><Stat>Eating</Stat><Stat>Eating</Stat><Stat>Eating</Stat></Proj_statuses>
+     <Stat>Waffle</Stat>
+     <Stat>asdf;lkj</Stat>
+     <Stat>test</Stat>
+  </Proj_statuses>
 </Data>
-=======
-     </Proj_statuses>
-</Data>
->>>>>>> cd9050efc98dd12dc2747aefbabda93927df6b47

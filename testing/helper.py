@@ -1,14 +1,45 @@
 import xml.etree.ElementTree as et
+import os, time
 from xml.etree.ElementTree import Element
 from PyQt4 import QtCore, QtGui
 
 
 class Helper():
 
+  xml_file = './data/data.xml'
+  fileSize = os.stat(xml_file)
+  
   #initiatlizes the class and prepares an XMLtree for parsing
   def __init__(self):
     self.tree = et.parse('./data/data.xml')
     self.root = self.tree.getroot()
+
+  def initFileSize(self):
+    fileToCheck = os.stat(self.xml_file)
+    self.fileSize = fileToCheck.st_size
+
+  def checkFileSize(self, filename, oldSize):
+    needsUpdate = False
+    checkedFile = os.stat(filename)
+    checkSize = checkedFile.st_size
+    if not(checkSize == oldSize):
+      print "returns true - update needed"
+      needsUpdate = True
+      self.initFileSize()
+    else:
+      print "returns false - no update needed"
+    return needsUpdate
+
+  def updateTimer(self):
+    t0 = time.time()
+    while not (time.time() - t0 >= 5):
+      time.sleep(1)
+    else:
+      self.checkFileSize(self.xml_file, self.fileSize) 
+      self.updateTimer()
+
+  def test(self):
+    print 'blah'
 
   def write(self, filename):
     return self.tree.write(filename)
@@ -91,3 +122,5 @@ if __name__ == "__main__":
 
   A.addEmployee('Walter', '0x0000FF')
   A.addStatus('Eating')
+
+  A.updateTimer()

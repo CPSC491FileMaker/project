@@ -4,7 +4,7 @@
         <Name>Tina LeMay</Name>
         <Color>(255,10,20,255)</Color>
      </Person>
-  </Employees>
+<Person><Name>Walter</Name><Color>0x0000FF</Color></Person></Employees>
   <Proj_statuses MODID="2">
      <Stat>Copy Creation</Stat>
      <Stat>Copy Edit</Stat>
@@ -34,10 +34,4 @@
      <Stat>Need Cost</Stat>
      <Stat>On Hold...</Stat>
      <Stat>Cancelled</Stat>
-<<<<<<< HEAD
-     <Stat>test2</Stat><Stat>test43</Stat><Stat>Eating</Stat><Stat>Eating</Stat><Stat>Eating</Stat><Stat>Eating</Stat><Stat>Eating</Stat><Stat>Eating</Stat><Stat>Eating</Stat><Stat>Eating</Stat><Stat>Eating</Stat><Stat>Eating</Stat><Stat>Eating</Stat><Stat>Eating</Stat><Stat>Eating</Stat><Stat>Eating</Stat><Stat>Eating</Stat><Stat>Eating</Stat><Stat>Eating</Stat><Stat>Eating</Stat><Stat>Eating</Stat><Stat>Eating</Stat><Stat>Eating</Stat><Stat>Eating</Stat><Stat>Eating</Stat><Stat>Eating</Stat></Proj_statuses>
-</Data>
-=======
-     </Proj_statuses>
-</Data>
->>>>>>> cd9050efc98dd12dc2747aefbabda93927df6b47
+<Stat>Eating</Stat></Proj_statuses></Data>

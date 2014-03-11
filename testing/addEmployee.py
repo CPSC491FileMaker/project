@@ -18,7 +18,7 @@ except AttributeError:
 class Ui_Dialog(object): 
 
     def __init__(self, MW_Dlg):
-	self.mwD = MW_Dlg
+      self.mwD = MW_Dlg
 
     nColor = QtGui.QColor()
     nName = "placeholder"

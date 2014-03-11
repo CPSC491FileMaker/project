@@ -1,0 +1,2 @@
+add a settings section to the data.xml
+    -change the rate of update checking

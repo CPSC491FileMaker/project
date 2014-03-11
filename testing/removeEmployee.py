@@ -27,12 +27,15 @@ class Ui_Dialog(object):
 
     def okClicked(self):
       self.nName = self.lineEdit.text()
+      #print 'nName : ' + self.nName
       if not(self.nName == ""):
         self.h.removeEmployee(str(self.nName))
       self.Dlg.accept()
       for entry in self.mwD.employees:
         self.tName = entry[0]
+        #print 'compared to : ' + self.tName
         if self.tName == self.nName:
+          #print 'found'
           self.mwD.employees.remove(entry)
       self.mwD.refreshCheckboxes()
 

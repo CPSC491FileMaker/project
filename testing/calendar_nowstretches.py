@@ -31,6 +31,7 @@ except AttributeError:
 
 
 class Ui_MainWindow(object):
+
     
     employees = []
     statuses = []
@@ -362,7 +363,7 @@ class Ui_MainWindow(object):
                   putMeInList = QtGui.QListWidgetItem(self.listWidget_5)
                   #putMeInList.setWordWrap(True)
                   putMeInList.setText(record[0].isoformat()+"\n"+record[1].isoformat()+"\n"+record[2]+"\n"+record[3]+"\n"+record[4]+"\n"+record[5])
-                  putMeInList.setBackgroundColor(QtGui.QColor(int(color[0]),int(color[1]),int(color[2]),255-(alphaValue*255)))
+                  putMeInList.setBackgroundColor(QtGui.QColor(int(color[1]),int(color[2]),int(color[3]),255-(alphaValue*255)))
                   self.listWidget_5.addItem(putMeInList)
               elif(dayOfWeek == 1):#listWidget_6 tuesday
                 if (date <= endDate and date >= startDate ):
@@ -372,7 +373,7 @@ class Ui_MainWindow(object):
                   putMeInList = QtGui.QListWidgetItem(self.listWidget_6)
                   #putMeInList.setWordWrap(True)
                   putMeInList.setText(record[0].isoformat()+"\n"+record[1].isoformat()+"\n"+record[2]+"\n"+record[3]+"\n"+record[4]+"\n"+record[5])
-                  putMeInList.setBackgroundColor(QtGui.QColor(int(color[0]),int(color[1]),int(color[2]),255-(alphaValue*255)))
+                  putMeInList.setBackgroundColor(QtGui.QColor(int(color[1]),int(color[2]),int(color[3]),255-(alphaValue*255)))
                   self.listWidget_6.addItem(putMeInList)
               elif(dayOfWeek == 2):#listWidget_4 wednesday
                 if (date <= endDate and date >= startDate ):
@@ -382,7 +383,7 @@ class Ui_MainWindow(object):
                   putMeInList = QtGui.QListWidgetItem(self.listWidget_4)
                   #putMeInList.setWordWrap(True)
                   putMeInList.setText(record[0].isoformat()+"\n"+record[1].isoformat()+"\n"+record[2]+"\n"+record[3]+"\n"+record[4]+"\n"+record[5])
-                  putMeInList.setBackgroundColor(QtGui.QColor(int(color[0]),int(color[1]),int(color[2]),255-(alphaValue*255)))
+                  putMeInList.setBackgroundColor(QtGui.QColor(int(color[1]),int(color[2]),int(color[3]),255-(alphaValue*255)))
                   self.listWidget_4.addItem(putMeInList)
               elif(dayOfWeek == 3):#listWidget_3 thursday
                 if (date <= endDate and date >= startDate ):
@@ -392,7 +393,7 @@ class Ui_MainWindow(object):
                   putMeInList = QtGui.QListWidgetItem(self.listWidget_3)
                   #putMeInList.setWordWrap(True)
                   putMeInList.setText(record[0].isoformat()+"\n"+record[1].isoformat()+"\n"+record[2]+"\n"+record[3]+"\n"+record[4]+"\n"+record[5])
-                  putMeInList.setBackgroundColor(QtGui.QColor(int(color[0]),int(color[1]),int(color[2]),255-(alphaValue*255)))
+                  putMeInList.setBackgroundColor(QtGui.QColor(int(color[1]),int(color[2]),int(color[3]),255-(alphaValue*255)))
                   self.listWidget_3.addItem(putMeInList)
               elif(dayOfWeek == 4):#listWidget friday
                 if (date <= endDate and date >= startDate ):
@@ -402,7 +403,7 @@ class Ui_MainWindow(object):
                   putMeInList = QtGui.QListWidgetItem(self.listWidget)
                   #putMeInList.setWordWrap(True)
                   putMeInList.setText(record[0].isoformat()+"\n"+record[1].isoformat()+"\n"+record[2]+"\n"+record[3]+"\n"+record[4]+"\n"+record[5])
-                  putMeInList.setBackgroundColor(QtGui.QColor(int(color[0]),int(color[1]),int(color[2]),255-(alphaValue*255)))
+                  putMeInList.setBackgroundColor(QtGui.QColor(int(color[1]),int(color[2]),int(color[3]),255-(alphaValue*255)))
                   self.listWidget.addItem(putMeInList)
               elif(dayOfWeek == 5):#listWidget_8 saturday
                 if (date <= endDate and date >= startDate ):
@@ -412,7 +413,7 @@ class Ui_MainWindow(object):
                   putMeInList = QtGui.QListWidgetItem(self.listWidget_8)
                   #putMeInList.setWordWrap(True)                  
                   putMeInList.setText(record[0].isoformat()+"\n"+record[1].isoformat()+"\n"+record[2]+"\n"+record[3]+"\n"+record[4]+"\n"+record[5])
-                  putMeInList.setBackgroundColor(QtGui.QColor(int(color[0]),int(color[1]),int(color[2]),255-(alphaValue*255)))
+                  putMeInList.setBackgroundColor(QtGui.QColor(int(color[1]),int(color[2]),int(color[3]),255-(alphaValue*255)))
                   self.listWidget_8.addItem(putMeInList)
               elif(dayOfWeek == 6):#listWidget_2 sunday
                 if (date <= endDate and date >= startDate ):
@@ -422,7 +423,7 @@ class Ui_MainWindow(object):
                   putMeInList = QtGui.QListWidgetItem(self.listWidget_2)
                   #putMeInList.setWordWrap(True)
                   putMeInList.setText(record[0].isoformat()+"\n"+record[1].isoformat()+"\n"+record[2]+"\n"+record[3]+"\n"+record[4]+"\n"+record[5])
-                  putMeInList.setBackgroundColor(QtGui.QColor(int(color[0]),int(color[1]),int(color[2]),255-(alphaValue*255)))
+                  putMeInList.setBackgroundColor(QtGui.QColor(int(color[1]),int(color[2]),int(color[3]),255-(alphaValue*255)))
                   self.listWidget_2.addItem(putMeInList)
             #listWidget_2 == Sunday
     #listWidget_5 == Monday
@@ -453,8 +454,8 @@ class Ui_MainWindow(object):
                   color = re.sub('[()]','',color)
                   color = color.split(',')
 #<<<<<<< HEAD:testing/Noah/pycalendar.py
-                print "MADE IT PAST CHECKEMP"
-                print "color "+str(color)
+                #print "MADE IT PAST CHECKEMP"
+                #print "color "+str(color)
 #=======
               #print "MADE IT PAST CHECKEMP"
               #print "color "+str(color)
@@ -481,7 +482,7 @@ class Ui_MainWindow(object):
                 #print "endDate: "+endDate.__repr__()
                 putMeInList = QtGui.QListWidgetItem(self.listWidget_7)
                 putMeInList.setText(record[2]+", "+record[3]+", "+record[4]+", "+record[5])
-                putMeInList.setBackgroundColor(QtGui.QColor(int(color[0]),int(color[1]),int(color[2]),255-(alphaValue*255)))
+                putMeInList.setBackgroundColor(QtGui.QColor(int(color[1]),int(color[2]),int(color[3]),255-(alphaValue*255)))
                 self.listWidget_7.addItem(putMeInList) 
     
     def fill_labels1(self, p_Date):
@@ -1247,4 +1248,3 @@ if __name__ == "__main__":
     MainWindow.show()
     atexit.register(ui.goodbye)
     sys.exit(app.exec_())
- 

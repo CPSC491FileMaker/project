@@ -100,6 +100,7 @@ class Ui_MainWindow(object):
         ind += 1
         self.checkBox = QtGui.QCheckBox(self.scrollAreaWidgetContents)
         self.checkBox.setObjectName(_fromUtf8("checkBox"))
+        self.checkBox.setChecked(True)
         self.formLayout_3.addWidget(self.checkBox)    #formlayout3 contains employee checkboxes 
         #self.empCheckBoxes.append(self.checkBox)
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
@@ -111,6 +112,7 @@ class Ui_MainWindow(object):
         ind += 1
         self.checkBox_3 = QtGui.QCheckBox(self.scrollAreaWidgetContents_2)
         self.checkBox_3.setObjectName(_fromUtf8("checkBox3"))
+        self.checkBox_3.setChecked(True)
         self.formLayout_4.addWidget(self.checkBox_3) #formlayout4 containts status checkboxes
         #self.statCheckBoxes.append(self.checkBox_3)
         self.scrollArea_2.setWidget(self.scrollAreaWidgetContents_2)
@@ -1233,7 +1235,7 @@ class Ui_MainWindow(object):
 
 if __name__ == "__main__":
     import sys
-    timerProc = subprocess.Popen(["python","timer.py"],stdout=subprocess.PIPE,shell=False,preexec_fn=os.setsid)
+    timerProc = subprocess.Popen(["python","calTimer.py"],stdout=subprocess.PIPE,shell=False,preexec_fn=os.setsid)
     xml = xmlparse.Xmlp()
     hpr = helper.Helper()
     employees = hpr.updateEmployee()

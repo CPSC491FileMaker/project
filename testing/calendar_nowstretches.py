@@ -101,6 +101,7 @@ class Ui_MainWindow(object):
         self.checkBox = QtGui.QCheckBox(self.scrollAreaWidgetContents)
         self.checkBox.setObjectName(_fromUtf8("checkBox"))
         self.checkBox.setChecked(True)
+        QtCore.QObject.connect(self.checkBox, QtCore.SIGNAL(_fromUtf8("clicked(bool)")),self.checkBox_toggled)
         self.formLayout_3.addWidget(self.checkBox)    #formlayout3 contains employee checkboxes 
         #self.empCheckBoxes.append(self.checkBox)
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
@@ -113,11 +114,35 @@ class Ui_MainWindow(object):
         self.checkBox_3 = QtGui.QCheckBox(self.scrollAreaWidgetContents_2)
         self.checkBox_3.setObjectName(_fromUtf8("checkBox3"))
         self.checkBox_3.setChecked(True)
+        QtCore.QObject.connect(self.checkBox_3, QtCore.SIGNAL(_fromUtf8("clicked(bool)")),self.checkBox_toggled)
         self.formLayout_4.addWidget(self.checkBox_3) #formlayout4 containts status checkboxes
         #self.statCheckBoxes.append(self.checkBox_3)
         self.scrollArea_2.setWidget(self.scrollAreaWidgetContents_2)
         self.formLayout_2.setWidget(0,QtGui.QFormLayout.LabelRole,self.scrollArea_2)
         self.checkBox_3.setText(QtGui.QApplication.translate("MainWindow", status, None, QtGui.QApplication.UnicodeUTF8))
+    
+    def checkBox_toggled(self):
+        #self.clear_all_lists()
+        self.calclicked()
+        self.calclicked2()
+        self.calclicked3()
+
+    def clear_all_lists(self):
+        self.listWidget.clear()
+        self.listWidget_2.clear()
+        self.listWidget_3.clear()
+        self.listWidget_4.clear()
+        self.listWidget_5.clear()
+        self.listWidget_6.clear()
+        self.listWidget_7.clear()
+        self.listWidget_8.clear()
+        self.listWidget_9.clear()
+        self.listWidget_10.clear()
+        self.listWidget_11.clear()
+        self.listWidget_12.clear()
+        self.listWidget_13.clear()
+        self.listWidget_14.clear()
+        self.listWidget_15.clear()
     
     def refreshCheckboxes(self):
         for i in reversed(range(self.formLayout_3.count())):
@@ -170,11 +195,13 @@ class Ui_MainWindow(object):
     #weekly view
 
     def calclicked(self):
+        self.clear_all_lists()
         self.dateEdit_3.setDate(self.calendarWidget.selectedDate())
         self.fill_labels1((self.calendarWidget.selectedDate()))
         self.calendarWidget.hide() 
     
     def calclicked2(self):
+        self.clear_all_lists()
         #print "about to clear lists"
 
         #for i in range(self.horizontalLayout_4.count()):
@@ -436,7 +463,8 @@ class Ui_MainWindow(object):
     #listWidget_8 == Saturday
    
     def calclicked3(self):
-        self.listWidget_4.clear()
+        self.clear_all_lists()
+        #self.listWidget_4.clear()
         selectedDate = self.calendarWidget_3.selectedDate() #QDate
         #print "selectedDate from Widget "+str(selectedDate)
         self.dateEdit.setDate(selectedDate) #datebox
@@ -1197,6 +1225,7 @@ class Ui_MainWindow(object):
         QtCore.QObject.connect(self.actionRemStat, QtCore.SIGNAL(_fromUtf8("activated()")), self.remStatClicked)          
         QtCore.QObject.connect(self.actionContact, QtCore.SIGNAL(_fromUtf8("activated()")), self.contactClicked)
         QtCore.QObject.connect(self.actionAbout, QtCore.SIGNAL(_fromUtf8("activated()")), self.aboutClicked) 
+        
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
 

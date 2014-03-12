@@ -9,10 +9,9 @@
 
 from PyQt4 import QtCore, QtGui
 from PyQt4.QtCore import QDateTime
-import atexit,os,helper, xmlparse, addEmployee, addStatus, removeEmployee, removeStatus, re
+import atexit,os,signal,subprocess,helper, xmlparse, addEmployee, addStatus, removeEmployee, removeStatus, re
 from datetime import date
 import datetime
-
 
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
@@ -65,7 +64,8 @@ class Ui_MainWindow(object):
       remStat.setupUi(remStatWindow)
       remStatWindow.exec_()   
 
-    def goodbye(self):
+    def goodbye(self,proc):
+      os.killpg(proc.pid,signal.SIGTERM)
       currentdir = os.path.dirname(os.path.realpath(__file__))
       files = os.listdir(currentdir)
       for file in files:
@@ -1197,6 +1197,7 @@ class Ui_MainWindow(object):
         QtCore.QObject.connect(self.actionAbout, QtCore.SIGNAL(_fromUtf8("activated()")), self.aboutClicked) 
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
+
     def retranslateUi(self, MainWindow):
         today = QtCore.QDate.currentDate()
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow", None))
@@ -1232,6 +1233,7 @@ class Ui_MainWindow(object):
 
 if __name__ == "__main__":
     import sys
+    timerProc = subprocess.Popen(["python","timer.py"],stdout=subprocess.PIPE,shell=False,preexec_fn=os.setsid)
     xml = xmlparse.Xmlp()
     hpr = helper.Helper()
     employees = hpr.updateEmployee()
@@ -1246,5 +1248,5 @@ if __name__ == "__main__":
     ui.statuses = statuses
     ui.setupUi(MainWindow)
     MainWindow.show()
-    atexit.register(ui.goodbye)
+    atexit.register(ui.goodbye,timerProc)
     sys.exit(app.exec_())

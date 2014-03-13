@@ -6,7 +6,7 @@
      </Person>
 <Person><Name>Daniel Austin</Name><Color>(255, 255, 85, 0)</Color></Person><Person><Name>Someone</Name><Color>(255, 255, 170, 127)</Color></Person></Employees>
   <Proj_statuses MODID="2">
-     <Stat>Copy Creation</Stat>
+     <Stat>EDITCopy Creation</Stat>
      <Stat>Copy Edit</Stat>
      <Stat>Copy Review</Stat>
      <Stat>Copy Revisions</Stat>

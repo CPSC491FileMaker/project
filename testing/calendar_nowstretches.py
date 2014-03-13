@@ -14,7 +14,7 @@ import calTimer
 import atexit,os,signal,subprocess,helper, xmlparse, addEmployee, addStatus, removeEmployee, removeStatus, re
 from datetime import date
 import datetime
-import threading,Queue
+import threading
 
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
@@ -104,7 +104,8 @@ class Ui_MainWindow(object):
       records = xml.fetchRecords()  
       self.reparse() 
       self.refreshCheckboxes()
-      #self.checkBox_toggled()
+      self.checkBox_toggled()
+      self.pushButton.setText("Update")
 
     def populateCheckboxes(self):
       ind =2

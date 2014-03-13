@@ -28,8 +28,7 @@ class CalTimer(threading.Thread):
     if not(checkSize == oldSize):
         print "returns true - update needed"
         needsUpdate = True
-        #self.view.updateRecordsClicked() 
-        #self.view.reparse()
+        self.view.pushButton.setText("UPDATE NEEDED")
         self.initFileSize()
     else:
         print "returns false - no update needed"

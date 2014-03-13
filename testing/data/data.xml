@@ -4,7 +4,7 @@
         <Name>Tina LeMay</Name>
         <Color>(255,10,20,255)</Color>
      </Person>
-<Person><Name>Walter</Name><Color>0x0000FF</Color></Person></Employees>
+<Person><Name>Daniel Austin</Name><Color>(255, 255, 85, 0)</Color></Person><Person><Name>Someone</Name><Color>(255, 255, 170, 127)</Color></Person></Employees>
   <Proj_statuses MODID="2">
      <Stat>Copy Creation</Stat>
      <Stat>Copy Edit</Stat>

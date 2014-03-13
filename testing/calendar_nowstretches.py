@@ -92,10 +92,7 @@ class Ui_MainWindow(object):
       records = xml.fetchRecords()  
     
     def populateCheckboxes(self):
-      #self.empCheckBoxes = []
-      #self.statCheckBoxes = []
       ind =2
-      #self.formLayout_6.addWidget(self.pushButton_2)
       for person in self.employees:
         ind += 1
         self.checkBox = QtGui.QCheckBox(self.scrollAreaWidgetContents)
@@ -103,12 +100,10 @@ class Ui_MainWindow(object):
         self.checkBox.setChecked(True)
         QtCore.QObject.connect(self.checkBox, QtCore.SIGNAL(_fromUtf8("clicked(bool)")),self.checkBox_toggled)
         self.formLayout_3.addWidget(self.checkBox)    #formlayout3 contains employee checkboxes 
-        #self.empCheckBoxes.append(self.checkBox)
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
         self.formLayout.setWidget(0,QtGui.QFormLayout.LabelRole,self.scrollArea)
         self.checkBox.setText(QtGui.QApplication.translate("MainWindow", person[0], None, QtGui.QApplication.UnicodeUTF8))
       ind =2 
-      #self.formLayout_7.addWidget(self.pushButton_3)
       for status in self.statuses:
         ind += 1
         self.checkBox_3 = QtGui.QCheckBox(self.scrollAreaWidgetContents_2)
@@ -116,13 +111,11 @@ class Ui_MainWindow(object):
         self.checkBox_3.setChecked(True)
         QtCore.QObject.connect(self.checkBox_3, QtCore.SIGNAL(_fromUtf8("clicked(bool)")),self.checkBox_toggled)
         self.formLayout_4.addWidget(self.checkBox_3) #formlayout4 containts status checkboxes
-        #self.statCheckBoxes.append(self.checkBox_3)
         self.scrollArea_2.setWidget(self.scrollAreaWidgetContents_2)
         self.formLayout_2.setWidget(0,QtGui.QFormLayout.LabelRole,self.scrollArea_2)
         self.checkBox_3.setText(QtGui.QApplication.translate("MainWindow", status, None, QtGui.QApplication.UnicodeUTF8))
     
     def checkBox_toggled(self):
-        #self.clear_all_lists()
         self.calclicked()
         self.calclicked2()
         self.calclicked3()
@@ -158,41 +151,22 @@ class Ui_MainWindow(object):
             self.formLayout_4.removeItem(item) 
         self.populateCheckboxes()
     
-    #formLayout_6 == employee checkBoxes
    
     def checkEmp(self,employeeName):
       count = 0
-      #print "in checkEmp "
-      #for checkBox in self.empCheckBoxes:
       for i in range(self.formLayout_3.count()):
-        #print "cb.text "+str(i)+' '+self.formLayout_6.itemAt(i).widget().text()
         if (self.formLayout_3.itemAt(i).widget().text() == employeeName):
           self.empStatus = self.formLayout_3.itemAt(i).widget().isChecked()
-          #print "empStatus "+str(self.empStatus)
           return
         else:
           self.empStatus = False
 
     def checkStat(self,status):
-      #print "in checkStat "
-      #for checkBox in self.statCheckBoxes:
       for i in range(self.formLayout_4.count()):
-        #print "cb.text "+self.formLayout_7.itemAt(i).widget().text()
         if(self.formLayout_4.itemAt(i).widget().text() == status):
           self.statStatus = self.formLayout_4.itemAt(i).widget().isChecked()
-          #print "statStatus "+str(statStatus)
         else:
           self.statStatus = False
-
-    #horizontalLayout_4
-    #listWidget_2 == Sunday
-    #listWidget_5 == Monday
-    #listWidget_6 == Tuesday
-    #listWidget_4 == Wednesday
-    #listWidget_3 == Thursday
-    #listWidget == Friday
-    #listWidget_8 == Saturday
-    #weekly view
 
     def calclicked(self):
         self.clear_all_lists()
@@ -202,21 +176,9 @@ class Ui_MainWindow(object):
     
     def calclicked2(self):
         self.clear_all_lists()
-        #print "about to clear lists"
 
         #for i in range(self.horizontalLayout_4.count()):
-         # self.horizontalLayout_4.itemAt(i).widget().addItem('test')
-          #for item in allitems:
-           # print "i: "+str(i)+' '+item
-          # print str(self.horizontalLayout_4.itemAt(i).widget().contains())
-
-        for i in range(self.horizontalLayout_4.count()):
-         # allitems = self.horizontalLayout_4.itemAt(i).widget().findItems('',QtCore.Qt.MatchRegExp)
-          #for item in allitems:
-           # print "i: "+str(i)+' '+item
-          # print str(self.horizontalLayout_4.itemAt(i).widget().contains())
-
-          self.horizontalLayout_4.itemAt(i).widget().clear()
+        #  self.horizontalLayout_4.itemAt(i).widget().clear()
 
         selectedDate = self.calendarWidget_2.selectedDate()
         self.dateEdit_2.setDate(selectedDate)
@@ -225,6 +187,7 @@ class Ui_MainWindow(object):
         selectedDateDayOfWeek = selectedDate.dayOfWeek()
         selectedDate = selectedDate.toPyDate()
         rangeForSelectedDate = []
+
         if(selectedDateDayOfWeek == 1):#monday
           tempDate = selectedDate
           tempDate -= datetime.timedelta(days=1)
@@ -241,9 +204,6 @@ class Ui_MainWindow(object):
           rangeForSelectedDate.append(tempDate)
           tempDate += datetime.timedelta(days=1)
           rangeForSelectedDate.append(tempDate)
-          #print "rangeForSelectedDate"
-          #for date in rangeForSelectedDate:
-            #print date
         elif(selectedDateDayOfWeek == 2):#tuesday
           tempDate = selectedDate
           tempDate -= datetime.timedelta(days=2)
@@ -355,29 +315,21 @@ class Ui_MainWindow(object):
           rangeForSelectedDate.append(tempDate)
           tempDate += datetime.timedelta(days=1)
           rangeForSelectedDate.append(tempDate)
-          #print "rangeForSelectedDate"
-          #for date in rangeForSelectedDate:
-            #print date
 
         for date in rangeForSelectedDate:
-          #print "date "+str(date)
           dow = date.weekday()
-          #print "day of the week"+str(date.weekday())
           for record in records:
+            #make for both artist and/or editor
             self.checkEmp(record[5])
             if(self.empStatus):
-              #print "empStatus is true"
               for employee in self.employees:
                 if(employee[0] == record[5]):
                   color = employee[1]
                   color = re.sub('[()]','',color)
                   color = color.split(',')
-             #check statStatus
               startDate = record[0]
               endDate = record[1]
               dayOfWeek = date.weekday()
-              #selectedDate = selectedDate.toPyDate()
-              #print "selectedDate "+str(selectedDate)
               deltaStartEndDate = endDate - startDate
               deltaDate = endDate - date
               if (deltaStartEndDate.total_seconds() > 0):
@@ -386,75 +338,48 @@ class Ui_MainWindow(object):
                 alphaValue = -2
               if(dayOfWeek == 0):#listWidget_5 monday
                 if (date <= endDate and date >= startDate ):
-                  #print "startDate: "+ startDate.__repr__()
-                  #print "date: "+selectedDate.__repr__()
-                  #print "endDate: "+endDate.__repr__()
                   putMeInList = QtGui.QListWidgetItem(self.listWidget_5)
-                  #putMeInList.setWordWrap(True)
                   putMeInList.setText(record[0].isoformat()+"\n"+record[1].isoformat()+"\n"+record[2]+"\n"+record[3]+"\n"+record[4]+"\n"+record[5])
                   putMeInList.setBackgroundColor(QtGui.QColor(int(color[1]),int(color[2]),int(color[3]),255-(alphaValue*255)))
                   self.listWidget_5.addItem(putMeInList)
               elif(dayOfWeek == 1):#listWidget_6 tuesday
                 if (date <= endDate and date >= startDate ):
-                  #print "startDate: "+ startDate.__repr__()
-                  #print "date: "+selectedDate.__repr__()
-                  #print "endDate: "+endDate.__repr__()
                   putMeInList = QtGui.QListWidgetItem(self.listWidget_6)
-                  #putMeInList.setWordWrap(True)
                   putMeInList.setText(record[0].isoformat()+"\n"+record[1].isoformat()+"\n"+record[2]+"\n"+record[3]+"\n"+record[4]+"\n"+record[5])
                   putMeInList.setBackgroundColor(QtGui.QColor(int(color[1]),int(color[2]),int(color[3]),255-(alphaValue*255)))
                   self.listWidget_6.addItem(putMeInList)
               elif(dayOfWeek == 2):#listWidget_4 wednesday
                 if (date <= endDate and date >= startDate ):
-                  #print "startDate: "+ startDate.__repr__()
-                  #print "date: "+selectedDate.__repr__()
-                  #print "endDate: "+endDate.__repr__()
                   putMeInList = QtGui.QListWidgetItem(self.listWidget_4)
-                  #putMeInList.setWordWrap(True)
                   putMeInList.setText(record[0].isoformat()+"\n"+record[1].isoformat()+"\n"+record[2]+"\n"+record[3]+"\n"+record[4]+"\n"+record[5])
                   putMeInList.setBackgroundColor(QtGui.QColor(int(color[1]),int(color[2]),int(color[3]),255-(alphaValue*255)))
                   self.listWidget_4.addItem(putMeInList)
               elif(dayOfWeek == 3):#listWidget_3 thursday
                 if (date <= endDate and date >= startDate ):
-                  #print "startDate: "+ startDate.__repr__()
-                  #print "date: "+selectedDate.__repr__()
-                  #print "endDate: "+endDate.__repr__()
                   putMeInList = QtGui.QListWidgetItem(self.listWidget_3)
-                  #putMeInList.setWordWrap(True)
                   putMeInList.setText(record[0].isoformat()+"\n"+record[1].isoformat()+"\n"+record[2]+"\n"+record[3]+"\n"+record[4]+"\n"+record[5])
                   putMeInList.setBackgroundColor(QtGui.QColor(int(color[1]),int(color[2]),int(color[3]),255-(alphaValue*255)))
                   self.listWidget_3.addItem(putMeInList)
               elif(dayOfWeek == 4):#listWidget friday
                 if (date <= endDate and date >= startDate ):
-                  #print "startDate: "+ startDate.__repr__()
-                  #print "date: "+selectedDate.__repr__()
-                  #print "endDate: "+endDate.__repr__()
                   putMeInList = QtGui.QListWidgetItem(self.listWidget)
-                  #putMeInList.setWordWrap(True)
                   putMeInList.setText(record[0].isoformat()+"\n"+record[1].isoformat()+"\n"+record[2]+"\n"+record[3]+"\n"+record[4]+"\n"+record[5])
                   putMeInList.setBackgroundColor(QtGui.QColor(int(color[1]),int(color[2]),int(color[3]),255-(alphaValue*255)))
                   self.listWidget.addItem(putMeInList)
               elif(dayOfWeek == 5):#listWidget_8 saturday
                 if (date <= endDate and date >= startDate ):
-                  #print "startDate: "+ startDate.__repr__()
-                  #print "date: "+selectedDate.__repr__()
-                  #print "endDate: "+endDate.__repr__()
                   putMeInList = QtGui.QListWidgetItem(self.listWidget_8)
-                  #putMeInList.setWordWrap(True)                  
                   putMeInList.setText(record[0].isoformat()+"\n"+record[1].isoformat()+"\n"+record[2]+"\n"+record[3]+"\n"+record[4]+"\n"+record[5])
                   putMeInList.setBackgroundColor(QtGui.QColor(int(color[1]),int(color[2]),int(color[3]),255-(alphaValue*255)))
                   self.listWidget_8.addItem(putMeInList)
               elif(dayOfWeek == 6):#listWidget_2 sunday
                 if (date <= endDate and date >= startDate ):
-                  #print "startDate: "+ startDate.__repr__()
-                  #print "date: "+selectedDate.__repr__()
-                  #print "endDate: "+endDate.__repr__()
                   putMeInList = QtGui.QListWidgetItem(self.listWidget_2)
-                  #putMeInList.setWordWrap(True)
                   putMeInList.setText(record[0].isoformat()+"\n"+record[1].isoformat()+"\n"+record[2]+"\n"+record[3]+"\n"+record[4]+"\n"+record[5])
                   putMeInList.setBackgroundColor(QtGui.QColor(int(color[1]),int(color[2]),int(color[3]),255-(alphaValue*255)))
                   self.listWidget_2.addItem(putMeInList)
-            #listWidget_2 == Sunday
+
+    #listWidget_2 == Sunday
     #listWidget_5 == Monday
     #listWidget_6 == Tuesday
     #listWidget_4 == Wednesday
@@ -464,16 +389,11 @@ class Ui_MainWindow(object):
    
     def calclicked3(self):
         self.clear_all_lists()
-        #self.listWidget_4.clear()
         selectedDate = self.calendarWidget_3.selectedDate() #QDate
-        #print "selectedDate from Widget "+str(selectedDate)
         self.dateEdit.setDate(selectedDate) #datebox
         self.calendarWidget_3.hide() #calanderbox
         selectedDateString = selectedDate.toString("Mdyyyy")
-        #print "selectedDateString "+selectedDateString
-        #print "selectedDate: "+str(selectedDate)
         selectedDate = selectedDate.toPyDate()
-        #print "selectedDate: "+str(selectedDate)
         
         for record in records:
           self.checkEmp(record[5])
@@ -483,33 +403,15 @@ class Ui_MainWindow(object):
                   color = employee[1]
                   color = re.sub('[()]','',color)
                   color = color.split(',')
-#<<<<<<< HEAD:testing/Noah/pycalendar.py
-                #print "MADE IT PAST CHECKEMP"
-                #print "color "+str(color)
-#=======
-              #print "MADE IT PAST CHECKEMP"
-              #print "color "+str(color)
-#>>>>>>> 59a5cea1287bb21d6dea58be210c384e80fa0a7a:testing/calendar_nowstretches.py
-            #self.checkStat(record[4])
-            #if(self.statStatus):
               startDate = record[0]
-              #print "startDate "+str(startDate)
               endDate = record[1]
-              #print "endDate "+str(endDate)
-              #print "selectedDate "+str(selectedDate)
               deltaStartEndDate = endDate - startDate
-              #print "deltaStartEndDate "+str(deltaStartEndDate.total_seconds())
               deltaDate = endDate - selectedDate
-              #print "deltaDate "+str(deltaDate.total_seconds())
               if( deltaStartEndDate.total_seconds() > 0):
                 alphaValue = deltaDate.total_seconds() / deltaStartEndDate.total_seconds()
               else:
                 alphaValue = -2;
-              #print "alphaValue "+str(alphaValue)
               if (selectedDate <= endDate and selectedDate >= startDate ):
-                #print "startDate: "+ startDate.__repr__()
-                #print "date: "+selectedDate.__repr__()
-                #print "endDate: "+endDate.__repr__()
                 putMeInList = QtGui.QListWidgetItem(self.listWidget_7)
                 putMeInList.setText(record[2]+", "+record[3]+", "+record[4]+", "+record[5])
                 putMeInList.setBackgroundColor(QtGui.QColor(int(color[1]),int(color[2]),int(color[3]),255-(alphaValue*255)))
@@ -870,7 +772,7 @@ class Ui_MainWindow(object):
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.toolBox.sizePolicy().hasHeightForWidth())
-        self.toolBox.setSizePolicy(sizePolicy)
+        self.toolBox.setSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
         self.toolBox.setMinimumSize(QtCore.QSize(200, 600))
         self.toolBox.setAutoFillBackground(False)
         self.toolBox.setObjectName(_fromUtf8("toolBox"))
@@ -921,8 +823,11 @@ class Ui_MainWindow(object):
         self.scrollAreaWidgetContents_2 = QtGui.QWidget()
         self.scrollAreaWidgetContents_2.setGeometry(QtCore.QRect(0, 0, 177, 510))
         self.scrollAreaWidgetContents_2.setObjectName(_fromUtf8("scrollAreaWidgetContents_2"))
+        self.scrollAreaWidgetContents_2.setSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
         self.formLayout_4 = QtGui.QFormLayout(self.scrollAreaWidgetContents_2)
         self.formLayout_4.setObjectName(_fromUtf8("formLayout_4"))
+        #self.formLayout_4.setSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
+
         #self.checkBox_4 = QtGui.QCheckBox(self.scrollAreaWidgetContents_2)
         #self.checkBox_4.setObjectName(_fromUtf8("checkBox_4"))
         #self.formLayout_4.setWidget(0, QtGui.QFormLayout.LabelRole, self.checkBox_4)
@@ -1224,8 +1129,29 @@ class Ui_MainWindow(object):
         QtCore.QObject.connect(self.actionRemEmp, QtCore.SIGNAL(_fromUtf8("activated()")), self.remEmpClicked)
         QtCore.QObject.connect(self.actionRemStat, QtCore.SIGNAL(_fromUtf8("activated()")), self.remStatClicked)          
         QtCore.QObject.connect(self.actionContact, QtCore.SIGNAL(_fromUtf8("activated()")), self.contactClicked)
-        QtCore.QObject.connect(self.actionAbout, QtCore.SIGNAL(_fromUtf8("activated()")), self.aboutClicked) 
-        
+        QtCore.QObject.connect(self.actionAbout, QtCore.SIGNAL(_fromUtf8("activated()")), self.aboutClicked)  
+    
+        self.listWidget_2.setStyleSheet("QScrollBar {height:0px}")
+        self.listWidget_5.setStyleSheet("QScrollBar {height:0px}")
+        self.listWidget_6.setStyleSheet("QScrollBar {height:0px}")
+        self.listWidget_4.setStyleSheet("QScrollBar {height:0px}")
+        self.listWidget_3.setStyleSheet("QScrollBar {height:0px}")
+        self.listWidget.setStyleSheet("QScrollBar {height:0px}")
+
+        self.listWidget_8.verticalScrollBar().valueChanged.connect(
+            self.listWidget_2.verticalScrollBar().setValue)
+        self.listWidget_8.verticalScrollBar().valueChanged.connect(
+            self.listWidget_5.verticalScrollBar().setValue)
+        self.listWidget_8.verticalScrollBar().valueChanged.connect(
+            self.listWidget_6.verticalScrollBar().setValue)
+        self.listWidget_8.verticalScrollBar().valueChanged.connect(
+            self.listWidget_4.verticalScrollBar().setValue)
+        self.listWidget_8.verticalScrollBar().valueChanged.connect(
+            self.listWidget_3.verticalScrollBar().setValue)
+        self.listWidget_8.verticalScrollBar().valueChanged.connect(
+            self.listWidget.verticalScrollBar().setValue)
+
+
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
 

@@ -80,13 +80,13 @@ class HandleLists:
 
   def weekly(self,selectedDate,allRecords):
     rangeForSelectedDate = self.weekFromADay(selectedDate)
-    myRecords = self.recordsForARange(rangeForSelectedDate,allRecords)
+    weekRecords = self.recordsForARange(rangeForSelectedDate,allRecords)
     selectedDateDayOfWeek = selectedDate.dayOfWeek()
     selectedDate = selectedDate.toPyDate()
 
     for date in rangeForSelectedDate:
         dow = date.weekday()
-        for record in myRecords:
+        for record in weekRecords:
           self.is_Selected(record)
           if(self.artStatus or self.editStatus):
             for employee in self.window.employees:

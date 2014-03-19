@@ -11,7 +11,7 @@
 from PyQt4 import QtCore, QtGui
 from PyQt4.QtCore import QDateTime
 import calTimer
-import atexit,os,signal,subprocess,helper, xmlparse, addEmployee, addStatus, removeEmployee, removeStatus, re
+import atexit,os,signal,subprocess,helper, xmlparse, addEmployee, addStatus, removeEmployee, removeStatus, re, handleLists
 from datetime import date
 import datetime
 import threading
@@ -200,9 +200,8 @@ class Ui_MainWindow(object):
         self.dateEdit_2.setDate(selectedDate)
         self.fill_labels2(selectedDate)
         self.calendarWidget_2.hide()
-        selectedDateDayOfWeek = selectedDate.dayOfWeek()
-        selectedDate = selectedDate.toPyDate()
-        rangeForSelectedDate = []
+        HL.weekly(selectedDate,records)
+        '''rangeForSelectedDate = []
 
         if(selectedDateDayOfWeek == 1):#monday
           tempDate = selectedDate
@@ -393,7 +392,7 @@ class Ui_MainWindow(object):
                   putMeInList = QtGui.QListWidgetItem(self.listWidget_2)
                   putMeInList.setText(record[0].isoformat()+"\n"+record[1].isoformat()+"\n"+record[2]+"\n"+record[3]+"\n"+record[4]+"\n"+record[5])
                   putMeInList.setBackgroundColor(QtGui.QColor(int(color[1]),int(color[2]),int(color[3]),255-(alphaValue*255)))
-                  self.listWidget_2.addItem(putMeInList)
+                  self.listWidget_2.addItem(putMeInList)'''
 
     #listWidget_2 == Sunday
     #listWidget_5 == Monday
@@ -410,29 +409,8 @@ class Ui_MainWindow(object):
         self.calendarWidget_3.hide() #calanderbox
         selectedDateString = selectedDate.toString("Mdyyyy")
         selectedDate = selectedDate.toPyDate()
-        
-        for record in records:
-          self.checkEmp(record[5])
-          if(self.empStatus):
-              for employee in self.employees:
-                if(employee[0] == record[5]):
-                  color = employee[1]
-                  color = re.sub('[()]','',color)
-                  color = color.split(',')
-              startDate = record[0]
-              endDate = record[1]
-              deltaStartEndDate = endDate - startDate
-              deltaDate = endDate - selectedDate
-              if( deltaStartEndDate.total_seconds() > 0):
-                alphaValue = deltaDate.total_seconds() / deltaStartEndDate.total_seconds()
-              else:
-                alphaValue = -2;
-              if (selectedDate <= endDate and selectedDate >= startDate ):
-                putMeInList = QtGui.QListWidgetItem(self.listWidget_7)
-                putMeInList.setText(record[2]+", "+record[3]+", "+record[4]+", "+record[5])
-                putMeInList.setBackgroundColor(QtGui.QColor(int(color[1]),int(color[2]),int(color[3]),255-(alphaValue*255)))
-                self.listWidget_7.addItem(putMeInList) 
-    
+        HL.daily(selectedDate,records)
+
     def fill_labels1(self, p_Date):
         day = int(p_Date.dayOfWeek())
         if day == 1:
@@ -1230,6 +1208,7 @@ if __name__ == "__main__":
     ui.employees = employees
     ui.statuses = statuses
     ui.setupUi(MainWindow)
+    HL = handleLists.HandleLists(ui)
     MainWindow.show()
     #atexit.register(ui.goodbye)
     sys.exit(app.exec_())

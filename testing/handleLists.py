@@ -29,28 +29,34 @@ class HandleLists:
             self.statStatus = self.window.formLayout_4.itemAt(j).widget().isChecked()
     return (self.artStatus or self.editStatus) and self.statStatus
 
+  def weekFromADay(self,selectedDate):
+    #QDate day of week monday = 1
+    selectedDateDayOfWeek = selectedDate.dayOfWeek()
+    selectedDate = selectedDate.toPyDate()
+    weekSelectedDateIsIn = []
+    tempDate = selectedDate - datetime.timedelta(days = selectedDateDayOfWeek)
+    weekSelectedDateIsIn.append(tempDate)
+    count = 0
+    while(count < 6):
+      tempDate += datetime.timedelta(days = 1)
+      print str(tempDate)
+      weekSelectedDateIsIn.append(tempDate)
+      count += 1
+    return (weekSelectedDateIsIn)
 
-  def checkEmp(self,employeeNames):
-    for employee in employeeNames:
-      for i in range(self.window.formLayout_3.count()):
-        if (self.window.formLayout_3.itemAt(i).widget().text() == employee):
-          self.empStatus = self.window.formLayout_3.itemAt(i).widget().isChecked()
-          return
-        else:
-          self.empStatus = False
-
-  def checkStat(self,status):
-      for i in range(self.window.formLayout_4.count()):
-        if(self.window.formLayout_4.itemAt(i).widget().text() == status):
-          self.statStatus = self.window.formLayout_4.itemAt(i).widget().isChecked()
-        else:
-          self.statStatus = False
+  def recordsForARange(self,rangeOfDates,allRecords):
+    relaventRecords = []
+    for date in rangeOfDates:
+      for record in allRecords:
+        if(date <= record[1] and date >= record[0]):
+          if record not in relaventRecords:
+            relaventRecords.append(record)
+    return relaventRecords
 
   #calclicked3, selectedDate is a PyDate
   def daily(self,selectedDate,allRecords):
     for record in allRecords:
       if(self.is_Selected(record)):
-      #self.checkEmp([record[5],record[6]])
         if(self.artStatus or self.editStatus):
           for employee in self.window.employees:
             if(employee[0] == record[5]):
@@ -74,124 +80,14 @@ class HandleLists:
           self.window.listWidget_7.addItem(putMeInList)
 
   def weekly(self,selectedDate,allRecords):
+    rangeForSelectedDate = self.weekFromADay(selectedDate)
+    myRecords = self.recordsForARange(rangeForSelectedDate,allRecords)
     selectedDateDayOfWeek = selectedDate.dayOfWeek()
     selectedDate = selectedDate.toPyDate()
-    rangeForSelectedDate = []
-    if(selectedDateDayOfWeek == 1):#monday
-      tempDate = selectedDate
-      tempDate -= datetime.timedelta(days=1)
-      rangeForSelectedDate.append(tempDate)
-      tempDate += datetime.timedelta(days=1)
-      rangeForSelectedDate.append(tempDate)
-      tempDate += datetime.timedelta(days=1)
-      rangeForSelectedDate.append(tempDate)
-      tempDate += datetime.timedelta(days=1)
-      rangeForSelectedDate.append(tempDate)
-      tempDate += datetime.timedelta(days=1)
-      rangeForSelectedDate.append(tempDate)
-      tempDate += datetime.timedelta(days=1)
-      rangeForSelectedDate.append(tempDate)
-      tempDate += datetime.timedelta(days=1)
-      rangeForSelectedDate.append(tempDate)
-    elif(selectedDateDayOfWeek == 2):#tuesday
-      tempDate = selectedDate
-      tempDate -= datetime.timedelta(days=2)
-      rangeForSelectedDate.append(tempDate)
-      tempDate += datetime.timedelta(days=1)
-      rangeForSelectedDate.append(tempDate)
-      tempDate += datetime.timedelta(days=1)
-      rangeForSelectedDate.append(tempDate)
-      tempDate += datetime.timedelta(days=1)
-      rangeForSelectedDate.append(tempDate)
-      tempDate += datetime.timedelta(days=1)
-      rangeForSelectedDate.append(tempDate)
-      tempDate += datetime.timedelta(days=1)
-      rangeForSelectedDate.append(tempDate)
-      tempDate += datetime.timedelta(days=1)
-      rangeForSelectedDate.append(tempDate)
-    elif(selectedDateDayOfWeek == 3):#wednesday
-      tempDate = selectedDate
-      tempDate -= datetime.timedelta(days=3)
-      rangeForSelectedDate.append(tempDate)
-      tempDate += datetime.timedelta(days=1)
-      rangeForSelectedDate.append(tempDate)
-      tempDate += datetime.timedelta(days=1)
-      rangeForSelectedDate.append(tempDate)
-      tempDate += datetime.timedelta(days=1)
-      rangeForSelectedDate.append(tempDate)
-      tempDate += datetime.timedelta(days=1)
-      rangeForSelectedDate.append(tempDate)
-      tempDate += datetime.timedelta(days=1)
-      rangeForSelectedDate.append(tempDate)
-      tempDate += datetime.timedelta(days=1)
-      rangeForSelectedDate.append(tempDate)
-    elif(selectedDateDayOfWeek == 4):#thursday
-      tempDate = selectedDate
-      tempDate -= datetime.timedelta(days=4)
-      rangeForSelectedDate.append(tempDate)
-      tempDate += datetime.timedelta(days=1)
-      rangeForSelectedDate.append(tempDate)
-      tempDate += datetime.timedelta(days=1)
-      rangeForSelectedDate.append(tempDate)
-      tempDate += datetime.timedelta(days=1)
-      rangeForSelectedDate.append(tempDate)
-      tempDate += datetime.timedelta(days=1)
-      rangeForSelectedDate.append(tempDate)
-      tempDate += datetime.timedelta(days=1)
-      rangeForSelectedDate.append(tempDate)
-      tempDate += datetime.timedelta(days=1)
-      rangeForSelectedDate.append(tempDate)
-    elif(selectedDateDayOfWeek == 5):#friday
-      tempDate = selectedDate
-      tempDate -= datetime.timedelta(days=5)
-      rangeForSelectedDate.append(tempDate)
-      tempDate += datetime.timedelta(days=1)
-      rangeForSelectedDate.append(tempDate)
-      tempDate += datetime.timedelta(days=1)
-      rangeForSelectedDate.append(tempDate)
-      tempDate += datetime.timedelta(days=1)
-      rangeForSelectedDate.append(tempDate)
-      tempDate += datetime.timedelta(days=1)
-      rangeForSelectedDate.append(tempDate)
-      tempDate += datetime.timedelta(days=1)
-      rangeForSelectedDate.append(tempDate)
-      tempDate += datetime.timedelta(days=1)
-      rangeForSelectedDate.append(tempDate)
-    elif(selectedDateDayOfWeek == 6):#saturday
-      tempDate = selectedDate
-      tempDate -= datetime.timedelta(days=6)
-      rangeForSelectedDate.append(tempDate)
-      tempDate += datetime.timedelta(days=1)
-      rangeForSelectedDate.append(tempDate)
-      tempDate += datetime.timedelta(days=1)
-      rangeForSelectedDate.append(tempDate)
-      tempDate += datetime.timedelta(days=1)
-      rangeForSelectedDate.append(tempDate)
-      tempDate += datetime.timedelta(days=1)
-      rangeForSelectedDate.append(tempDate)
-      tempDate += datetime.timedelta(days=1)
-      rangeForSelectedDate.append(tempDate)
-      tempDate += datetime.timedelta(days=1)
-      rangeForSelectedDate.append(tempDate)
-    elif(selectedDateDayOfWeek == 7):#sunday
-      tempDate = selectedDate
-      tempDate -= datetime.timedelta(days=7)
-      rangeForSelectedDate.append(tempDate)
-      tempDate += datetime.timedelta(days=1)
-      rangeForSelectedDate.append(tempDate)
-      tempDate += datetime.timedelta(days=1)
-      rangeForSelectedDate.append(tempDate)
-      tempDate += datetime.timedelta(days=1)
-      rangeForSelectedDate.append(tempDate)
-      tempDate += datetime.timedelta(days=1)
-      rangeForSelectedDate.append(tempDate)
-      tempDate += datetime.timedelta(days=1)
-      rangeForSelectedDate.append(tempDate)
-      tempDate += datetime.timedelta(days=1)
-      rangeForSelectedDate.append(tempDate)
+
     for date in rangeForSelectedDate:
         dow = date.weekday()
-        for record in allRecords:
+        for record in myRecords:
           self.is_Selected(record)
           if(self.artStatus or self.editStatus):
             for employee in self.window.employees:
@@ -210,44 +106,65 @@ class HandleLists:
             else:
               alphaValue = 255
             if(dayOfWeek == 0):#listWidget_5 monday
+              putMeInList = QtGui.QListWidgetItem(self.window.listWidget_5)
               if (date <= endDate and date >= startDate ):
-                putMeInList = QtGui.QListWidgetItem(self.window.listWidget_5)
                 putMeInList.setText(record[0].isoformat()+"\n"+record[1].isoformat()+"\n"+record[2]+"\n"+record[3]+"\n"+record[4]+"\n"+record[5])
                 putMeInList.setBackgroundColor(QtGui.QColor(int(color[1]),int(color[2]),int(color[3]),alphaValue))
-                self.window.listWidget_5.addItem(putMeInList)
+              else:
+                putMeInList.setText("\n\n\n\n\n")
+                putMeInList.setBackgroundColor(QtGui.QColor(0,255,0,255))
+              self.window.listWidget_5.addItem(putMeInList)
             elif(dayOfWeek == 1):#listWidget_6 tuesday
+              putMeInList = QtGui.QListWidgetItem(self.window.listWidget_6)
               if (date <= endDate and date >= startDate ):
-                putMeInList = QtGui.QListWidgetItem(self.window.listWidget_6)
                 putMeInList.setText(record[0].isoformat()+"\n"+record[1].isoformat()+"\n"+record[2]+"\n"+record[3]+"\n"+record[4]+"\n"+record[5])
                 putMeInList.setBackgroundColor(QtGui.QColor(int(color[1]),int(color[2]),int(color[3]),alphaValue))
-                self.window.listWidget_6.addItem(putMeInList)
+              else:
+                putMeInList.setText("\n\n\n\n\n")
+                putMeInList.setBackgroundColor(QtGui.QColor(0,255,0,255))
+              self.window.listWidget_6.addItem(putMeInList)
             elif(dayOfWeek == 2):#listWidget_4 wednesday
+              putMeInList = QtGui.QListWidgetItem(self.window.listWidget_4)
               if (date <= endDate and date >= startDate ):
-                putMeInList = QtGui.QListWidgetItem(self.window.listWidget_4)
                 putMeInList.setText(record[0].isoformat()+"\n"+record[1].isoformat()+"\n"+record[2]+"\n"+record[3]+"\n"+record[4]+"\n"+record[5])
                 putMeInList.setBackgroundColor(QtGui.QColor(int(color[1]),int(color[2]),int(color[3]),alphaValue))
-                self.window.listWidget_4.addItem(putMeInList)
+              else:
+                putMeInList.setText("\n\n\n\n\n")
+                putMeInList.setBackgroundColor(QtGui.QColor(0,255,0,255))
+              self.window.listWidget_4.addItem(putMeInList)
             elif(dayOfWeek == 3):#listWidget_3 thursday
+              putMeInList = QtGui.QListWidgetItem(self.window.listWidget_3)
               if (date <= endDate and date >= startDate ):
-                putMeInList = QtGui.QListWidgetItem(self.window.listWidget_3)
                 putMeInList.setText(record[0].isoformat()+"\n"+record[1].isoformat()+"\n"+record[2]+"\n"+record[3]+"\n"+record[4]+"\n"+record[5])
                 putMeInList.setBackgroundColor(QtGui.QColor(int(color[1]),int(color[2]),int(color[3]),alphaValue))
-                self.window.listWidget_3.addItem(putMeInList)
+              else:
+                putMeInList.setText("\n\n\n\n\n")
+                putMeInList.setBackgroundColor(QtGui.QColor(0,255,0,255))
+              self.window.listWidget_3.addItem(putMeInList)
             elif(dayOfWeek == 4):#listWidget friday
+              putMeInList = QtGui.QListWidgetItem(self.window.listWidget)
               if (date <= endDate and date >= startDate ):
-                putMeInList = QtGui.QListWidgetItem(self.window.listWidget)
                 putMeInList.setText(record[0].isoformat()+"\n"+record[1].isoformat()+"\n"+record[2]+"\n"+record[3]+"\n"+record[4]+"\n"+record[5])
                 putMeInList.setBackgroundColor(QtGui.QColor(int(color[1]),int(color[2]),int(color[3]),alphaValue))
-                self.window.listWidget.addItem(putMeInList)
+              else:
+                putMeInList.setText("\n\n\n\n\n")
+                putMeInList.setBackgroundColor(QtGui.QColor(0,255,0,255))
+              self.window.listWidget.addItem(putMeInList)
             elif(dayOfWeek == 5):#listWidget_8 saturday
+              putMeInList = QtGui.QListWidgetItem(self.window.listWidget_8)
               if (date <= endDate and date >= startDate ):
-                putMeInList = QtGui.QListWidgetItem(self.window.listWidget_8)
                 putMeInList.setText(record[0].isoformat()+"\n"+record[1].isoformat()+"\n"+record[2]+"\n"+record[3]+"\n"+record[4]+"\n"+record[5])
                 putMeInList.setBackgroundColor(QtGui.QColor(int(color[1]),int(color[2]),int(color[3]),alphaValue))
-                self.window.listWidget_8.addItem(putMeInList)
+              else:
+                putMeInList.setText("\n\n\n\n\n")
+                putMeInList.setBackgroundColor(QtGui.QColor(0,255,0,255))
+              self.window.listWidget_8.addItem(putMeInList)
             elif(dayOfWeek == 6):#listWidget_2 sunday
+              putMeInList = QtGui.QListWidgetItem(self.window.listWidget_2)
               if (date <= endDate and date >= startDate ):
-                putMeInList = QtGui.QListWidgetItem(self.window.listWidget_2)
                 putMeInList.setText(record[0].isoformat()+"\n"+record[1].isoformat()+"\n"+record[2]+"\n"+record[3]+"\n"+record[4]+"\n"+record[5])
                 putMeInList.setBackgroundColor(QtGui.QColor(int(color[1]),int(color[2]),int(color[3]),alphaValue))
-                self.window.listWidget_2.addItem(putMeInList)
+              else:
+                putMeInList.setText("\n\n\n\n\n")
+                putMeInList.setBackgroundColor(QtGui.QColor(0,255,0,255))
+              self.window.listWidget_2.addItem(putMeInList)

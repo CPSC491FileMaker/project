@@ -151,7 +151,14 @@ class Ui_MainWindow(object):
         self.listWidget_12.clear()
         self.listWidget_13.clear()
         self.listWidget_14.clear()
-        self.listWidget_15.clear()
+        self.listWidget_15.clear()        
+        self.listWidget_16.clear()
+        self.listWidget_17.clear()
+        self.listWidget_18.clear()
+        self.listWidget_19.clear()
+        self.listWidget_20.clear()
+        self.listWidget_21.clear()
+        self.listWidget_22.clear()
     
     def refreshCheckboxes(self):
         for i in reversed(range(self.formLayout_3.count())):
@@ -169,9 +176,11 @@ class Ui_MainWindow(object):
 
     def calclicked(self):
         self.clear_all_lists()
-        self.dateEdit_3.setDate(self.calendarWidget.selectedDate())
-        self.fill_labels1((self.calendarWidget.selectedDate()))
-        self.calendarWidget.hide() 
+        selectedDate = self.calendarWidget.selectedDate()
+        self.dateEdit_3.setDate(selectedDate)
+        self.fill_labels1(selectedDate)
+        self.calendarWidget.hide()
+        HL.biweekly(selectedDate,records)
     
     def calclicked2(self):
         self.clear_all_lists()

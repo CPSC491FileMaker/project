@@ -39,7 +39,6 @@ class HandleLists:
     count = 0
     while(count < 6):
       tempDate += datetime.timedelta(days = 1)
-      print str(tempDate)
       weekSelectedDateIsIn.append(tempDate)
       count += 1
     return (weekSelectedDateIsIn)

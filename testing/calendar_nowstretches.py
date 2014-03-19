@@ -137,14 +137,14 @@ class Ui_MainWindow(object):
         self.calclicked3()
 
     def clear_all_lists(self):
-        self.listWidget.clear()
-        self.listWidget_2.clear()
-        self.listWidget_3.clear()
-        self.listWidget_4.clear()
-        self.listWidget_5.clear()
-        self.listWidget_6.clear()
-        self.listWidget_7.clear()
-        self.listWidget_8.clear()
+        self.listWidget.clear()   #w1
+        self.listWidget_2.clear() #w1
+        self.listWidget_3.clear() #w1
+        self.listWidget_4.clear() #w1
+        self.listWidget_5.clear() #w1
+        self.listWidget_6.clear() #w1
+        self.listWidget_7.clear() #daily
+        self.listWidget_8.clear() #w1
         self.listWidget_9.clear()
         self.listWidget_10.clear()
         self.listWidget_11.clear()
@@ -175,7 +175,21 @@ class Ui_MainWindow(object):
         self.populateCheckboxes()
 
     def calclicked(self):
-        self.clear_all_lists()
+        self.listWidget_9.clear()
+        self.listWidget_10.clear()
+        self.listWidget_11.clear()
+        self.listWidget_12.clear()
+        self.listWidget_13.clear()
+        self.listWidget_14.clear()
+        self.listWidget_15.clear()        
+        self.listWidget_16.clear()
+        self.listWidget_17.clear()
+        self.listWidget_18.clear()
+        self.listWidget_19.clear()
+        self.listWidget_20.clear()
+        self.listWidget_21.clear()
+        self.listWidget_22.clear()
+#        self.clear_all_lists()
         selectedDate = self.calendarWidget.selectedDate()
         self.dateEdit_3.setDate(selectedDate)
         self.fill_labels1(selectedDate)
@@ -183,7 +197,14 @@ class Ui_MainWindow(object):
         HL.biweekly(selectedDate,records)
     
     def calclicked2(self):
-        self.clear_all_lists()
+        self.listWidget.clear()   #w1
+        self.listWidget_2.clear() #w1
+        self.listWidget_3.clear() #w1
+        self.listWidget_4.clear() #w1
+        self.listWidget_5.clear() #w1
+        self.listWidget_6.clear() #w1
+        self.listWidget_8.clear() #w1
+        #self.clear_all_lists()
         selectedDate = self.calendarWidget_2.selectedDate()
         self.dateEdit_2.setDate(selectedDate)
         self.fill_labels2(selectedDate)
@@ -199,7 +220,8 @@ class Ui_MainWindow(object):
     #listWidget_8 == Saturday
    
     def calclicked3(self):
-        self.clear_all_lists()
+        self.listWidget_7.clear() #daily
+        #self.clear_all_lists()
         selectedDate = self.calendarWidget_3.selectedDate() #QDate
         self.dateEdit.setDate(selectedDate) #datebox
         self.calendarWidget_3.hide() #calanderbox
@@ -927,7 +949,20 @@ class Ui_MainWindow(object):
         self.listWidget_4.setStyleSheet("QScrollBar {height:0px}")
         self.listWidget_3.setStyleSheet("QScrollBar {height:0px}")
         self.listWidget.setStyleSheet("QScrollBar {height:0px}")
-        
+
+        self.listWidget_9.setStyleSheet("QScrollBar {height:0px}")
+        self.listWidget_10.setStyleSheet("QScrollBar {height:0px}")
+        self.listWidget_11.setStyleSheet("QScrollBar {height:0px}")
+        self.listWidget_12.setStyleSheet("QScrollBar {height:0px}")
+        self.listWidget_13.setStyleSheet("QScrollBar {height:0px}")
+        self.listWidget_14.setStyleSheet("QScrollBar {height:0px}")        
+
+        self.listWidget_16.setStyleSheet("QScrollBar {height:0px}")
+        self.listWidget_17.setStyleSheet("QScrollBar {height:0px}")
+        self.listWidget_18.setStyleSheet("QScrollBar {height:0px}")
+        self.listWidget_19.setStyleSheet("QScrollBar {height:0px}")
+        self.listWidget_20.setStyleSheet("QScrollBar {height:0px}")
+        self.listWidget_21.setStyleSheet("QScrollBar {height:0px}")        
 
         self.listWidget_8.verticalScrollBar().valueChanged.connect(
             self.listWidget_2.verticalScrollBar().setValue)
@@ -943,6 +978,33 @@ class Ui_MainWindow(object):
             self.listWidget.verticalScrollBar().setValue)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
+        self.listWidget_15.verticalScrollBar().valueChanged.connect(
+            self.listWidget_14.verticalScrollBar().setValue)
+        self.listWidget_15.verticalScrollBar().valueChanged.connect(
+            self.listWidget_13.verticalScrollBar().setValue)
+        self.listWidget_15.verticalScrollBar().valueChanged.connect(
+            self.listWidget_12.verticalScrollBar().setValue)
+        self.listWidget_15.verticalScrollBar().valueChanged.connect(
+            self.listWidget_11.verticalScrollBar().setValue)
+        self.listWidget_15.verticalScrollBar().valueChanged.connect(
+            self.listWidget_10.verticalScrollBar().setValue)
+        self.listWidget_15.verticalScrollBar().valueChanged.connect(
+            self.listWidget_9.verticalScrollBar().setValue)
+        QtCore.QMetaObject.connectSlotsByName(MainWindow)
+
+        self.listWidget_22.verticalScrollBar().valueChanged.connect(
+            self.listWidget_16.verticalScrollBar().setValue)
+        self.listWidget_22.verticalScrollBar().valueChanged.connect(
+            self.listWidget_17.verticalScrollBar().setValue)
+        self.listWidget_22.verticalScrollBar().valueChanged.connect(
+            self.listWidget_18.verticalScrollBar().setValue)
+        self.listWidget_22.verticalScrollBar().valueChanged.connect(
+            self.listWidget_19.verticalScrollBar().setValue)
+        self.listWidget_22.verticalScrollBar().valueChanged.connect(
+            self.listWidget_20.verticalScrollBar().setValue)
+        self.listWidget_22.verticalScrollBar().valueChanged.connect(
+            self.listWidget_21.verticalScrollBar().setValue)
+        QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
         today = QtCore.QDate.currentDate()

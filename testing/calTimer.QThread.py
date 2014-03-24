@@ -12,8 +12,16 @@ class calTimer(QtCore.QThread):
     fileSize = os.stat(xml_file)
 
     def initFileSize(self):
+        print "initfilesize run"
         fileToCheck = os.stat(self.xml_file)
         self.fileSize = fileToCheck.st_size
 
     def run(self):
+        self.initFileSize()
+        testFileSize = self.fileSize
+        while testFileSize == self.fileSize:
+            print "No change - sleep 3"
+            #time.sleep(3)
+
+
         

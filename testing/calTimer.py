@@ -1,53 +1,27 @@
-import os, time
-import threading,ctypes
+#rewrite of original calTimer to use qthreads as opposed to native python threads
+#needed to make UI changes (impossible from native)
+#also attempting to alleviate need for sigterm to stop perm loop
 
-class CalTimer(threading.Thread):
- 
-  xml_file = './data/data.xml'
-  fileSize = os.stat(xml_file)
+from PyQt4 import QtCore
+import time,os,ctypes
+import sys
 
-  def __init__(self,ui):
-    threading.Thread.__init__(self)
-    print "Started calTimer thread"
-    self.view = ui
-    self.initFileSize()
-    self.updateTimer()
+class calTimer(QtCore.QThread):
 
-  def initFileSize(self):
-    fileToCheck = os.stat(self.xml_file)
-    self.fileSize = fileToCheck.st_size
+    xml_file = './data/data.xml'
+    fileSize = os.stat(xml_file)
 
-  def stop(self):
-    self.join()
-    sys.exit()
+    def initFileSize(self):
+        print "initfilesize run"
+        fileToCheck = os.stat(self.xml_file)
+        self.fileSize = fileToCheck.st_size
 
-  def checkFileSize(self, filename, oldSize):
-    needsUpdate = False
-    checkedFile = os.stat(filename)
-    checkSize = checkedFile.st_size
-    if not(checkSize == oldSize):
-        print "returns true - update needed"
-        needsUpdate = True
-        self.view.pushButton.setText("UPDATE NEEDED")
+    def run(self):
         self.initFileSize()
-    else:
-        print "returns false - no update needed"
-    return needsUpdate
-
-  def updateTimer(self):
-    t0 = time.time()
-    while not (time.time() - t0 >= 5):
-      time.sleep(1)
-    else:
-      self.checkFileSize(self.xml_file, self.fileSize)
-      self.updateTimer()
-
-  def test(self):
-    print 'blah'
+        testFileSize = self.fileSize
+        while testFileSize == self.fileSize:
+            print "No change - sleep 3"
+            #time.sleep(3)
 
 
-if __name__ == "__main__":
-
-  A = CalTimer()
-
-  A.updateTimer()
+        

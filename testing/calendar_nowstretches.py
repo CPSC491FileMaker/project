@@ -41,8 +41,16 @@ class Ui_MainWindow(object):
     #statCheckBoxes = []    
     empStatus = False
     statStatus = False
-    daemon = None
+    #daemon = None
 
+
+    def usingQThread(self):
+        qapp = QtCore.QCoreApplication([])
+        thread = calTimer.calTimer()
+        thread.finished.connect(qapp.exit)
+        thread.start()
+        print "Thread finished"
+        
     def openMenu(self,position):
         menu = QtGui.QMenu()
         clearAll= menu.addAction("Clear All")
@@ -1006,6 +1014,8 @@ class Ui_MainWindow(object):
             self.listWidget_21.verticalScrollBar().setValue)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
+        self.usingQThread()
+
     def retranslateUi(self, MainWindow):
         today = QtCore.QDate.currentDate()
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow", None))
@@ -1060,9 +1070,9 @@ if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)
     MainWindow = QtGui.QMainWindow()
     ui = Ui_MainWindow()
-    myThread = threading.Thread(target=calTimer.CalTimer, args=(ui,));
-    myThread.start()
-    ui.daemon = myThread
+    #myThread = threading.Thread(target=calTimer.CalTimer, args=(ui,));
+    #myThread.start()
+    #ui.daemon = myThread
     ui.employees = employees
     ui.statuses = statuses
     ui.setupUi(MainWindow)

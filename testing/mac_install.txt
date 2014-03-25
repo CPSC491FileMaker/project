@@ -1,0 +1,10 @@
+
+#install home brew
+ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
+
+#install pyqt
+brew install qt
+brew install sip
+brew install pyqt
+
+

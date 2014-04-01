@@ -32,7 +32,6 @@ except AttributeError:
     
 
 
-#class Ui_MainWindow(object):
 class Ui_MainWindow(QtGui.QMainWindow):
     
     employees = []
@@ -971,19 +970,26 @@ class Ui_MainWindow(QtGui.QMainWindow):
         self.listWidget_19.setStyleSheet("QScrollBar {height:0px}")
         self.listWidget_20.setStyleSheet("QScrollBar {height:0px}")
         self.listWidget_21.setStyleSheet("QScrollBar {height:0px}")        
+    #listWidget_2 == Sunday
+    #listWidget_5 == Monday
+    #listWidget_6 == Tuesday
+    #listWidget_4 == Wednesday
+    #listWidget_3 == Thursday
+    #listWidget == Friday
+    #listWidget_8 == Saturday
 
         self.listWidget_8.verticalScrollBar().valueChanged.connect(
-            self.listWidget_2.verticalScrollBar().setValue)
-        self.listWidget_8.verticalScrollBar().valueChanged.connect(
-            self.listWidget_5.verticalScrollBar().setValue)
-        self.listWidget_8.verticalScrollBar().valueChanged.connect(
-            self.listWidget_6.verticalScrollBar().setValue)
-        self.listWidget_8.verticalScrollBar().valueChanged.connect(
-            self.listWidget_4.verticalScrollBar().setValue)
+            self.listWidget.verticalScrollBar().setValue)
         self.listWidget_8.verticalScrollBar().valueChanged.connect(
             self.listWidget_3.verticalScrollBar().setValue)
         self.listWidget_8.verticalScrollBar().valueChanged.connect(
-            self.listWidget.verticalScrollBar().setValue)
+            self.listWidget_4.verticalScrollBar().setValue)
+        self.listWidget_8.verticalScrollBar().valueChanged.connect(
+            self.listWidget_6.verticalScrollBar().setValue)
+        self.listWidget_8.verticalScrollBar().valueChanged.connect(
+            self.listWidget_5.verticalScrollBar().setValue)
+        self.listWidget_8.verticalScrollBar().valueChanged.connect(
+            self.listWidget_2.verticalScrollBar().setValue)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
         self.listWidget_15.verticalScrollBar().valueChanged.connect(
@@ -1062,16 +1068,13 @@ if __name__ == "__main__":
     xml = xmlparse.Xmlp()
     hpr = helper.Helper()
     employees = hpr.updateEmployee()
-    #print "employees "+str(employees)
     statuses = hpr.updateStatus()
-    #print "statuses "+str(statuses)
     records = xml.fetchRecords()
     app = QtGui.QApplication(sys.argv)
     MainWindow = QtGui.QMainWindow()
     ui = Ui_MainWindow()
     myThread = threading.Thread(target=calTimer.CalTimer, args=(ui,));
     myThread.start()
-    #ui.daemon = myThread
     ui.employees = employees
     ui.statuses = statuses
     ui.setupUi(MainWindow)

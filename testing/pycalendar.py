@@ -11,7 +11,7 @@
 from PyQt4 import QtCore, QtGui
 from PyQt4.QtCore import QDateTime
 import calTimer
-import atexit,os,signal,subprocess,helper, xmlparse, addEmployee, addStatus, removeEmployee, removeStatus, re, handleLists
+import atexit,os,signal,subprocess,helper, xmlparse, About, addEmployee, addStatus, removeEmployee, removeStatus, re, handleLists
 from datetime import date
 import datetime
 import threading
@@ -30,7 +30,6 @@ except AttributeError:
     def _translate(context, text, disambig):
         return QtGui.QApplication.translate(context, text, disambig)
     
-
 
 class Ui_MainWindow(QtGui.QMainWindow):
     
@@ -56,12 +55,16 @@ class Ui_MainWindow(QtGui.QMainWindow):
         if action == clearAll:
             self.listWidget_7.clear()
 
-    def contactClicked(self):
-        print "stub"
+   #def contactClicked(self):
+   # 	print "stub"
+    	
+
     
     def aboutClicked(self):
-        print "stub"
-
+        AboutWindow = QtGui.QDialog()
+        myAbout = About.Ui_Dialog(self)
+        myAbout.setupUi(AboutWindow)
+        AboutWindow.exec_()
 
     
     def remEmpClicked(self):
@@ -899,15 +902,15 @@ class Ui_MainWindow(QtGui.QMainWindow):
         self.actionExit.setObjectName(_fromUtf8("actionExit"))
         self.actionRemEmp = QtGui.QAction(MainWindow)
         self.actionRemStat = QtGui.QAction(MainWindow)
-        self.actionContact = QtGui.QAction(MainWindow)
-        self.actionContact.setObjectName(_fromUtf8("actionContact"))
+        #self.actionContact = QtGui.QAction(MainWindow)
+        #self.actionContact.setObjectName(_fromUtf8("actionContact"))
         self.actionAbout = QtGui.QAction(MainWindow)
         self.actionAbout.setObjectName(_fromUtf8("actionAbout"))
         self.menuFile.addAction(self.actionRemEmp)
         self.menuFile.addAction(self.actionRemStat)
         self.menuFile.addAction(self.actionExit)
         self.menuHelp.addSeparator()
-        self.menuHelp.addAction(self.actionContact)
+        #self.menuHelp.addAction(self.actionContact)
         self.menuHelp.addAction(self.actionAbout)
         self.menubar.addAction(self.menuFile.menuAction())
         self.menubar.addAction(self.menuHelp.menuAction())
@@ -946,7 +949,7 @@ class Ui_MainWindow(QtGui.QMainWindow):
         QtCore.QObject.connect(self.actionExit, QtCore.SIGNAL(_fromUtf8("activated()")), self.close)
         QtCore.QObject.connect(self.actionRemEmp, QtCore.SIGNAL(_fromUtf8("activated()")), self.remEmpClicked)
         QtCore.QObject.connect(self.actionRemStat, QtCore.SIGNAL(_fromUtf8("activated()")), self.remStatClicked)          
-        QtCore.QObject.connect(self.actionContact, QtCore.SIGNAL(_fromUtf8("activated()")), self.contactClicked)
+        #QtCore.QObject.connect(self.actionContact, QtCore.SIGNAL(_fromUtf8("activated()")), self.contactClicked)
         QtCore.QObject.connect(self.actionAbout, QtCore.SIGNAL(_fromUtf8("activated()")), self.aboutClicked)  
         #QtCore.QObject.connect(self, QtCore.SIGNAL(_fromUtf8("destroyed()")), self.closeEvent)
         
@@ -1052,7 +1055,7 @@ class Ui_MainWindow(QtGui.QMainWindow):
         self.actionExit.setText(_translate("MainWindow", "Exit", None))
         self.actionRemEmp.setText(_translate("MainWindow", "Remove Employee", None))
         self.actionRemStat.setText(_translate("MainWindow", "Remove Status", None))
-        self.actionContact.setText(_translate("MainWindow", "Contact", None))
+        #self.actionContact.setText(_translate("MainWindow", "Contact", None))
         self.actionAbout.setText(_translate("MainWindow", "About", None))
 
     def reparse(self):

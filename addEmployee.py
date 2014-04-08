@@ -15,7 +15,10 @@ except AttributeError:
     def _translate(context, text, disambig):
         return QtGui.QApplication.translate(context, text, disambig)
 
-class Ui_Dialog(object):
+class Ui_Dialog(object): 
+
+    def __init__(self, MW_Dlg):
+      self.mwD = MW_Dlg
 
     nColor = QtGui.QColor()
     nName = "placeholder"
@@ -23,33 +26,30 @@ class Ui_Dialog(object):
     Dlg = None
 
     def pickColor(self):
-	p = self.frame.palette()
-        newColor = QtGui.QColorDialog.getColor()
-	p.setColor(self.frame.backgroundRole(), newColor)
-	self.frame.setPalette(p)
-	self.nColor = newColor
+      p = self.frame.palette()
+      newColor = QtGui.QColorDialog.getColor()
+      p.setColor(self.frame.backgroundRole(), newColor)
+      self.frame.setPalette(p)
+      self.nColor = newColor
 
-    #because Qt works with QColors, we've got to work with ARGB values.
-    #Until someone thinks of a better way to do this, I'm going to make
-    #it a 4-tuple.  Noah, you're the one dealing with colors, so if you
-    #think of a better way, let me know.  Alpha is first in a QColor
-    #then come the RGB values.
     def okClicked(self):
-      self.nName = self.textEdit.toPlainText()
+      self.nName = self.lineEdit.text()
       if not(self.nName == ""):
-	rgb_vals = [000, 000, 000, 000]
+        rgb_vals = [000, 000, 000, 000]
         rgb_vals[0] += self.nColor.alpha()
         rgb_vals[1] += self.nColor.red()
-        rgb_vals[2] += self.nColor.blue()
-	rgb_vals[3] += self.nColor.green()
-	self.h.addEmployee(str(self.nName),str((rgb_vals[0], rgb_vals[1], rgb_vals[2], rgb_vals[3])))
-	self.Dlg.accept()
+        rgb_vals[2] += self.nColor.green()
+        rgb_vals[3] += self.nColor.blue()
+        self.h.addEmployee(str(self.nName),str((rgb_vals[0], rgb_vals[1], rgb_vals[2], rgb_vals[3])))
+        self.Dlg.accept()
+        self.mwD.employees.append([str(self.nName),str((rgb_vals[0], rgb_vals[1], rgb_vals[2], rgb_vals[3]))])
+        self.mwD.refreshCheckboxes()
 
     def forCallback(self, D):
-	return D
+      return D
 
     def setupUi(self, Dialog):
-	self.Dlg = Dialog
+        self.Dlg = Dialog
         Dialog.setObjectName(_fromUtf8("Dialog"))
         Dialog.setWindowModality(QtCore.Qt.ApplicationModal)
         Dialog.resize(366, 133)
@@ -64,9 +64,9 @@ class Ui_Dialog(object):
         self.label_2 = QtGui.QLabel(Dialog)
         self.label_2.setGeometry(QtCore.QRect(10, 70, 191, 17))
         self.label_2.setObjectName(_fromUtf8("label_2"))
-        self.textEdit = QtGui.QTextEdit(Dialog)
-        self.textEdit.setGeometry(QtCore.QRect(10, 40, 341, 21))
-        self.textEdit.setObjectName(_fromUtf8("textEdit"))
+        self.lineEdit = QtGui.QLineEdit(Dialog)
+        self.lineEdit.setGeometry(QtCore.QRect(10, 40, 341, 21))
+        self.lineEdit.setObjectName(_fromUtf8("lineEdit"))
         self.pushButton = QtGui.QPushButton(Dialog)
         self.pushButton.setGeometry(QtCore.QRect(10, 90, 95, 27))
         self.pushButton.setObjectName(_fromUtf8("pushButton"))
@@ -75,7 +75,7 @@ class Ui_Dialog(object):
         self.frame.setFrameShape(QtGui.QFrame.StyledPanel)
         self.frame.setFrameShadow(QtGui.QFrame.Raised)
         self.frame.setObjectName(_fromUtf8("frame"))
-	self.frame.setAutoFillBackground(True)
+        self.frame.setAutoFillBackground(True)
 
         self.retranslateUi(Dialog)
         QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL(_fromUtf8("accepted()")), self.okClicked)

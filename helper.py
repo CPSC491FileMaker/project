@@ -1,10 +1,12 @@
 import xml.etree.ElementTree as et
+import os, time
 from xml.etree.ElementTree import Element
 from PyQt4 import QtCore, QtGui
 
 
 class Helper():
 
+  
   #initiatlizes the class and prepares an XMLtree for parsing
   def __init__(self):
     self.tree = et.parse('./data/data.xml')
@@ -53,10 +55,11 @@ class Helper():
 
   def removeStatus(self, toRemove):
 
-    for statuses in self.root:
-      for status in statuses:
+    proj_stats = self.root.find('Proj_statuses')
+    for status in proj_stats:
+      #for status in statuses:
         if (status.text == toRemove):
-           statuses.remove(status)
+           proj_stats.remove(status)
     self.write('./data/data.xml')
 
   def addEmployee(self, eName, eColor):
@@ -67,6 +70,8 @@ class Helper():
     color = Element('Color')
     name.text = eName
     color.text = eColor
+    #print 'to xml:  ' + name.text
+    #print 'to xml:  ' + color.text
     emp.append(name)
     emp.append(color)
     kid.append(emp)
@@ -88,3 +93,4 @@ if __name__ == "__main__":
 
   A.addEmployee('Walter', '0x0000FF')
   A.addStatus('Eating')
+

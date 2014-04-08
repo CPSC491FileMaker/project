@@ -1,10 +1,12 @@
 import xml.etree.ElementTree as et
+import os, time
 from xml.etree.ElementTree import Element
 from PyQt4 import QtCore, QtGui
 
 
 class Helper():
 
+  
   #initiatlizes the class and prepares an XMLtree for parsing
   def __init__(self):
     self.tree = et.parse('./data/data.xml')
@@ -68,8 +70,8 @@ class Helper():
     color = Element('Color')
     name.text = eName
     color.text = eColor
-    print 'appending ' + name.text
-    print 'appending ' + color.text
+    #print 'to xml:  ' + name.text
+    #print 'to xml:  ' + color.text
     emp.append(name)
     emp.append(color)
     kid.append(emp)
@@ -91,3 +93,4 @@ if __name__ == "__main__":
 
   A.addEmployee('Walter', '0x0000FF')
   A.addStatus('Eating')
+

@@ -41,12 +41,12 @@ class Ui_MainWindow(QtGui.QMainWindow):
     statStatus = False
     daemon = None
     
-    def usingQThread(self):
-        qapp = QtCore.QCoreApplication([])
-        thread = calTimer.calTimer()
-        thread.finished.connect(qapp.exit)
-        thread.start()
-        print "Thread finished"
+    #def usingQThread(self):
+    #    qapp = QtCore.QCoreApplication([])
+    #    thread = calTimer.calTimer()
+    #    thread.finished.connect(qapp.exit)
+    #    thread.start()
+    #    print "Thread finished"
         
     def openMenu(self,position):
         menu = QtGui.QMenu()

@@ -74,17 +74,20 @@ class Xmlp():
       
 
 #    print "Record Fetch"
-    for k in allfound:  #Associated Filemaker field:
-        print k
-  #    print k[0]        #open_date
-   #   print k[1]        #due_date_actual_delivery
-    #  print k[2]        #description
-     # print k[3]        #project_number
-      #print k[4]        #status
-      #print k[5]        #artist_name
-      #print k[6]        #editor_name
-      #print k[7]        #client_contact_name
-      #print "----End of Record"
+#<<<<<<< HEAD
+#=======
+    #for k in allfound:  #Associated Filemaker field:
+        #print k
+#>>>>>>> 59a5cea1287bb21d6dea58be210c384e80fa0a7a
+#      print k[0]        #open_date
+#      print k[1]        #due_date_actual_delivery
+#      print k[2]        #description
+#      print k[3]        #project_number
+#      print k[4]        #status
+#      print k[5]        #artist_name
+#      print k[6]        #editor_name
+#      print k[7]        #client_contact_name
+#      print "----End of Record"
 #    for record in allfound:
 #    	record[0] = #strip that bitch		and record [1]
 

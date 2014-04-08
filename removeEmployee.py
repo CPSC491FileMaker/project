@@ -26,13 +26,16 @@ class Ui_Dialog(object):
     Dlg = None
 
     def okClicked(self):
-      self.nName = self.textEdit.toPlainText()
+      self.nName = self.lineEdit.text()
+      #print 'nName : ' + self.nName
       if not(self.nName == ""):
         self.h.removeEmployee(str(self.nName))
       self.Dlg.accept()
       for entry in self.mwD.employees:
         self.tName = entry[0]
+        #print 'compared to : ' + self.tName
         if self.tName == self.nName:
+          #print 'found'
           self.mwD.employees.remove(entry)
       self.mwD.refreshCheckboxes()
 
@@ -52,9 +55,9 @@ class Ui_Dialog(object):
         self.label = QtGui.QLabel(Dialog)
         self.label.setGeometry(QtCore.QRect(10, 20, 200, 17))
         self.label.setObjectName(_fromUtf8("label"))
-        self.textEdit = QtGui.QTextEdit(Dialog)
-        self.textEdit.setGeometry(QtCore.QRect(10, 40, 341, 21))
-        self.textEdit.setObjectName(_fromUtf8("textEdit"))
+        self.lineEdit = QtGui.QLineEdit(Dialog)
+        self.lineEdit.setGeometry(QtCore.QRect(10, 40, 341, 21))
+        self.lineEdit.setObjectName(_fromUtf8("lineEdit"))
 
         self.retranslateUi(Dialog)
         QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL(_fromUtf8("accepted()")), self.okClicked)

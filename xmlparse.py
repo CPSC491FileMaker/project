@@ -10,7 +10,7 @@ class Xmlp():
 
   #initiatlizes the class and prepares an XMLtree for parsing
   def __init__(self):
-    self.tree = et.parse('data/realFM.xml')
+    self.tree = et.parse('/Volumes/Filemaker/BobaFettCalendarInterface/FMxml.xml')
     #self.tree = et.parse('FM2xml.xml')
     self.root = self.tree.getroot()
 
@@ -56,21 +56,56 @@ class Xmlp():
       #print record
     
     for record in allfound:
+        tempDateString0 = ''
+	if record[0] != "NONE":
+          if len(record[0]) >= 8:
+            print "record[0]: "+str(record[0])
+	    for char0 in record[0]:
+              if ord(char0) < 48 or ord(char0) > 57:
+                print "not an Int: "+char0
+                tempDateString0 += '/'
+                #record[0][char] = '/'
+              else:
+                tempDateString0 += char0
+	    record[0] = tempDateString0
+            print "record[0]: "+tempDateString0
+          else:
+	    #allfound.remove(record)
+            continue
+        else:
+          #allfound.remove(record)
+          continue
+
+        tempDateString1 = ''
+        if record[1] != "NONE":          
+          if len(record[0]) >= 8:
+            print "record[1]: "+str(record[1])
+	    for char1 in record[1]:
+              if ord(char1) < 48 or ord(char1) > 57:
+                tempDateString1 += '/'
+                #record[1][char] = '/'
+              else:
+                tempDateString1 += char1
+            record[1] = tempDateString1
+            print "record[1]: "+tempDateString1
+	  else:
+            record[1] = "NONE"	  
+
       #print record
-      dateInfo = record[0].split('/')
-      #print "dateInfo record[0] "+record[3]+' '+str(dateInfo)
-      #year day month
-      tempDate = date(int(dateInfo[2]),int(dateInfo[0]),int(dateInfo[1]))#pyDate
-      record[0] = tempDate
-      if (record[1] == 'NONE'):
-     #   print "record[1] == NONE "+record[3]
-        tempDate = date(int(dateInfo[2])+1,int(dateInfo[0]),int(dateInfo[1]))#pyDate
-        record[1] = tempDate
-      else:
-    #    print "record[1] != NONE "+record[3] 
-        dateInfo = record[1].split('/')
+        dateInfo = record[0].split('/')
+        print "dateInfo record[0] "+record[3]+' '+str(dateInfo)
+        #year day month
         tempDate = date(int(dateInfo[2]),int(dateInfo[0]),int(dateInfo[1]))#pyDate
-        record[1] = tempDate
+        record[0] = tempDate
+        if (record[1] == 'NONE'):
+          #print "record[1] == NONE "+record[3]
+          tempDate = date(int(dateInfo[2])+1,int(dateInfo[0]),int(dateInfo[1]))#pyDate
+          record[1] = tempDate
+        else:
+          dateInfo = record[1].split('/')
+          print "record[1] != NONE "+record[3]+str(dateInfo) 
+          tempDate = date(int(dateInfo[2]),int(dateInfo[0]),int(dateInfo[1]))#pyDate
+          record[1] = tempDate
       
 
 #    print "Record Fetch"
@@ -99,4 +134,5 @@ if __name__ == "__main__":
 
   A = Xmlp()
   A.fetchRecords()
+
 

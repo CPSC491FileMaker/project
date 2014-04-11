@@ -3,7 +3,7 @@ import threading,ctypes
 
 class CalTimer(threading.Thread):
  
-  xml_file = './data/data.xml'
+  xml_file = '/Volumes/Filemaker/BobaFettCalendarInterface/FMxml.xml'
   fileSize = os.stat(xml_file)
 
   def __init__(self,ui):

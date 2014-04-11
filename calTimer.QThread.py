@@ -8,7 +8,7 @@ import sys
 
 class calTimer(QtCore.QThread):
 
-    xml_file = './data/data.xml'
+    xml_file = '/Volumes/Filemaker/BobaFettCalendarInterface/FMxml.xml'
     fileSize = os.stat(xml_file)
 
     def initFileSize(self):
@@ -20,7 +20,7 @@ class calTimer(QtCore.QThread):
         self.initFileSize()
         testFileSize = self.fileSize
         while testFileSize == self.fileSize:
-            print "No change - sleep 3"
+            #print "No change - sleep 3"
             #time.sleep(3)
 
 

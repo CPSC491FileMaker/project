@@ -2,7 +2,7 @@ import os, time
 
 class CalTimer():
 
-  xml_file = './data/data.xml'
+  xml_file = '/Volumes/Filemaker/BobaFettCalendarInterface/FMxml.xml'
   fileSize = os.stat(xml_file)
 
 
@@ -24,8 +24,8 @@ class CalTimer():
 
   def updateTimer(self):
     t0 = time.time()
-    while not (time.time() - t0 >= 5):
-      time.sleep(1)
+    while not (time.time() - t0 >= 300):
+      time.sleep(299)
     else:
       self.checkFileSize(self.xml_file, self.fileSize)
       self.updateTimer()

@@ -48,7 +48,11 @@ class Xmlp():
                  rList.append("NONE")    
                else:
                  rList.append(data.text)
-           allfound.append(rList)
+           if(len(rList[0]) < 8):
+             rList.append(False)
+           else:
+             rList.append(True)
+             allfound.append(rList)
            rList = []
 
     #print "allfound is this big "+str(len(allfound))    
@@ -56,30 +60,23 @@ class Xmlp():
       #print record
     
     for record in allfound:
+      if(record[8]):
         tempDateString0 = ''
-	if record[0] != "NONE":
-          if len(record[0]) >= 8:
-            print "record[0]: "+str(record[0])
-	    for char0 in record[0]:
-              if ord(char0) < 48 or ord(char0) > 57:
-                print "not an Int: "+char0
-                tempDateString0 += '/'
-                #record[0][char] = '/'
-              else:
-                tempDateString0 += char0
-	    record[0] = tempDateString0
-            print "record[0]: "+tempDateString0
+        #print "record[0]: "+str(record[0])
+	for char0 in record[0]:
+          if ord(char0) < 48 or ord(char0) > 57:
+            #print "not an Int: "+char0
+            tempDateString0 += '/'
+            #record[0][char] = '/'
           else:
-	    #allfound.remove(record)
-            continue
-        else:
-          #allfound.remove(record)
-          continue
+            tempDateString0 += char0
+	record[0] = tempDateString0
+        #print "record[0]: "+tempDateString0
 
         tempDateString1 = ''
         if record[1] != "NONE":          
           if len(record[0]) >= 8:
-            print "record[1]: "+str(record[1])
+            #print "record[1]: "+str(record[1])
 	    for char1 in record[1]:
               if ord(char1) < 48 or ord(char1) > 57:
                 tempDateString1 += '/'
@@ -87,13 +84,13 @@ class Xmlp():
               else:
                 tempDateString1 += char1
             record[1] = tempDateString1
-            print "record[1]: "+tempDateString1
+            #print "record[1]: "+tempDateString1
 	  else:
             record[1] = "NONE"	  
 
       #print record
         dateInfo = record[0].split('/')
-        print "dateInfo record[0] "+record[3]+' '+str(dateInfo)
+        #print "dateInfo record[0] "+record[3]+' '+str(dateInfo)
         #year day month
         tempDate = date(int(dateInfo[2]),int(dateInfo[0]),int(dateInfo[1]))#pyDate
         record[0] = tempDate
@@ -103,7 +100,7 @@ class Xmlp():
           record[1] = tempDate
         else:
           dateInfo = record[1].split('/')
-          print "record[1] != NONE "+record[3]+str(dateInfo) 
+          #print "record[1] != NONE "+record[3]+str(dateInfo) 
           tempDate = date(int(dateInfo[2]),int(dateInfo[0]),int(dateInfo[1]))#pyDate
           record[1] = tempDate
       

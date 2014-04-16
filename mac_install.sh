@@ -1,4 +1,4 @@
-
+#!/bin/bash
 #install home brew
 ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
 

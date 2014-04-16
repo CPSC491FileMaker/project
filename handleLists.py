@@ -47,6 +47,7 @@ class HandleLists:
     relaventRecords = []
     for date in rangeOfDates:
       for record in allRecords:
+	#print "In RecordsForARange: date: "+str(date)+" record[0]: "+str(record[0])+" record[1] "+str(record[1])
         if(date <= record[1] and date >= record[0]):
           if record not in relaventRecords:
             relaventRecords.append(record)

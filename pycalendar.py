@@ -1,3 +1,4 @@
+#!/bin/bash
 # -*- coding: utf-8 -*-
 
 
@@ -887,7 +888,10 @@ class Ui_MainWindow(QtGui.QMainWindow):
         self.gridLayout.addWidget(self.tabWidget, 1, 0, 1, 1)
         self.horizontalLayout.addLayout(self.gridLayout)
         MainWindow.setCentralWidget(self.centralwidget)
+
         self.menubar = QtGui.QMenuBar(MainWindow)
+	self.menubar.setNativeMenuBar(False)  							#Heya
+
         self.menubar.setGeometry(QtCore.QRect(0, 0, 1123, 21))
         self.menubar.setObjectName(_fromUtf8("menubar"))
         self.menuFile = QtGui.QMenu(self.menubar)

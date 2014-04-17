@@ -35,39 +35,27 @@ class Ui_MainWindow(QtGui.QMainWindow):
     
     employees = []
     statuses = []
-    #empCheckBoxes = []
-    #statCheckBoxes = []    
     empStatus = False
     statStatus = False
     daemon = None
     
-    #def usingQThread(self):
-    #    qapp = QtCore.QCoreApplication([])
-    #    thread = calTimer.calTimer()
-    #    thread.finished.connect(qapp.exit)
-    #    thread.start()
-    #    print "Thread finished"
-        
-    def openMenu(self,position):
+       
+    def openMenu(self,position):            #right click in widget to autoclear method
         menu = QtGui.QMenu()
         clearAll= menu.addAction("Clear All")
         action = menu.exec_(self.listWidget_7.mapToGlobal(position))
         if action == clearAll:
             self.listWidget_7.clear()
 
-   #def contactClicked(self):
-   # 	print "stub"
-    	
 
-    
-    def aboutClicked(self):
+    def aboutClicked(self):                 #about tab action when clicked
         AboutWindow = QtGui.QDialog()
         myAbout = About.Ui_Dialog(self)
         myAbout.setupUi(AboutWindow)
         AboutWindow.exec_()
 
     
-    def remEmpClicked(self):
+    def remEmpClicked(self):				
       remEmpWindow = QtGui.QDialog()
       remEmp = removeEmployee.Ui_Dialog(self)
       remEmp.setupUi(remEmpWindow)
@@ -80,10 +68,10 @@ class Ui_MainWindow(QtGui.QMainWindow):
       remStatWindow.exec_()   
 
     
-    def goodbye(self):
-        self.closeEvent(self.close)
+    def goodbye(self):						#calls cleanup of temporary files in execution dir
+        self.closeEvent(self.close)			#and kills any threads
     
-    def closeEvent(self,event):
+    def closeEvent(self,event):             
       mypid = os.getpid()
       currentdir = os.path.dirname(os.path.realpath(__file__))
       files = os.listdir(currentdir)
@@ -108,7 +96,7 @@ class Ui_MainWindow(QtGui.QMainWindow):
       addEmp.setupUi(addEmpWindow)
       addEmpWindow.exec_()
 
-    def updateRecordsClicked(self):
+    def updateRecordsClicked(self):         
       print "updaterecordsclicked() called"
       records = xml.fetchRecords()  
       self.reparse() 
@@ -116,8 +104,8 @@ class Ui_MainWindow(QtGui.QMainWindow):
       self.checkBox_toggled()
       self.pushButton.setText("Update")
 
-    def populateCheckboxes(self):
-      ind =2
+    def populateCheckboxes(self):			#dynamically generated checkboxes in toolbar scroll
+      ind =2 								#also connects slot here
       for person in self.employees:
         ind += 1
         self.checkBox = QtGui.QCheckBox(self.scrollAreaWidgetContents)
@@ -140,7 +128,7 @@ class Ui_MainWindow(QtGui.QMainWindow):
         self.formLayout_2.setWidget(0,QtGui.QFormLayout.LabelRole,self.scrollArea_2)
         self.checkBox_3.setText(QtGui.QApplication.translate("MainWindow", status, None, QtGui.QApplication.UnicodeUTF8))
     
-    def checkBox_toggled(self):
+    def checkBox_toggled(self):          
         self.calclicked()
         self.calclicked2()
         self.calclicked3()
@@ -183,10 +171,10 @@ class Ui_MainWindow(QtGui.QMainWindow):
             self.formLayout_4.removeItem(item) 
         self.populateCheckboxes()
 
-    def calclicked(self):
-        self.listWidget_9.clear()
-        self.listWidget_10.clear()
-        self.listWidget_11.clear()
+    def calclicked(self):                                  #calendar clicked.
+        self.listWidget_9.clear()						   #clears / repopulates listwidgets with 
+        self.listWidget_10.clear()						   #appropriate dates from calendarWidget
+        self.listWidget_11.clear()	
         self.listWidget_12.clear()
         self.listWidget_13.clear()
         self.listWidget_14.clear()
@@ -205,7 +193,7 @@ class Ui_MainWindow(QtGui.QMainWindow):
         self.calendarWidget.hide()
         HL.biweekly(selectedDate,records)
     
-    def calclicked2(self):
+    def calclicked2(self):                        			#same as above but modifying different list widgets
         self.listWidget.clear()   #w1
         self.listWidget_2.clear() #w1
         self.listWidget_3.clear() #w1
@@ -213,7 +201,6 @@ class Ui_MainWindow(QtGui.QMainWindow):
         self.listWidget_5.clear() #w1
         self.listWidget_6.clear() #w1
         self.listWidget_8.clear() #w1
-        #self.clear_all_lists()
         selectedDate = self.calendarWidget_2.selectedDate()
         self.dateEdit_2.setDate(selectedDate)
         self.fill_labels2(selectedDate)
@@ -228,7 +215,8 @@ class Ui_MainWindow(QtGui.QMainWindow):
     #listWidget == Friday
     #listWidget_8 == Saturday
    
-    def calclicked3(self):
+    def calclicked3(self):									#same as above but modifying different list widgets
+        self.listWidget.clear()   #w1
         self.listWidget_7.clear() #daily
         #self.clear_all_lists()
         selectedDate = self.calendarWidget_3.selectedDate() #QDate
@@ -238,8 +226,8 @@ class Ui_MainWindow(QtGui.QMainWindow):
         selectedDate = selectedDate.toPyDate()
         HL.daily(selectedDate,records)
 
-    def fill_labels1(self, p_Date):
-        day = int(p_Date.dayOfWeek())
+    def fill_labels1(self, p_Date):					#Statically assigning date passed from calendar on click/load iot populate
+        day = int(p_Date.dayOfWeek())				#the labels with the correct date
         if day == 1:
            sun=p_Date.addDays(-1)
            self.label_8.setText(QtGui.QApplication.translate("MainWindow", sun.toString("dddd MMM dd"), None, QtGui.QApplication.UnicodeUTF8))
@@ -438,7 +426,7 @@ class Ui_MainWindow(QtGui.QMainWindow):
            self.label_21.setText(QtGui.QApplication.translate("MainWindow", p_Date.toString("dddd MMM dd"), None, QtGui.QApplication.UnicodeUTF8))
 
     
-    def fill_labels2(self, p_Date):
+    def fill_labels2(self, p_Date):								#same as above
         day = int(p_Date.dayOfWeek())
         if day == 1:
            sun=p_Date.addDays(-1)
@@ -540,8 +528,8 @@ class Ui_MainWindow(QtGui.QMainWindow):
            self.label.setText(QtGui.QApplication.translate("MainWindow", p_Date.toString("dddd MMM dd"), None, QtGui.QApplication.UnicodeUTF8))
    
    
-    def setupUi(self, MainWindow):
-        MainWindow.setObjectName(_fromUtf8("MainWindow"))
+    def setupUi(self, MainWindow):											#primary GUI generation conducted here
+        MainWindow.setObjectName(_fromUtf8("MainWindow"))					#all statically generated GUI items created.
         MainWindow.resize(1123, 871)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
@@ -617,12 +605,6 @@ class Ui_MainWindow(QtGui.QMainWindow):
         self.scrollAreaWidgetContents.setObjectName(_fromUtf8("scrollAreaWidgetContents"))
         self.formLayout_3 = QtGui.QFormLayout(self.scrollAreaWidgetContents)
         self.formLayout_3.setObjectName(_fromUtf8("formLayout_3"))
-        #self.checkBox_2 = QtGui.QCheckBox(self.scrollAreaWidgetContents)
-        #self.checkBox_2.setObjectName(_fromUtf8("checkBox_2"))
-        #self.formLayout_3.setWidget(0, QtGui.QFormLayout.LabelRole, self.checkBox_2)
-        #self.checkBox = QtGui.QCheckBox(self.scrollAreaWidgetContents)
-        #self.checkBox.setObjectName(_fromUtf8("checkBox"))
-        #self.formLayout_3.setWidget(1, QtGui.QFormLayout.LabelRole, self.checkBox)
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
         self.formLayout.setWidget(0, QtGui.QFormLayout.SpanningRole, self.scrollArea)
         self.toolBox.addItem(self.page_3, _fromUtf8(""))
@@ -647,15 +629,6 @@ class Ui_MainWindow(QtGui.QMainWindow):
         self.scrollAreaWidgetContents_2.setSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
         self.formLayout_4 = QtGui.QFormLayout(self.scrollAreaWidgetContents_2)
         self.formLayout_4.setObjectName(_fromUtf8("formLayout_4"))
-        #self.formLayout_4.setSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
-
-        #self.checkBox_4 = QtGui.QCheckBox(self.scrollAreaWidgetContents_2)
-        #self.checkBox_4.setObjectName(_fromUtf8("checkBox_4"))
-        #self.formLayout_4.setWidget(0, QtGui.QFormLayout.LabelRole, self.checkBox_4)
-        #self.checkBox_3 = QtGui.QCheckBox(self.scrollAreaWidgetContents_2)
-        #self.checkBox_3.setObjectName(_fromUtf8("checkBox_3"))
-        #self.formLayout_4.setWidget(1, QtGui.QFormLayout.LabelRole, self.checkBox_3)
-        #self.scrollArea_2.setWidget(self.scrollAreaWidgetContents_2)
         self.formLayout_2.setWidget(0, QtGui.QFormLayout.LabelRole, self.scrollArea_2)
         self.toolBox.addItem(self.page_4, _fromUtf8(""))
         self.verticalLayout.addWidget(self.toolBox)
@@ -902,15 +875,12 @@ class Ui_MainWindow(QtGui.QMainWindow):
         self.actionExit.setObjectName(_fromUtf8("actionExit"))
         self.actionRemEmp = QtGui.QAction(MainWindow)
         self.actionRemStat = QtGui.QAction(MainWindow)
-        #self.actionContact = QtGui.QAction(MainWindow)
-        #self.actionContact.setObjectName(_fromUtf8("actionContact"))
         self.actionAbout = QtGui.QAction(MainWindow)
         self.actionAbout.setObjectName(_fromUtf8("actionAbout"))
         self.menuFile.addAction(self.actionRemEmp)
         self.menuFile.addAction(self.actionRemStat)
         self.menuFile.addAction(self.actionExit)
         self.menuHelp.addSeparator()
-        #self.menuHelp.addAction(self.actionContact)
         self.menuHelp.addAction(self.actionAbout)
         self.menubar.addAction(self.menuFile.menuAction())
         self.menubar.addAction(self.menuHelp.menuAction())
@@ -949,9 +919,7 @@ class Ui_MainWindow(QtGui.QMainWindow):
         QtCore.QObject.connect(self.actionExit, QtCore.SIGNAL(_fromUtf8("activated()")), self.close)
         QtCore.QObject.connect(self.actionRemEmp, QtCore.SIGNAL(_fromUtf8("activated()")), self.remEmpClicked)
         QtCore.QObject.connect(self.actionRemStat, QtCore.SIGNAL(_fromUtf8("activated()")), self.remStatClicked)          
-        #QtCore.QObject.connect(self.actionContact, QtCore.SIGNAL(_fromUtf8("activated()")), self.contactClicked)
         QtCore.QObject.connect(self.actionAbout, QtCore.SIGNAL(_fromUtf8("activated()")), self.aboutClicked)  
-        #QtCore.QObject.connect(self, QtCore.SIGNAL(_fromUtf8("destroyed()")), self.closeEvent)
         
         self.listWidget_2.setStyleSheet("QScrollBar {height:0px}")
         self.listWidget_5.setStyleSheet("QScrollBar {height:0px}")
@@ -1024,7 +992,7 @@ class Ui_MainWindow(QtGui.QMainWindow):
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
 
-        #self.usingQThread()
+
 
     def retranslateUi(self, MainWindow):
         today = QtCore.QDate.currentDate()
@@ -1032,12 +1000,7 @@ class Ui_MainWindow(QtGui.QMainWindow):
         self.pushButton_2.setText(_translate("MainWindow", "Add Employee", None))
         self.pushButton_3.setText(_translate("MainWindow", "Add Status", None))
         self.pushButton.setText(_translate("MainWindow", "Update", None))
-        #self.label_22.setText(_translate("MainWindow", "Banner Goes Here", None))
-        #self.checkBox_2.setText(_translate("MainWindow", "CheckBox", None))
-        #self.checkBox.setText(_translate("MainWindow", "CheckBox", None))
         self.toolBox.setItemText(self.toolBox.indexOf(self.page_3), _translate("MainWindow", "Employees", None))
-        #self.checkBox_4.setText(_translate("MainWindow", "CheckBox", None))
-        #self.checkBox_3.setText(_translate("MainWindow", "CheckBox", None))
         self.toolBox.setItemText(self.toolBox.indexOf(self.page_4), _translate("MainWindow", "Project Statuses", None))
         self.dateEdit.setDate(today)
         self.dateEdit_2.setDate(today)
@@ -1055,7 +1018,6 @@ class Ui_MainWindow(QtGui.QMainWindow):
         self.actionExit.setText(_translate("MainWindow", "Exit", None))
         self.actionRemEmp.setText(_translate("MainWindow", "Remove Employee", None))
         self.actionRemStat.setText(_translate("MainWindow", "Remove Status", None))
-        #self.actionContact.setText(_translate("MainWindow", "Contact", None))
         self.actionAbout.setText(_translate("MainWindow", "About", None))
 
     def reparse(self):
@@ -1084,7 +1046,6 @@ if __name__ == "__main__":
     HL = handleLists.HandleLists(ui)
     MainWindow.show()
     app.aboutToQuit.connect(ui.goodbye)
-    #atexit.register(ui.goodbye)
     sys.exit(app.exec_())
 
 

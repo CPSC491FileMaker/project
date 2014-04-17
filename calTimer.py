@@ -1,6 +1,11 @@
 import os, time
 import threading,ctypes
 
+#this class is responsible for monitoring the remote data file in order to provide the user with a timely
+#notification when a change has been made to the remote data file.
+#it is called via a thread from pycalendar and runs until it receives sigterm.
+#still some vestiges of previous QThread solution in this class.
+
 class CalTimer(threading.Thread):
  
   xml_file = './data/data.xml'
@@ -8,7 +13,6 @@ class CalTimer(threading.Thread):
 
   def __init__(self,ui):
     threading.Thread.__init__(self)
-    #print "Started calTimer thread"
     self.view = ui
     self.initFileSize()
     self.updateTimer()
@@ -28,7 +32,7 @@ class CalTimer(threading.Thread):
     if not(checkSize == oldSize):
         #print "returns true - update needed"
         needsUpdate = True
-        self.view.pushButton.setText("UPDATE NEEDED")
+        self.view.pushButton.setText("UPDATE NEEDED")  #pushbutton text that is modified.
         self.initFileSize()
     #else:
     #    print "returns false - no update needed"

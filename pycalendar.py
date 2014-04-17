@@ -903,7 +903,7 @@ class Ui_MainWindow(QtGui.QMainWindow):
         self.tabWidget.setCurrentIndex(0)
         self.label_22.setAlignment(QtCore.Qt.AlignCenter)
         self.populateCheckboxes()
-        myPixmap = QtGui.QPixmap(_fromUtf8('./data/Clemson_nobg.png'))
+        myPixmap = QtGui.QPixmap(_fromUtf8('./data/bountyhuntersymb.svg'))
         myScaledPixmap = myPixmap.scaled(self.label_22.size(), QtCore.Qt.KeepAspectRatio)
         myIcon = QtGui.QIcon()
         myIcon.addPixmap(QtGui.QPixmap(_fromUtf8("./data/bobafett_icon.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)

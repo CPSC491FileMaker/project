@@ -3,6 +3,11 @@ from PyQt4.QtCore import QDateTime
 import datetime, re
 from datetime import time
 
+'''
+The main objective for this class is to populate the 
+listwidgets that are part of the MainWindow
+'''
+
 class HandleLists:
 
   def __init__(self,MainWindow):
@@ -11,6 +16,12 @@ class HandleLists:
     self.editStatus = False
     self.statStatus = False
 
+  '''
+  is_Selected is a function that takes single
+  record from the XML file and checks to see if
+  the record falls into the states selected in 
+  MainWindow
+  '''
 
   def is_Selected(self,singleRecord):
     self.artStatus = False
@@ -29,6 +40,12 @@ class HandleLists:
             self.statStatus = self.window.formLayout_4.itemAt(j).widget().isChecked()
     return (self.artStatus or self.editStatus) and self.statStatus
 
+  '''
+  weekFromADay takes a single date that was selected from the 
+  calendar widget, it then returns a list for the week that
+  the seleceted date falls in
+  '''
+
   def weekFromADay(self,selectedDate):
     #QDate day of week monday = 1
     selectedDateDayOfWeek = selectedDate.dayOfWeek()
@@ -43,6 +60,12 @@ class HandleLists:
       count += 1
     return (weekSelectedDateIsIn)
 
+  '''
+  recordsForARange takes in a week of dates and all the
+  records, it returns a list of all the records that fall
+  into that week 
+  '''
+
   def recordsForARange(self,rangeOfDates,allRecords):
     relaventRecords = []
     for date in rangeOfDates:
@@ -52,6 +75,11 @@ class HandleLists:
             relaventRecords.append(record)
     return relaventRecords
 
+  '''
+  daily takes care of actually populating the listwidget
+  for the daily view in the MainWindow
+  '''
+
   #calclicked3, selectedDate is a PyDate
   def daily(self,selectedDate,allRecords):
     for record in allRecords:
@@ -60,26 +88,17 @@ class HandleLists:
         startDate = record[0]
         endDate = record[1]
         
-        
-            
         if (selectedDate <= endDate and selectedDate >= startDate ):
           deltaStartEndDate = endDate - startDate
           deltaDate = endDate - selectedDate
-          #print "deltaStartEndDate: "+str(deltaStartEndDate.total_seconds()/86400.0)
-          #print "deltaDate: "+str(deltaDate.total_seconds()/86400.0)
-
           for employee in self.window.employees:
             if(employee[0] == record[5]):
               color = employee[1]
               color = re.sub('[()]','',color)
               color = color.split(',')
-
           if( (deltaStartEndDate.total_seconds()) > 0):
             alphaValue = deltaDate.total_seconds() / deltaStartEndDate.total_seconds()
-            #print "alpha value: "+str(alphaValue)
             alphaValue = 255 - (alphaValue*255)
-            #print "alpha value: "+str(alphaValue)
-            
           else:
             alphaValue = 255;
           jobDescription = re.sub('[\n]','',record[2])
@@ -88,10 +107,14 @@ class HandleLists:
           putMeInList.setBackgroundColor(QtGui.QColor(int(color[1]),int(color[2]),int(color[3]),alphaValue))
           self.window.listWidget_7.addItem(putMeInList)
 
+  '''
+  weekly takes care of actually populating the listwidgets
+  for the weekly view in the MainWindow
+  '''
+
   def weekly(self,selectedDate,allRecords):
     rangeForSelectedDate = self.weekFromADay(selectedDate)
     weekRecords = self.recordsForARange(rangeForSelectedDate,allRecords)
-
     for date in rangeForSelectedDate:
         for record in weekRecords:
           if(self.is_Selected(record)):
@@ -176,23 +199,30 @@ class HandleLists:
                 putMeInList.setBackgroundColor(QtGui.QColor(255,255,255,255))
               self.window.listWidget_2.addItem(putMeInList)
 
-  '''week1:
+  '''
+  biweekly takes care of actually populating the listwidgets
+  for the biweekly view in the MainWindow 
+
+  these are the liswidgets(LW) that correspond to the days
+  in the biweekly view
+
+  week1:
   sun = LW_9
-  m = LW_10
-  t = 11
-  w = 12
-  thur = 13
-  f = 14
-  sat = 15
+  mon = LW_10
+  tue = LW_11
+  wed = LW_12
+  thur = LW_13
+  fri = LW_14
+  sat = LW_15
 
   week 2:
-  sun = 16
-  m = 17
-  t = 18
-  w = 19
-  t = 20
-  f = 21
-  sat = 22
+  sun = LW_16
+  mon = LW_17
+  tue = LW_18
+  wed = LW_19
+  thur = LW_20
+  fri = LW_21
+  sat = LW_22
   '''
 
   def biweekly(self,selectedDate,allRecords):
@@ -201,7 +231,6 @@ class HandleLists:
     newDate = selectedDate.addDays(7)
     week2 = self.weekFromADay(newDate)
     week2Records = self.recordsForARange(week2,allRecords)
-
     for date in week1:
         for record in week1Records:
           if(self.is_Selected(record)):
@@ -285,7 +314,6 @@ class HandleLists:
                 putMeInList.setText("\n\n\n\n")
                 putMeInList.setBackgroundColor(QtGui.QColor(255,255,255,255))
               self.window.listWidget_9.addItem(putMeInList)
-
     for date in week2:
         for record in week2Records:
           if(self.is_Selected(record)):

@@ -1,6 +1,14 @@
 from PyQt4 import QtCore, QtGui
 import helper, pycalendar
 
+#'''
+#This class is a simple implementation to bring up a modal dialog window to
+#allow the user to add a new employee to the list of checkboxes.  The checkboxes
+#will allow filtering of data in real time.  This modal dialog box will provide
+#functionality for color selection.  Each added employee needs a color, and
+#the default color will be white.
+#'''
+
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
 except AttributeError:
@@ -25,6 +33,8 @@ class Ui_Dialog(object):
     h = helper.Helper()
     Dlg = None
 
+    #This function handles the selection of the colors from
+    #a QColorDialog and sets the class's color to the result.
     def pickColor(self):
       p = self.frame.palette()
       newColor = QtGui.QColorDialog.getColor()
@@ -32,6 +42,10 @@ class Ui_Dialog(object):
       self.frame.setPalette(p)
       self.nColor = newColor
 
+    #This function registers the user as having finished and
+    #having clicked the 'OK' button.  It saves the color and
+    #name string in the appropriate lists readable by the
+    #rest of the program.
     def okClicked(self):
       self.nName = self.lineEdit.text()
       if not(self.nName == ""):
@@ -45,9 +59,12 @@ class Ui_Dialog(object):
         self.mwD.employees.append([str(self.nName),str((rgb_vals[0], rgb_vals[1], rgb_vals[2], rgb_vals[3]))])
         self.mwD.refreshCheckboxes()
 
+    #This function exists only for debugging.
     def forCallback(self, D):
       return D
 
+    #This function is Qt dynamically generated code which sets up the
+    #visual look of the modal dialog window.
     def setupUi(self, Dialog):
         self.Dlg = Dialog
         Dialog.setObjectName(_fromUtf8("Dialog"))
@@ -83,6 +100,7 @@ class Ui_Dialog(object):
         QtCore.QObject.connect(self.pushButton, QtCore.SIGNAL(_fromUtf8("clicked()")), self.pickColor)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
+    #Qt dynamically generated function to update the visual window
     def retranslateUi(self, Dialog):
         Dialog.setWindowTitle(_translate("Dialog", "Add Employee", None))
         self.label.setText(_translate("Dialog", "Employee to add:", None))

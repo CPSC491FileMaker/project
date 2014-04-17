@@ -55,13 +55,13 @@ class Ui_MainWindow(QtGui.QMainWindow):
         AboutWindow.exec_()
 
     
-    def remEmpClicked(self):				
+    def remEmpClicked(self):			    #calls the Remove Employee modal dialog box	
       remEmpWindow = QtGui.QDialog()
       remEmp = removeEmployee.Ui_Dialog(self)
       remEmp.setupUi(remEmpWindow)
       remEmpWindow.exec_()
 
-    def remStatClicked(self):
+    def remStatClicked(self):               #calls the Remove Status modal dialog box
       remStatWindow = QtGui.QDialog()
       remStat = removeStatus.Ui_Dialog(self)
       remStat.setupUi(remStatWindow)
@@ -84,19 +84,19 @@ class Ui_MainWindow(QtGui.QMainWindow):
             os.remove(os.path.join(currentdir,file))
       os.kill(mypid,signal.SIGTERM)
         
-    def addStatClicked(self):
+    def addStatClicked(self):               #calls the Add Status modal dialog box
       addStatWindow = QtGui.QDialog()
       addStat = addStatus.Ui_Dialog(self)
       addStat.setupUi(addStatWindow)
       addStatWindow.exec_()
-    
-    def addEmpClicked(self):
+        
+    def addEmpClicked(self):                #calls the Add Employee modal dialog box
       addEmpWindow = QtGui.QDialog()
       addEmp = addEmployee.Ui_Dialog(self)
       addEmp.setupUi(addEmpWindow)
       addEmpWindow.exec_()
 
-    def updateRecordsClicked(self):         
+    def updateRecordsClicked(self):         #Querys EmployeesAndStatuses.xml for refresh
       print "updaterecordsclicked() called"
       records = xml.fetchRecords()  
       self.reparse() 
@@ -128,12 +128,12 @@ class Ui_MainWindow(QtGui.QMainWindow):
         self.formLayout_2.setWidget(0,QtGui.QFormLayout.LabelRole,self.scrollArea_2)
         self.checkBox_3.setText(QtGui.QApplication.translate("BobaFett", status, None, QtGui.QApplication.UnicodeUTF8))
     
-    def checkBox_toggled(self):          
+    def checkBox_toggled(self):             #called upon checkbox toggle on/off
         self.calclicked()
         self.calclicked2()
         self.calclicked3()
 
-    def clear_all_lists(self):
+    def clear_all_lists(self):              #clears all lists to empty.
         self.listWidget.clear()   #w1
         self.listWidget_2.clear() #w1
         self.listWidget_3.clear() #w1
@@ -157,7 +157,7 @@ class Ui_MainWindow(QtGui.QMainWindow):
         self.listWidget_21.clear()
         self.listWidget_22.clear()
     
-    def refreshCheckboxes(self):
+    def refreshCheckboxes(self):                    #called when employees/statuses are added/removed
         for i in reversed(range(self.formLayout_3.count())):
             item = self.formLayout_3.itemAt(i)
             if isinstance(item, QtGui.QWidgetItem):
@@ -949,6 +949,8 @@ class Ui_MainWindow(QtGui.QMainWindow):
     #listWidget == Friday
     #listWidget_8 == Saturday
 
+        #The following 3 blocks of code attach multiple lists to one scrollbar
+        #for user convenience
         self.listWidget_8.verticalScrollBar().valueChanged.connect(
             self.listWidget.verticalScrollBar().setValue)
         self.listWidget_8.verticalScrollBar().valueChanged.connect(

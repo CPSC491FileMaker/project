@@ -1,6 +1,14 @@
 from PyQt4 import QtCore, QtGui
 import helper, pycalendar
 
+#'''
+#This class is a simple implementation to bring up a modal dialog window to
+#allow the user to remove an existing status to the list of checkboxes. It
+#functions the same was as removeEmployee.py.  Refer to that file for appropriate
+#comments
+#'''
+
+
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
 except AttributeError:

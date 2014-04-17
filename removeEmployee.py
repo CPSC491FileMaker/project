@@ -1,6 +1,15 @@
 from PyQt4 import QtCore, QtGui
 import helper, pycalendar
 
+
+#'''
+#This class is a simple implementation to bring up a modal dialog window to
+#allow the user to remove an existing employee from the list of checkboxes.
+#Each removal will remove one name.  If a name is in the list twice, it will
+#need removal twice.
+#'''
+
+
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
 except AttributeError:
@@ -25,6 +34,9 @@ class Ui_Dialog(object):
     h = helper.Helper()
     Dlg = None
 
+    #This function runs when the user clicks 'OK' and confirms that they are
+    #done with name entry.  It removes the name from the appropriate list
+    #on which the checkboxes rely, then refreshes the visible checkboxes.
     def okClicked(self):
       self.nName = self.lineEdit.text()
       #print 'nName : ' + self.nName
@@ -39,9 +51,11 @@ class Ui_Dialog(object):
           self.mwD.employees.remove(entry)
       self.mwD.refreshCheckboxes()
 
+    #Used for debug only
     def forCallback(self, D):
 	return D
 
+    #Qt code to set-up the visual modal dialog box
     def setupUi(self, Dialog):
 	self.Dlg = Dialog
         Dialog.setObjectName(_fromUtf8("Dialog"))
@@ -64,6 +78,7 @@ class Ui_Dialog(object):
         QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL(_fromUtf8("rejected()")), Dialog.reject)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
+    #Qt code to refresh the visual modal dialog box
     def retranslateUi(self, Dialog):
         Dialog.setWindowTitle(_translate("Dialog", "Remove Employee", None))
         self.label.setText(_translate("Dialog", "Employee to remove:", None))

@@ -1,11 +1,4 @@
-# -*- coding: utf-8 -*-
-
-# Form implementation generated from reading ui file 'About.ui'
-#
-# Created: Mon Apr  7 21:42:06 2014
-#      by: PyQt4 UI code generator 4.10.3
-#
-# WARNING! All changes made in this file will be lost!
+#This file is the GUI layout for the Contact Tab and Bug Submission page.
 
 from PyQt4 import QtCore, QtGui
 
@@ -54,6 +47,9 @@ class Ui_Dialog(QtGui.QDialog):
         self.pushButton.setObjectName(_fromUtf8("pushButton"))
         self.gridLayout_2.addWidget(self.pushButton, 0, 0, 1, 1)
         self.gridLayout.addLayout(self.gridLayout_2, 1, 0, 1, 1)
+        myIcon = QtGui.QIcon()
+        myIcon.addPixmap(QtGui.QPixmap(_fromUtf8("./data/bobafett_icon.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        Dialog.setWindowIcon(myIcon)
 
         self.retranslateUi(Dialog)
         QtCore.QObject.connect(self.pushButton, QtCore.SIGNAL(_fromUtf8("clicked()")), Dialog.close)

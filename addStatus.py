@@ -64,6 +64,9 @@ class Ui_Dialog(object):
         self.lineEdit = QtGui.QLineEdit(Dialog)
         self.lineEdit.setGeometry(QtCore.QRect(10, 40, 341, 21))
         self.lineEdit.setObjectName(_fromUtf8("lineEdit"))
+        myIcon = QtGui.QIcon()
+        myIcon.addPixmap(QtGui.QPixmap(_fromUtf8("./data/bobafett_icon.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        Dialog.setWindowIcon(myIcon)
 
         self.retranslateUi(Dialog)
         QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL(_fromUtf8("accepted()")), self.okClicked)

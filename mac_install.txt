@@ -1,3 +1,9 @@
+To install this on a Mac:
+-Open Terminal
+-Run each line that does not begin with a '#' and hit 'Enter' at the 
+ end of each.
+ (These will install some programs, admin passwords may be required.)
+
 #install home brew
 ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
 
@@ -8,6 +14,25 @@ brew install pyqt
 
 #setting the path
 mkdir -p ~/Library/Python/2.7/lib/python/site-packages
+
 echo '/usr/local/lib/python2.7/site-packages' >> ~/Library/Python/2.7/lib/python/site-packages/homebrew.pth
 
-# git clone https://github.com/CPSC491FileMaker/project
+git clone https://github.com/CPSC491FileMaker/project
+
+
+-In terminal, type 'vim BobaFett.command'
+-When this blank file is created, hit 'I'
+ (you should see the ' -- INSERT -- ' at the bottom)
+-Place the next four lines in the file:
+
+#!/bin/bash
+cd /Applications/BobaFett/project
+python pycalendar.py
+quit -n terminals
+
+
+-Hit ESC, ' -- INSERT -- ' should disappear
+-type :wq and hit enter
+-In the terminal, type 'chmod +x BobaFett.command'
+
+-You now double-click 'BobaFett.command' to open the Application
